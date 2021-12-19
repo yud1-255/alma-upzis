@@ -24,6 +24,7 @@ class CreateZakatsTable extends Migration
             $table->foreign('zakat_pic')->references('id')->on('users');
 
             $table->date('transaction_date');
+            $table->string('hijri_year');
             $table->string('family_head');
             $table->timestamps();
         });

@@ -16,6 +16,8 @@ class CreateFamiliesTable extends Migration
         Schema::create('families', function (Blueprint $table) {
             $table->id();
             $table->string('head_of_family');
+            $table->string('phone');
+            $table->string('address');
             $table->timestamps();
         });
 
@@ -38,12 +40,12 @@ class CreateFamiliesTable extends Migration
     public function down()
     {
         Schema::table('muzakkis', function (Blueprint $table) {
-            $table->dropForeign('family_id');
+            $table->dropForeign(['family_id']);
             $table->dropColumn('family_id');
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('family_id');
+            $table->dropForeign(['family_id']);
             $table->dropColumn('family_id');
         });
 
