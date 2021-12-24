@@ -28,7 +28,6 @@
             leading-4
             border
             rounded
-            hover:bg-white
             focus:border-indigo-500 focus:text-indigo-500
           "
           :class="{ 'bg-blue-700 text-white': link.active }"
