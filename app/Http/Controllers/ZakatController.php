@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Zakat;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use DB;
 
 class ZakatController extends Controller
 {
@@ -14,7 +16,14 @@ class ZakatController extends Controller
      */
     public function index()
     {
-        //
+        // $zakats = Zakat::latest()->paginate(10);
+        $zakats = DB::table('zakats')
+            ->join('users', 'users.id', '=', 'zakats.receive_from')
+            ->join('users as u2', 'u2.id', '=', 'zakats.zakat_pic')
+            ->select(['zakats.*', 'users.name as receive_from_name', 'u2.name as zakat_pic_name'])
+            ->paginate(10);
+
+        return Inertia::render('Zakat/Index', ['zakats' => $zakats]);
     }
 
     /**
