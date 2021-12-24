@@ -17,16 +17,16 @@ class CreateZakatLineTable extends Migration
             $table->id();
             $table->unsignedBigInteger('zakat_id');
             $table->foreign('zakat_id')->references('id')->on('zakats');
-            $table->decimal('fitrah_rp', 8, 2);
-            $table->decimal('fitrah_kg', 8, 2);
-            $table->decimal('fitrah_lt', 8, 2);
-            $table->decimal('maal_rp', 8, 2);
-            $table->decimal('profesi_rp', 8, 2);
-            $table->decimal('infaq_rp', 8, 2);
-            $table->decimal('wakaf_rp', 8, 2);
-            $table->decimal('fidyah_kg', 8, 2);
-            $table->decimal('fidyah_rp', 8, 2);
-            $table->decimal('kafarat_rp', 8, 2);
+            $table->decimal('fitrah_rp', 13, 2);
+            $table->decimal('fitrah_kg', 13, 2);
+            $table->decimal('fitrah_lt', 13, 2);
+            $table->decimal('maal_rp', 13, 2);
+            $table->decimal('profesi_rp', 13, 2);
+            $table->decimal('infaq_rp', 13, 2);
+            $table->decimal('wakaf_rp', 13, 2);
+            $table->decimal('fidyah_kg', 13, 2);
+            $table->decimal('fidyah_rp', 13, 2);
+            $table->decimal('kafarat_rp', 13, 2);
             $table->timestamps();
         });
     }

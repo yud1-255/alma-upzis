@@ -21,6 +21,7 @@ class ZakatFactory extends Factory
             'transaction_date' => $this->faker->date(),
             'hijri_year' => 1443,
             'family_head' => $this->faker->name(),
+            'total_rp' => $this->faker->randomNumber(7)
 
         ];
     }
