@@ -13,6 +13,7 @@
           <td class="px-4 py-2">Petugas</td>
           <td class="px-4 py-2">Periode</td>
           <td class="px-4 py-2">Kepala Keluarga</td>
+          <td class="px-4 py-2">Jumlah</td>
           <td class="px-4 py-2">Action</td>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
             <td class="px-4 py-2">{{ zakat.zakat_pic_name }}</td>
             <td class="px-4 py-2">{{ zakat.hijri_year }}</td>
             <td class="px-4 py-2">{{ zakat.family_head }}</td>
+            <td class="px-4 py-2">{{ zakat.total_rp.toLocaleString() }}</td>
             <td class="px-4 py-2 font-extrabold">
               <Link
                 :href="route('zakat.edit', zakat.id)"
