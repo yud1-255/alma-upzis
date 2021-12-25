@@ -20,7 +20,7 @@ class CreateZakatsTable extends Migration
             $table->unsignedBigInteger('receive_from');
             $table->foreign('receive_from')->references('id')->on('users');
 
-            $table->unsignedBigInteger('zakat_pic');
+            $table->unsignedBigInteger('zakat_pic')->nullable();
             $table->foreign('zakat_pic')->references('id')->on('users');
 
             $table->date('transaction_date');
