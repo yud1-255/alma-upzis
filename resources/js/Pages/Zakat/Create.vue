@@ -13,7 +13,7 @@
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <InputError :message="errors"> </InputError>
+            <BreezeValidationErrors class="mb-4" />
             <form @submit.prevent="submit">
               <div>
                 <label for="transaction_no">transaction_no</label>
@@ -109,14 +109,14 @@
 </template>
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import InputError from "@/Components/InputError.vue";
+import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
     BreezeAuthenticatedLayout,
-    InputError,
+    BreezeValidationErrors,
     Head,
   },
   setup() {

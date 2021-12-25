@@ -4,9 +4,10 @@ namespace App\Domains;
 
 use App\Models\Zakat;
 use App\Models\User;
+use Illuminate\Database\Query\Builder;
 
 use DB;
-use phpDocumentor\Reflection\Types\Boolean;
+
 
 class ZakatDomain
 {
@@ -22,7 +23,7 @@ class ZakatDomain
         return $zakat;
     }
 
-    public function transactionSummaryList()
+    public function transactionSummaryList(): Builder
     {
         $zakats = DB::table('zakats')
             ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
