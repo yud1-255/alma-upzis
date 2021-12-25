@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Domains\ZakatDomain;
 use App\Models\Zakat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+
+use Auth;
 
 class ZakatController extends Controller
 {
@@ -40,12 +43,18 @@ class ZakatController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'total_rp' => ['numeric'],
+            'family_head' => ['required']
+        ]);
         $zakat = new Zakat();
         $formData = $request->only($zakat->getFillable());
         $zakat->fill($formData);
 
         $domain = new ZakatDomain();
         $domain->submitAsMuzakki(Auth::user(), $zakat);
+
+        return Redirect::route('zakat.index');
     }
 
     /**
