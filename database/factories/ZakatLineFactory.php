@@ -14,7 +14,17 @@ class ZakatLineFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'muzakki_id',
+            'fitrah_rp',
+            'fitrah_kg',
+            'fitrah_lt',
+            'maal_rp',
+            'profesi_rp',
+            'infaq_rp',
+            'wakaf_rp',
+            'fidyah_kg',
+            'fidyah_rp',
+            'kafarat_rp',
         ];
     }
 }

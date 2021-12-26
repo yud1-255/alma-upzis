@@ -50,9 +50,10 @@ class ZakatController extends Controller
         $zakat = new Zakat();
         $formData = $request->only($zakat->getFillable());
         $zakat->fill($formData);
+        $zakatLines = $request['zakat_lines'];
 
         $domain = new ZakatDomain();
-        $domain->submitAsMuzakki(Auth::user(), $zakat);
+        $domain->submitAsMuzakki(Auth::user(), $zakat, $zakatLines);
 
         return Redirect::route('zakat.index');
     }

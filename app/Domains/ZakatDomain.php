@@ -11,14 +11,14 @@ use DB;
 
 class ZakatDomain
 {
-    public function submitAsMuzakki(User $user, Zakat $zakat): Zakat
+    public function submitAsMuzakki(User $user, Zakat $zakat, array $zakatLines): Zakat
     {
-        // TODO implement submission logic (from muzakki; set zakat_pic as null)
-
         $zakat->zakatPIC()->associate(null);
         $zakat->receiveFrom()->associate($user);
 
         $zakat->save();
+
+        $zakat->zakatLines()->createMany($zakatLines);
 
         return $zakat;
     }

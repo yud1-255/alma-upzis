@@ -95,6 +95,31 @@
                   "
                 />
               </div>
+              <div class="overflow-auto">
+                <h2
+                  class="text-l my-4 font-semibold leading-tight text-gray-800"
+                >
+                  Jumlah Muzakki
+                </h2>
+                <div
+                  v-for="zakat_line in form.zakat_lines"
+                  :key="zakat_line.id"
+                >
+                  <div class="flex">mid: {{ zakat_line.muzakki_id }}</div>
+                  <div class="flex">
+                    <Input v-model="zakat_line.fitrah_rp" />
+                    <Input v-model="zakat_line.fitrah_kg" />
+                    <Input v-model="zakat_line.fitrah_lt" />
+                    <Input v-model="zakat_line.maal_rp" />
+                    <Input v-model="zakat_line.profesi_rp" />
+                    <Input v-model="zakat_line.infaq_rp" />
+                    <Input v-model="zakat_line.wakaf_rp" />
+                    <Input v-model="zakat_line.fidyah_rp" />
+                    <Input v-model="zakat_line.fidyah_kg" />
+                    <Input v-model="zakat_line.kafarat_rp" />
+                  </div>
+                </div>
+              </div>
               <div class="flex items-center mt-4">
                 <button class="px-6 py-2 text-white bg-gray-900 rounded">
                   Simpan
@@ -110,6 +135,7 @@
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
+import Input from "@/Components/Input.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
@@ -117,17 +143,46 @@ export default {
   components: {
     BreezeAuthenticatedLayout,
     BreezeValidationErrors,
+    Input,
     Head,
   },
   setup() {
     const form = useForm({
-      transaction_no: null,
+      transaction_no: "UPZ/1443/01",
       // receive_from: null,
       // zakat_pic: null,
-      transaction_date: null,
-      hijri_year: null,
-      family_head: null,
-      total_rp: null,
+      transaction_date: "2021-10-10",
+      hijri_year: 1443,
+      family_head: "Prasetyo",
+      total_rp: 999000,
+      zakat_lines: [
+        {
+          muzakki_id: 1,
+          fitrah_rp: 1100,
+          fitrah_kg: 1200,
+          fitrah_lt: 1,
+          maal_rp: 1300,
+          profesi_rp: 1400,
+          infaq_rp: 1500,
+          wakaf_rp: 1600,
+          fidyah_kg: 2,
+          fidyah_rp: 900,
+          kafarat_rp: 800,
+        },
+        {
+          muzakki_id: 2,
+          fitrah_rp: 1000,
+          fitrah_kg: 200,
+          fitrah_lt: 1,
+          maal_rp: 300,
+          profesi_rp: 400,
+          infaq_rp: 500,
+          wakaf_rp: 600,
+          fidyah_kg: 2,
+          fidyah_rp: 100,
+          kafarat_rp: 110,
+        },
+      ],
     });
 
     return { form };
