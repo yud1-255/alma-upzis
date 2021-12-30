@@ -7,7 +7,7 @@
       </h1>
     </template>
 
-    <!-- TODO implement view for Create -->
+    <!-- TODO modify styling for Create -->
 
     <div class="py-12">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -45,44 +45,57 @@
                   v-for="zakat_line in form.zakat_lines"
                   :key="zakat_line.id"
                 >
-                  <div class="flex">mid: {{ zakat_line.muzakki_name }}</div>
+                  <div class="flex">muzakki: {{ zakat_line.muzakki_name }}</div>
                   <div class="flex">
                     <Input
                       v-model="zakat_line.fitrah_rp"
                       placeholder="fitrah_rp"
+                      class="w-16"
                     />
                     <Input
                       v-model="zakat_line.fitrah_kg"
                       placeholder="fitrah_kg"
+                      class="w-16"
                     />
                     <Input
                       v-model="zakat_line.fitrah_lt"
                       placeholder="fitrah_lt"
+                      class="w-16"
                     />
-                    <Input v-model="zakat_line.maal_rp" placeholder="maal_rp" />
+                    <Input
+                      v-model="zakat_line.maal_rp"
+                      placeholder="maal_rp"
+                      class="w-16"
+                    />
                     <Input
                       v-model="zakat_line.profesi_rp"
                       placeholder="profesi_rp"
+                      class="w-16"
                     />
                     <Input
                       v-model="zakat_line.infaq_rp"
                       placeholder="infaq_rp"
+                      class="w-16"
                     />
                     <Input
                       v-model="zakat_line.wakaf_rp"
                       placeholder="wakaf_rp"
+                      class="w-16"
                     />
                     <Input
                       v-model="zakat_line.fidyah_rp"
                       placeholder="fidyah_rp"
+                      class="w-16"
                     />
                     <Input
                       v-model="zakat_line.fidyah_kg"
                       placeholder="fidyah_kg"
+                      class="w-16"
                     />
                     <Input
                       v-model="zakat_line.kafarat_rp"
                       placeholder="kafarat_rp"
+                      class="w-16"
                     />
                   </div>
                 </div>
@@ -152,6 +165,18 @@ export default {
   },
   methods: {
     submit() {
+      this.form.zakat_lines.forEach((item) => {
+        item.fitrah_rp = item.fitrah_rp ?? 0;
+        item.fitrah_kg = item.fitrah_kg ?? 0;
+        item.fitrah_lt = item.fitrah_lt ?? 0;
+        item.maal_rp = item.maal_rp ?? 0;
+        item.profesi_rp = item.profesi_rp ?? 0;
+        item.infaq_rp = item.infaq_rp ?? 0;
+        item.wakaf_rp = item.wakaf_rp ?? 0;
+        item.fidyah_kg = item.fidyah_kg ?? 0;
+        item.fidyah_rp = item.fidyah_rp ?? 0;
+        item.kafarat_rp = item.kafarat_rp ?? 0;
+      });
       this.form.post(route("zakat.store"));
     },
   },
