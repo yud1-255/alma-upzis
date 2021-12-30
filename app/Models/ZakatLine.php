@@ -19,4 +19,9 @@ class ZakatLine extends Model
     {
         return $this->belongsTo(Zakat::class);
     }
+
+    public function muzakki()
+    {
+        return $this->belongsTo(Muzakki::class);
+    }
 }

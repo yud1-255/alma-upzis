@@ -23,6 +23,12 @@ class ZakatDomain
         return $zakat;
     }
 
+    public function deleteTransaction(Zakat $zakat)
+    {
+        $zakat->zakatLines()->delete();
+        $zakat->delete();
+    }
+
     public function transactionSummaryList(): Builder
     {
         $zakats = DB::table('zakats')

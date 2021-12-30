@@ -32,7 +32,10 @@ class ZakatController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Zakat/Create');
+        $user = Auth::user();
+        $muzakkis = $user->family->muzakkis;
+
+        return Inertia::render('Zakat/Create', ['muzakkis' => $muzakkis]);
     }
 
     /**
@@ -100,6 +103,8 @@ class ZakatController extends Controller
      */
     public function destroy(Zakat $zakat)
     {
-        //
+        $domain = new ZakatDomain();
+        $domain->deleteTransaction($zakat);
+        return Redirect::route('zakat.index');
     }
 }

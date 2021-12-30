@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     destroy(id) {
-      this.$inertia.delete(route("zakats.destroy"), id);
+      this.$inertia.delete(route("zakat.destroy", id));
     },
   },
 };

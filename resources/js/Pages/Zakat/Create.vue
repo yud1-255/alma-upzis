@@ -16,84 +16,24 @@
             <BreezeValidationErrors class="mb-4" />
             <form @submit.prevent="submit">
               <div>
-                <label for="transaction_no">transaction_no</label>
-                <input
-                  type="text"
-                  v-model="form.transaction_no"
-                  class="
-                    w-full
-                    px-4
-                    py-2
-                    mt-2
-                    border
-                    rounded-md
-                    focus:outline-none focus:ring-1 focus:ring-blue-600
-                  "
-                />
+                <Label for="transaction_no">transaction_no</Label>
+                <Input v-model="form.transaction_no" />
               </div>
               <div>
-                <label for="transaction_date">transaction_date</label>
-                <input
-                  type="text"
-                  v-model="form.transaction_date"
-                  class="
-                    w-full
-                    px-4
-                    py-2
-                    mt-2
-                    border
-                    rounded-md
-                    focus:outline-none focus:ring-1 focus:ring-blue-600
-                  "
-                />
+                <Label for="transaction_date">transaction_date</Label>
+                <Input v-model="form.transaction_date" />
               </div>
               <div>
-                <label for="family_head">family_head</label>
-                <input
-                  type="text"
-                  v-model="form.family_head"
-                  class="
-                    w-full
-                    px-4
-                    py-2
-                    mt-2
-                    border
-                    rounded-md
-                    focus:outline-none focus:ring-1 focus:ring-blue-600
-                  "
-                />
+                <Label for="family_head">family_head</Label>
+                <Input v-model="form.family_head" />
               </div>
               <div>
-                <label for="total_rp">total_rp</label>
-                <input
-                  type="text"
-                  v-model="form.total_rp"
-                  class="
-                    w-full
-                    px-4
-                    py-2
-                    mt-2
-                    border
-                    rounded-md
-                    focus:outline-none focus:ring-1 focus:ring-blue-600
-                  "
-                />
+                <Label for="total_rp">total_rp</Label>
+                <Input v-model="form.total_rp" />
               </div>
               <div>
-                <label for="hijri_year">hijri_year</label>
-                <input
-                  type="text"
-                  v-model="form.hijri_year"
-                  class="
-                    w-full
-                    px-4
-                    py-2
-                    mt-2
-                    border
-                    rounded-md
-                    focus:outline-none focus:ring-1 focus:ring-blue-600
-                  "
-                />
+                <Label for="hijri_year">hijri_year</Label>
+                <Input v-model="form.hijri_year" />
               </div>
               <div class="overflow-auto">
                 <h2
@@ -105,18 +45,45 @@
                   v-for="zakat_line in form.zakat_lines"
                   :key="zakat_line.id"
                 >
-                  <div class="flex">mid: {{ zakat_line.muzakki_id }}</div>
+                  <div class="flex">mid: {{ zakat_line.muzakki_name }}</div>
                   <div class="flex">
-                    <Input v-model="zakat_line.fitrah_rp" />
-                    <Input v-model="zakat_line.fitrah_kg" />
-                    <Input v-model="zakat_line.fitrah_lt" />
-                    <Input v-model="zakat_line.maal_rp" />
-                    <Input v-model="zakat_line.profesi_rp" />
-                    <Input v-model="zakat_line.infaq_rp" />
-                    <Input v-model="zakat_line.wakaf_rp" />
-                    <Input v-model="zakat_line.fidyah_rp" />
-                    <Input v-model="zakat_line.fidyah_kg" />
-                    <Input v-model="zakat_line.kafarat_rp" />
+                    <Input
+                      v-model="zakat_line.fitrah_rp"
+                      placeholder="fitrah_rp"
+                    />
+                    <Input
+                      v-model="zakat_line.fitrah_kg"
+                      placeholder="fitrah_kg"
+                    />
+                    <Input
+                      v-model="zakat_line.fitrah_lt"
+                      placeholder="fitrah_lt"
+                    />
+                    <Input v-model="zakat_line.maal_rp" placeholder="maal_rp" />
+                    <Input
+                      v-model="zakat_line.profesi_rp"
+                      placeholder="profesi_rp"
+                    />
+                    <Input
+                      v-model="zakat_line.infaq_rp"
+                      placeholder="infaq_rp"
+                    />
+                    <Input
+                      v-model="zakat_line.wakaf_rp"
+                      placeholder="wakaf_rp"
+                    />
+                    <Input
+                      v-model="zakat_line.fidyah_rp"
+                      placeholder="fidyah_rp"
+                    />
+                    <Input
+                      v-model="zakat_line.fidyah_kg"
+                      placeholder="fidyah_kg"
+                    />
+                    <Input
+                      v-model="zakat_line.kafarat_rp"
+                      placeholder="kafarat_rp"
+                    />
                   </div>
                 </div>
               </div>
@@ -136,6 +103,7 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import Input from "@/Components/Input.vue";
+import Label from "@/Components/Label.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
@@ -143,10 +111,11 @@ export default {
   components: {
     BreezeAuthenticatedLayout,
     BreezeValidationErrors,
+    Label,
     Input,
     Head,
   },
-  setup() {
+  setup(props) {
     const form = useForm({
       transaction_no: "UPZ/1443/01",
       // receive_from: null,
@@ -155,40 +124,31 @@ export default {
       hijri_year: 1443,
       family_head: "Prasetyo",
       total_rp: 999000,
-      zakat_lines: [
-        {
-          muzakki_id: 1,
-          fitrah_rp: 1100,
-          fitrah_kg: 1200,
-          fitrah_lt: 1,
-          maal_rp: 1300,
-          profesi_rp: 1400,
-          infaq_rp: 1500,
-          wakaf_rp: 1600,
-          fidyah_kg: 2,
-          fidyah_rp: 900,
-          kafarat_rp: 800,
-        },
-        {
-          muzakki_id: 2,
-          fitrah_rp: 1000,
-          fitrah_kg: 200,
-          fitrah_lt: 1,
-          maal_rp: 300,
-          profesi_rp: 400,
-          infaq_rp: 500,
-          wakaf_rp: 600,
-          fidyah_kg: 2,
-          fidyah_rp: 100,
-          kafarat_rp: 110,
-        },
-      ],
+      zakat_lines: [],
+    });
+
+    props.muzakkis.forEach((muzakki) => {
+      form.zakat_lines.push({
+        muzakki_id: muzakki.id,
+        muzakki_name: muzakki.name,
+        fitrah_rp: null,
+        fitrah_kg: null,
+        fitrah_lt: null,
+        maal_rp: null,
+        profesi_rp: null,
+        infaq_rp: null,
+        wakaf_rp: null,
+        fidyah_kg: null,
+        fidyah_rp: null,
+        kafarat_rp: null,
+      });
     });
 
     return { form };
   },
   props: {
     errors: null,
+    muzakkis: Array,
   },
   methods: {
     submit() {
