@@ -45,58 +45,60 @@
                   v-for="zakat_line in form.zakat_lines"
                   :key="zakat_line.id"
                 >
+                  <!-- TODO implement checkbox to disallow at backend -->
                   <div class="flex">muzakki: {{ zakat_line.muzakki_name }}</div>
-                  <div class="flex">
+                  <div class="flex flex-wrap py-2">
                     <Input
                       v-model="zakat_line.fitrah_rp"
                       placeholder="fitrah_rp"
-                      class="w-16"
+                      class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fitrah_kg"
                       placeholder="fitrah_kg"
-                      class="w-16"
+                      class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fitrah_lt"
                       placeholder="fitrah_lt"
-                      class="w-16"
+                      class="w-24"
                     />
                     <Input
                       v-model="zakat_line.maal_rp"
                       placeholder="maal_rp"
-                      class="w-16"
+                      class="w-24"
                     />
                     <Input
                       v-model="zakat_line.profesi_rp"
                       placeholder="profesi_rp"
-                      class="w-16"
+                      class="w-24"
                     />
                     <Input
                       v-model="zakat_line.infaq_rp"
                       placeholder="infaq_rp"
-                      class="w-16"
+                      class="w-24"
                     />
                     <Input
                       v-model="zakat_line.wakaf_rp"
                       placeholder="wakaf_rp"
-                      class="w-16"
+                      class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fidyah_rp"
                       placeholder="fidyah_rp"
-                      class="w-16"
+                      class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fidyah_kg"
                       placeholder="fidyah_kg"
-                      class="w-16"
+                      class="w-24"
                     />
                     <Input
                       v-model="zakat_line.kafarat_rp"
                       placeholder="kafarat_rp"
-                      class="w-16"
+                      class="w-24"
                     />
+                    <!-- TODO implement minus button -->
                   </div>
                 </div>
               </div>
@@ -106,6 +108,35 @@
                 </button>
               </div>
             </form>
+
+            <form @submit.prevent="addMuzakki">
+              <div>
+                <h2>Muzakki baru</h2>
+              </div>
+              <div class="flex">
+                <Input
+                  v-model="muzakkiForm.name"
+                  placeholder="name"
+                  class="w-24"
+                />
+                <div>
+                  <input type="checkbox" v-model="muzakkiForm.is_bpi" /> is_bpi
+                  <Input
+                    v-model="muzakkiForm.bpi_block_no"
+                    placeholder="bpi_block_no"
+                    class="w-24"
+                  />
+                </div>
+                <Input
+                  v-model="muzakkiForm.bpi_house_no"
+                  placeholder="bpi_house_no"
+                  class="w-24"
+                />
+              </div>
+              <button class="px-6 py-2 text-white bg-gray-900 rounded">
+                Tambah Muzakki
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -113,57 +144,81 @@
   </BreezeAuthenticatedLayout>
 </template>
 <script>
+import { onMounted, onUpdated } from "vue";
+
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import Input from "@/Components/Input.vue";
+import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
+import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
     BreezeAuthenticatedLayout,
     BreezeValidationErrors,
+    Link,
     Label,
     Input,
+    Checkbox,
     Head,
   },
   setup(props) {
     const form = useForm({
       transaction_no: "UPZ/1443/01",
-      // receive_from: null,
-      // zakat_pic: null,
-      transaction_date: "2021-10-10",
+      transaction_date: new Date().toISOString().split("T")[0],
       hijri_year: 1443,
       family_head: "Prasetyo",
       total_rp: 999000,
       zakat_lines: [],
     });
 
-    props.muzakkis.forEach((muzakki) => {
-      form.zakat_lines.push({
-        muzakki_id: muzakki.id,
-        muzakki_name: muzakki.name,
-        fitrah_rp: null,
-        fitrah_kg: null,
-        fitrah_lt: null,
-        maal_rp: null,
-        profesi_rp: null,
-        infaq_rp: null,
-        wakaf_rp: null,
-        fidyah_kg: null,
-        fidyah_rp: null,
-        kafarat_rp: null,
+    const refreshMuzakki = () => {
+      form.zakat_lines = [];
+      props.muzakkis.forEach((muzakki) => {
+        form.zakat_lines.push({
+          muzakki_id: muzakki.id,
+          muzakki_name: muzakki.name,
+          fitrah_rp: null,
+          fitrah_kg: null,
+          fitrah_lt: null,
+          maal_rp: null,
+          profesi_rp: null,
+          infaq_rp: null,
+          wakaf_rp: null,
+          fidyah_kg: null,
+          fidyah_rp: null,
+          kafarat_rp: null,
+        });
       });
+    };
+
+    onMounted(() => refreshMuzakki());
+    onUpdated(() => refreshMuzakki());
+
+    const muzakkiForm = useForm({
+      name: "Ulya",
+      family_id: 1,
+      address: "BPI B6/2",
+      is_bpi: true,
+      bpi_block_no: "B6",
+      bpi_house_no: "2",
     });
 
-    return { form };
+    return { form, muzakkiForm };
   },
   props: {
     errors: null,
     muzakkis: Array,
   },
   methods: {
+    addMuzakki() {
+      console.warn("hi!");
+      this.muzakkiForm.post(route("muzakki.store"));
+    },
     submit() {
       this.form.zakat_lines.forEach((item) => {
         item.fitrah_rp = item.fitrah_rp ?? 0;

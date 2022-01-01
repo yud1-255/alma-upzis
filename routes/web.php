@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ZakatController;
+use App\Http\Controllers\MuzakkiController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,5 +31,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('zakat', ZakatController::class);
+Route::resource('muzakki', MuzakkiController::class);
 
 require __DIR__ . '/auth.php';

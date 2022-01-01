@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Muzakki extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name', 'family_id', 'address', 'is_bpi', 'bpi_block_no', 'bpi_house_no'
+    ];
 }

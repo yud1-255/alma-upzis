@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Muzakki;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class MuzakkiController extends Controller
 {
@@ -24,7 +25,7 @@ class MuzakkiController extends Controller
      */
     public function create()
     {
-        //
+        // TODO implement add muzakki from Zakat create page
     }
 
     /**
@@ -35,7 +36,13 @@ class MuzakkiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $muzakki = new Muzakki();
+        $formData = $request->only($muzakki->getFillable());
+        $muzakki->fill($formData);
+
+        $muzakki->save();
+
+        return Redirect::route('zakat.create');
     }
 
     /**
