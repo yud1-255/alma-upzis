@@ -25,7 +25,7 @@ class MuzakkiController extends Controller
      */
     public function create()
     {
-        // TODO implement add muzakki from Zakat create page
+        // 
     }
 
     /**

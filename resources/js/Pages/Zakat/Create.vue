@@ -102,45 +102,45 @@
                   </div>
                 </div>
               </div>
+              <form @submit.prevent="addMuzakki">
+                <div>
+                  <h2>Muzakki baru</h2>
+                </div>
+                <div class="flex">
+                  <Input
+                    v-model="muzakkiForm.name"
+                    placeholder="name"
+                    class="w-24"
+                  />
+                  <div>
+                    <input type="checkbox" v-model="muzakkiForm.is_bpi" />
+                    is_bpi
+                  </div>
+                  <Input
+                    v-model="muzakkiForm.address"
+                    placeholder="address"
+                    class="w-24"
+                  />
+                  <Input
+                    v-model="muzakkiForm.bpi_block_no"
+                    placeholder="bpi_block_no"
+                    class="w-24"
+                  />
+                  <Input
+                    v-model="muzakkiForm.bpi_house_no"
+                    placeholder="bpi_house_no"
+                    class="w-24"
+                  />
+                </div>
+                <button class="px-6 py-2 text-white bg-gray-900 rounded">
+                  Tambah Muzakki
+                </button>
+              </form>
               <div class="flex items-center mt-4">
                 <button class="px-6 py-2 text-white bg-gray-900 rounded">
                   Simpan
                 </button>
               </div>
-            </form>
-
-            <form @submit.prevent="addMuzakki">
-              <div>
-                <h2>Muzakki baru</h2>
-              </div>
-              <div class="flex">
-                <Input
-                  v-model="muzakkiForm.name"
-                  placeholder="name"
-                  class="w-24"
-                />
-                <div>
-                  <input type="checkbox" v-model="muzakkiForm.is_bpi" /> is_bpi
-                </div>
-                <Input
-                  v-model="muzakkiForm.address"
-                  placeholder="address"
-                  class="w-24"
-                />
-                <Input
-                  v-model="muzakkiForm.bpi_block_no"
-                  placeholder="bpi_block_no"
-                  class="w-24"
-                />
-                <Input
-                  v-model="muzakkiForm.bpi_house_no"
-                  placeholder="bpi_house_no"
-                  class="w-24"
-                />
-              </div>
-              <button class="px-6 py-2 text-white bg-gray-900 rounded">
-                Tambah Muzakki
-              </button>
             </form>
           </div>
         </div>
