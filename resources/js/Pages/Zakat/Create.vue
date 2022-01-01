@@ -121,12 +121,17 @@
                 />
                 <div>
                   <input type="checkbox" v-model="muzakkiForm.is_bpi" /> is_bpi
-                  <Input
-                    v-model="muzakkiForm.bpi_block_no"
-                    placeholder="bpi_block_no"
-                    class="w-24"
-                  />
                 </div>
+                <Input
+                  v-model="muzakkiForm.address"
+                  placeholder="address"
+                  class="w-24"
+                />
+                <Input
+                  v-model="muzakkiForm.bpi_block_no"
+                  placeholder="bpi_block_no"
+                  class="w-24"
+                />
                 <Input
                   v-model="muzakkiForm.bpi_house_no"
                   placeholder="bpi_house_no"
@@ -217,7 +222,7 @@ export default {
   methods: {
     addMuzakki() {
       console.warn("hi!");
-      this.muzakkiForm.post(route("muzakki.store"));
+      this.muzakkiForm.post(route("muzakki.store"), { preserveScroll: true });
     },
     submit() {
       this.form.zakat_lines.forEach((item) => {
