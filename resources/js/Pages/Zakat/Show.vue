@@ -12,58 +12,62 @@
           <div class="p-6 bg-white border-b border-gray-200">
             <!-- {{ zakat }} -->
             <div class="py-4">
-              <p>Transaksi no: {{ zakat.transaction_no }}}</p>
+              <p>Transaksi no: {{ zakat.transaction_no }}</p>
               <p>Tanggal: {{ zakat.transaction_date }}</p>
             </div>
 
-            <table class="table-auto overflow-auto">
-              <thead class="font-bold bg-gray-300 border-b-2">
-                <td class="px-4 py-2">Nama</td>
-                <td class="px-4 py-2">Fitrah (rp kg lt)</td>
-                <td class="px-4 py-2">Maal</td>
-                <td class="px-4 py-2">Profesi</td>
-                <td class="px-4 py-2">Fidyah (rp kg)</td>
-                <td class="px-4 py-2">Wakaf</td>
-                <td class="px-4 py-2">Kafarat</td>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="zakat_line in zakat.zakat_lines"
-                  :key="zakat_line.id"
-                >
-                  <td>{{ zakat_line.muzakki.name }}</td>
-                  <td>
-                    {{ zakat_line.fitrah_rp }} | {{ zakat_line.fitrah_kg }} |
-                    {{ zakat_line.fitrah_lt }}
-                  </td>
-                  <td>{{ zakat_line.maal_rp }}</td>
-                  <td>{{ zakat_line.profesi_rp }}</td>
-                  <td>
-                    {{ zakat_line.fidyah_rp }} | {{ zakat_line.fidyah_kg }}
-                  </td>
-                  <td>{{ zakat_line.wakaf_rp }}</td>
-                  <td>{{ zakat_line.kafarat_rp }}</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <th>Total</th>
-                <th>
-                  {{ totalFitrahRp() }} | {{ totalFitrahKg() }} |
-                  {{ totalFitrahLt() }}
-                </th>
-                <th>{{ totalMaalRp() }}</th>
-                <th>{{ totalProfesiRp() }}</th>
-                <th>{{ totalFidyahRp() }} | {{ totalFidyahKg() }}</th>
-                <th>{{ totalWakafRp() }}</th>
-                <th>{{ totalKafaratRp() }}</th>
-              </tfoot>
-            </table>
-            <div class="flex py-4">
+            <div class="overflow-x-auto">
+              <table class="table-auto">
+                <thead class="font-bold bg-gray-300 border-b-2">
+                  <td class="px-4 py-2">Nama</td>
+                  <td class="px-4 py-2">Fitrah (rp kg lt)</td>
+                  <td class="px-4 py-2">Maal</td>
+                  <td class="px-4 py-2">Profesi</td>
+                  <td class="px-4 py-2">Fidyah (rp kg)</td>
+                  <td class="px-4 py-2">Wakaf</td>
+                  <td class="px-4 py-2">Kafarat</td>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="zakat_line in zakat.zakat_lines"
+                    :key="zakat_line.id"
+                  >
+                    <td>{{ zakat_line.muzakki.name }}</td>
+                    <td class="text-right">
+                      {{ zakat_line.fitrah_rp }} | {{ zakat_line.fitrah_kg }} |
+                      {{ zakat_line.fitrah_lt }}
+                    </td>
+                    <td class="text-right">{{ zakat_line.maal_rp }}</td>
+                    <td class="text-right">{{ zakat_line.profesi_rp }}</td>
+                    <td class="text-right">
+                      {{ zakat_line.fidyah_rp }} | {{ zakat_line.fidyah_kg }}
+                    </td>
+                    <td class="text-right">{{ zakat_line.wakaf_rp }}</td>
+                    <td class="text-right">{{ zakat_line.kafarat_rp }}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <th>Total</th>
+                  <th class="text-right">
+                    {{ totalFitrahRp() }} | {{ totalFitrahKg() }} |
+                    {{ totalFitrahLt() }}
+                  </th>
+                  <th class="text-right">{{ totalMaalRp() }}</th>
+                  <th class="text-right">{{ totalProfesiRp() }}</th>
+                  <th class="text-right">
+                    {{ totalFidyahRp() }} | {{ totalFidyahKg() }}
+                  </th>
+                  <th class="text-right">{{ totalWakafRp() }}</th>
+                  <th class="text-right">{{ totalKafaratRp() }}</th>
+                </tfoot>
+              </table>
+            </div>
+            <div class="flex flex-wrap py-4">
               <div>
                 <p>Terima dari: {{ zakat.receive_from.name }}</p>
                 <p>Petugas: {{ zakat.zakat_pic?.name }}</p>
               </div>
-              <div class="px-64">
+              <div class="mx-8 md:text-right md:px-64">
                 <p>Jumlah:</p>
                 <p>
                   Rp:
