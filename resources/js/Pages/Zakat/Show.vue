@@ -23,6 +23,7 @@
                   <td class="px-4 py-2">Fitrah (rp kg lt)</td>
                   <td class="px-4 py-2">Maal</td>
                   <td class="px-4 py-2">Profesi</td>
+                  <td class="px-4 py-2">Infaq/Shadaqah</td>
                   <td class="px-4 py-2">Fidyah (rp kg)</td>
                   <td class="px-4 py-2">Wakaf</td>
                   <td class="px-4 py-2">Kafarat</td>
@@ -39,6 +40,7 @@
                     </td>
                     <td class="text-right">{{ zakat_line.maal_rp }}</td>
                     <td class="text-right">{{ zakat_line.profesi_rp }}</td>
+                    <td class="text-right">{{ zakat_line.infaq_rp }}</td>
                     <td class="text-right">
                       {{ zakat_line.fidyah_rp }} | {{ zakat_line.fidyah_kg }}
                     </td>
@@ -54,6 +56,7 @@
                   </th>
                   <th class="text-right">{{ totalMaalRp() }}</th>
                   <th class="text-right">{{ totalProfesiRp() }}</th>
+                  <th class="text-right">{{ totalInfaqRp() }}</th>
                   <th class="text-right">
                     {{ totalFidyahRp() }} | {{ totalFidyahKg() }}
                   </th>
@@ -75,6 +78,7 @@
                     totalFitrahRp() +
                     totalMaalRp() +
                     totalProfesiRp() +
+                    totalInfaqRp() +
                     totalFidyahRp() +
                     totalWakafRp() +
                     totalKafaratRp()
@@ -132,6 +136,12 @@ export default {
     totalProfesiRp() {
       return this.zakat.zakat_lines.reduce((total, line) => {
         total += Number(line.profesi_rp);
+        return total;
+      }, 0);
+    },
+    totalInfaqRp() {
+      return this.zakat.zakat_lines.reduce((total, line) => {
+        total += Number(line.infaq_rp);
         return total;
       }, 0);
     },

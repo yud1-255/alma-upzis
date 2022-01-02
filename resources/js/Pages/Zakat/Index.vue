@@ -40,6 +40,9 @@
                 >
                   Lihat
                 </Link>
+                <Link @click="confirmPayment(zakat.id)" class="text-orange-700">
+                  Konfirmasi
+                </Link>
                 <Link @click="destroy(zakat.id)" class="text-red-700">
                   Hapus
                 </Link>
@@ -73,6 +76,10 @@ export default {
   methods: {
     destroy(id) {
       this.$inertia.delete(route("zakat.destroy", id));
+    },
+    confirmPayment(id) {
+      // TODO implement payment confirmation
+      console.warn("hi!");
     },
   },
 };
