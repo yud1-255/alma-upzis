@@ -30,7 +30,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('zakat', ZakatController::class);
-Route::resource('muzakki', MuzakkiController::class);
+Route::resource('zakat', ZakatController::class)->middleware(['auth']);
+Route::resource('muzakki', MuzakkiController::class)->middleware(['auth']);
 
 require __DIR__ . '/auth.php';
