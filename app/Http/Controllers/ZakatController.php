@@ -110,4 +110,12 @@ class ZakatController extends Controller
         $domain->deleteTransaction($zakat);
         return Redirect::route('zakat.index');
     }
+
+    public function confirmPayment(Request $request)
+    {
+        // TODO implement confirm payment logic (use domain)
+        $id = $request->route('id');
+        dd($id);
+        return Redirect::route('zakat.index');
+    }
 }

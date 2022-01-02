@@ -79,7 +79,7 @@ export default {
     },
     confirmPayment(id) {
       // TODO implement payment confirmation
-      console.warn("hi!");
+      this.$inertia.post(route(`zakat.confirm`, id));
     },
   },
 };

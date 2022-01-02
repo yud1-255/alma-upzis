@@ -31,6 +31,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('zakat', ZakatController::class)->middleware(['auth']);
+Route::post('/zakat/{id}/confirm', [ZakatController::class, 'confirmPayment'])->middleware(['auth'])->name('zakat.confirm');
+
 Route::resource('muzakki', MuzakkiController::class)->middleware(['auth']);
 
 require __DIR__ . '/auth.php';
