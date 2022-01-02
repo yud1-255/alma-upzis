@@ -70,6 +70,9 @@ class ZakatController extends Controller
     public function show(Zakat $zakat)
     {
         // TODO implement show submitted zakat
+        $zakatTx = Zakat::with('zakatLines', 'receiveFrom', 'zakatPIC', 'zakatLines.muzakki')->where('id', $zakat->id)->first();
+
+        return Inertia::render('Zakat/Show', ['zakat' => $zakatTx]);
     }
 
     /**

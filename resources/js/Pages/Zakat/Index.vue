@@ -35,10 +35,10 @@
               <td class="px-4 py-2">{{ zakat.total_rp.toLocaleString() }}</td>
               <td class="px-4 py-2 font-extrabold">
                 <Link
-                  :href="route('zakat.edit', zakat.id)"
+                  :href="route('zakat.show', zakat.id)"
                   class="text-green-700"
                 >
-                  Ubah
+                  Lihat
                 </Link>
                 <Link @click="destroy(zakat.id)" class="text-red-700">
                   Hapus
