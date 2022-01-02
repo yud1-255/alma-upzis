@@ -50,6 +50,7 @@
                   <div class="flex flex-wrap py-2">
                     <Input
                       v-model="zakat_line.fitrah_rp"
+                      @change="calculateTotalZakat"
                       placeholder="fitrah_rp"
                       class="w-24"
                     />
@@ -65,26 +66,31 @@
                     />
                     <Input
                       v-model="zakat_line.maal_rp"
+                      @change="calculateTotalZakat"
                       placeholder="maal_rp"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.profesi_rp"
+                      @change="calculateTotalZakat"
                       placeholder="profesi_rp"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.infaq_rp"
+                      @change="calculateTotalZakat"
                       placeholder="infaq_rp"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.wakaf_rp"
+                      @change="calculateTotalZakat"
                       placeholder="wakaf_rp"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fidyah_rp"
+                      @change="calculateTotalZakat"
                       placeholder="fidyah_rp"
                       class="w-24"
                     />
@@ -95,6 +101,7 @@
                     />
                     <Input
                       v-model="zakat_line.kafarat_rp"
+                      @change="calculateTotalZakat"
                       placeholder="kafarat_rp"
                       class="w-24"
                     />
@@ -104,6 +111,7 @@
               </div>
               <form @submit.prevent="addMuzakki">
                 <div>
+                  .
                   <h2>Muzakki baru</h2>
                 </div>
                 <div class="flex">
@@ -173,11 +181,11 @@ export default {
   },
   setup(props) {
     const form = useForm({
-      transaction_no: "UPZ/1443/01",
+      transaction_no: "UPZ/[AUTO]/[GEN]",
       transaction_date: new Date().toISOString().split("T")[0],
       hijri_year: 1443,
       family_head: "Prasetyo",
-      total_rp: 999000,
+      total_rp: 0,
       zakat_lines: [],
     });
 
@@ -220,8 +228,23 @@ export default {
     muzakkis: Array,
   },
   methods: {
+    calculateTotalZakat() {
+      let totalRp = this.form.zakat_lines.reduce((total, line) => {
+        total =
+          total +
+          Number(line.fitrah_rp) +
+          Number(line.maal_rp) +
+          Number(line.profesi_rp) +
+          Number(line.infaq_rp) +
+          Number(line.wakaf_rp) +
+          Number(line.fidyah_rp) +
+          Number(line.kafarat_rp);
+        return total;
+      }, 0);
+
+      this.form.total_rp = totalRp;
+    },
     addMuzakki() {
-      console.warn("hi!");
       this.muzakkiForm.post(route("muzakki.store"), { preserveScroll: true });
     },
     submit() {

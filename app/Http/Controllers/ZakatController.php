@@ -69,7 +69,7 @@ class ZakatController extends Controller
      */
     public function show(Zakat $zakat)
     {
-        //
+        // TODO implement show submitted zakat
     }
 
     /**
