@@ -75,7 +75,9 @@ export default {
   },
   methods: {
     destroy(id) {
-      this.$inertia.delete(route("zakat.destroy", id));
+      this.$inertia.delete(route("zakat.destroy", id), {
+        preserveScroll: true,
+      });
     },
     confirmPayment(id) {
       // TODO implement payment confirmation
