@@ -30,9 +30,11 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('zakat', ZakatController::class)->middleware(['auth']);
-Route::post('/zakat/{id}/confirm', [ZakatController::class, 'confirmPayment'])->middleware(['auth'])->name('zakat.confirm');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('zakat', ZakatController::class);
+    Route::post('/zakat/{id}/confirm', [ZakatController::class, 'confirmPayment'])->name('zakat.confirm');
 
-Route::resource('muzakki', MuzakkiController::class)->middleware(['auth']);
+    Route::resource('muzakki', MuzakkiController::class);
+});
 
 require __DIR__ . '/auth.php';
