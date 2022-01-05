@@ -69,6 +69,9 @@ class ZakatController extends Controller
      */
     public function show(Zakat $zakat)
     {
+        if (Auth::user()->cannot('view', $zakat)) {
+            abort(403);
+        }
         // TODO implement show submitted zakat
         $zakatTx = Zakat::with('zakatLines', 'receiveFrom', 'zakatPIC', 'zakatLines.muzakki')->where('id', $zakat->id)->first();
 

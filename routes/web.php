@@ -30,7 +30,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware(['auth', 'role:administrator'])->group(function () {
     Route::resource('zakat', ZakatController::class);
     Route::post('/zakat/{id}/confirm', [ZakatController::class, 'confirmPayment'])->name('zakat.confirm');
 

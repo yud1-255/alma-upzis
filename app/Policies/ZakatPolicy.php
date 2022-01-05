@@ -30,7 +30,7 @@ class ZakatPolicy
      */
     public function view(User $user, Zakat $zakat)
     {
-        //
+        return $user->id == $zakat->receive_from || $user->hasRole('administrator');
     }
 
     /**
