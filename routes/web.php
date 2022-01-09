@@ -30,11 +30,13 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'role:administrator'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::resource('zakat', ZakatController::class);
-    Route::post('/zakat/{id}/confirm', [ZakatController::class, 'confirmPayment'])->name('zakat.confirm');
-
     Route::resource('muzakki', MuzakkiController::class);
+});
+
+Route::middleware(['auth', 'role:administrator'])->group(function () {
+    Route::post('/zakat/{id}/confirm', [ZakatController::class, 'confirmPayment'])->name('zakat.confirm');
 });
 
 require __DIR__ . '/auth.php';

@@ -43,4 +43,11 @@ class ZakatDomain
 
         return $zakats;
     }
+
+    public function generateZakatNumber(): string
+    {
+        // TODO transaction sequence number
+
+        return "";
+    }
 }

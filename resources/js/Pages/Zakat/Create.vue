@@ -213,18 +213,19 @@ export default {
     onUpdated(() => refreshMuzakki());
 
     const muzakkiForm = useForm({
-      name: "Ulya",
-      family_id: 1,
-      address: "BPI B6/2",
+      name: "",
+      family_id: props.family.id,
+      address: "",
       is_bpi: true,
-      bpi_block_no: "B6",
-      bpi_house_no: "2",
+      bpi_block_no: "",
+      bpi_house_no: "",
     });
 
     return { form, muzakkiForm };
   },
   props: {
     errors: null,
+    family: Object,
     muzakkis: Array,
   },
   methods: {

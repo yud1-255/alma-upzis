@@ -33,9 +33,10 @@ class ZakatController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $family = $user->family;
         $muzakkis = $user->family->muzakkis;
 
-        return Inertia::render('Zakat/Create', ['muzakkis' => $muzakkis]);
+        return Inertia::render('Zakat/Create', ['family' => $family, 'muzakkis' => $muzakkis]);
     }
 
     /**
@@ -72,7 +73,6 @@ class ZakatController extends Controller
         if (Auth::user()->cannot('view', $zakat)) {
             abort(403);
         }
-        // TODO implement show submitted zakat
         $zakatTx = Zakat::with('zakatLines', 'receiveFrom', 'zakatPIC', 'zakatLines.muzakki')->where('id', $zakat->id)->first();
 
         return Inertia::render('Zakat/Show', ['zakat' => $zakatTx]);
