@@ -21,10 +21,16 @@ class ZakatController extends Controller
     {
         $user = Auth::user();
         $domain = new ZakatDomain();
-        $zakats = $domain->transactionSummaryList()->paginate(10);
+        $zakats = array();
+
+        if ($user->can('viewAny', new Zakat())) {
+            $zakats = $domain->transactionSummary();
+        } else {
+            $zakats = $domain->ownTransactionSummary($user);
+        }
 
         return Inertia::render('Zakat/Index', [
-            'zakats' => $zakats,
+            'zakats' => $zakats->paginate(10),
             'can' => [
                 'delete' => $user->can('delete', new Zakat()),
                 'confirmPayment' => $user->can('confirmPayment', new Zakat())

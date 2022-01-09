@@ -31,11 +31,27 @@ class ZakatDomain
         $zakat->delete();
     }
 
-    public function transactionSummaryList(): Builder
+    public function transactionSummary(): Builder
     {
         $zakats = DB::table('zakats')
             ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
             ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
+            ->orderBy('transaction_no', 'desc')
+            ->select([
+                'zakats.*',
+                'user_receive_from.name as receive_from_name',
+                'user_zakat_pic.name as zakat_pic_name'
+            ]);
+
+        return $zakats;
+    }
+
+    public function ownTransactionSummary(User $user): Builder
+    {
+        $zakats = DB::table('zakats')
+            ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
+            ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
+            ->where('receive_from', $user->id)
             ->orderBy('transaction_no', 'desc')
             ->select([
                 'zakats.*',

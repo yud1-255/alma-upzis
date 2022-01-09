@@ -18,7 +18,7 @@ class ZakatPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasRole('administrator');
     }
 
     /**
