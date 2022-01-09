@@ -19,10 +19,16 @@ class ZakatController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $domain = new ZakatDomain();
         $zakats = $domain->transactionSummaryList()->paginate(10);
 
-        return Inertia::render('Zakat/Index', ['zakats' => $zakats]);
+        return Inertia::render('Zakat/Index', [
+            'zakats' => $zakats,
+            'can' => [
+                'confirmPayment' => $user->can('confirmPayment', new Zakat())
+            ]
+        ]);
     }
 
     /**

@@ -40,7 +40,11 @@
                 >
                   Lihat
                 </Link>
-                <Link @click="confirmPayment(zakat.id)" class="text-orange-700">
+                <Link
+                  v-if="can.confirmPayment"
+                  @click="confirmPayment(zakat.id)"
+                  class="text-orange-700"
+                >
                   Konfirmasi
                 </Link>
                 <Link @click="destroy(zakat.id)" class="text-red-700">
@@ -72,6 +76,7 @@ export default {
   },
   props: {
     zakats: Object,
+    can: Array,
   },
   methods: {
     destroy(id) {

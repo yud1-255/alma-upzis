@@ -41,7 +41,7 @@ class ZakatPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class ZakatPolicy
      */
     public function update(User $user, Zakat $zakat)
     {
-        //
+        return $user->hasRole('administrator');
     }
 
     /**
@@ -65,7 +65,7 @@ class ZakatPolicy
      */
     public function delete(User $user, Zakat $zakat)
     {
-        //
+        return $user->hasRole('administrator');
     }
 
     /**
@@ -77,7 +77,7 @@ class ZakatPolicy
      */
     public function restore(User $user, Zakat $zakat)
     {
-        //
+        return $user->hasRole('administrator');
     }
 
     /**
@@ -89,6 +89,11 @@ class ZakatPolicy
      */
     public function forceDelete(User $user, Zakat $zakat)
     {
-        //
+        return $user->hasRole('administrator');
+    }
+
+    public function confirmPayment(User $user, Zakat $zakat)
+    {
+        return $user->hasRole('administrator');
     }
 }
