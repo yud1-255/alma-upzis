@@ -47,7 +47,11 @@
                 >
                   Konfirmasi
                 </Link>
-                <Link @click="destroy(zakat.id)" class="text-red-700">
+                <Link
+                  v-if="can.delete"
+                  @click="destroy(zakat.id)"
+                  class="text-red-700"
+                >
                   Hapus
                 </Link>
               </td>
@@ -76,7 +80,7 @@ export default {
   },
   props: {
     zakats: Object,
-    can: Array,
+    can: Object,
   },
   methods: {
     destroy(id) {

@@ -36,7 +36,7 @@ class ZakatDomain
         $zakats = DB::table('zakats')
             ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
             ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('transaction_no', 'desc')
             ->select([
                 'zakats.*',
                 'user_receive_from.name as receive_from_name',

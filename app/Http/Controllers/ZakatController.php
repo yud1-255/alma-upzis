@@ -26,6 +26,7 @@ class ZakatController extends Controller
         return Inertia::render('Zakat/Index', [
             'zakats' => $zakats,
             'can' => [
+                'delete' => $user->can('delete', new Zakat()),
                 'confirmPayment' => $user->can('confirmPayment', new Zakat())
             ]
         ]);
@@ -121,6 +122,10 @@ class ZakatController extends Controller
      */
     public function destroy(Zakat $zakat)
     {
+        if (Auth::user()->cannot('delete', $zakat)) {
+            abort(403);
+        }
+
         $domain = new ZakatDomain();
         $domain->deleteTransaction($zakat);
         return Redirect::route('zakat.index');
