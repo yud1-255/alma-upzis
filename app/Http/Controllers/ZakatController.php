@@ -36,7 +36,13 @@ class ZakatController extends Controller
         $family = $user->family;
         $muzakkis = $user->family->muzakkis;
 
-        return Inertia::render('Zakat/Create', ['family' => $family, 'muzakkis' => $muzakkis]);
+        $domain = new ZakatDomain();
+        $transaction_no = $domain->generateZakatNumber(false);
+
+        return Inertia::render('Zakat/Create', [
+            'family' => $family, 'muzakkis' => $muzakkis,
+            'transaction_no' => $transaction_no
+        ]);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Domains;
 
+use App\Models\SequenceNumber;
 use App\Models\Zakat;
 use App\Models\User;
 use Illuminate\Database\Query\Builder;
@@ -15,6 +16,7 @@ class ZakatDomain
     {
         $zakat->zakatPIC()->associate(null);
         $zakat->receiveFrom()->associate($user);
+        $zakat->transaction_no = $this->generateZakatNumber(true);
 
         $zakat->save();
 
@@ -44,10 +46,24 @@ class ZakatDomain
         return $zakats;
     }
 
-    public function generateZakatNumber(): string
+    public function generateZakatNumber(bool $save): string
     {
-        // TODO transaction sequence number
+        $sequence = SequenceNumber::where('type', 'zakat')->first();
+        $format = $sequence->format;
+        $last_number = $sequence->last_number;
+        $next_number = $last_number + 1;
 
-        return "";
+        $next_format = str_replace(
+            ['%year%', '%seq%'],
+            [(string)date("Y"), str_pad((string)$next_number, 3, "0", STR_PAD_LEFT)],
+            $format
+        );
+
+        if ($save) {
+            $sequence->last_number = $last_number + 1;
+            $sequence->save();
+        }
+
+        return $next_format;
     }
 }
