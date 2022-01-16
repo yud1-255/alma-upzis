@@ -2,11 +2,13 @@
   <Head title="Lihat transaksi zakat"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h1 class="text-xl font-semibold leading-tight text-gray-800">
+      <h1
+        class="text-xl font-semibold leading-tight text-gray-800 print:hidden"
+      >
         Transaksi Zakat
       </h1>
     </template>
-    <div class="py-12">
+    <div class="py-12 print:text-xs">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
@@ -16,6 +18,7 @@
               <p>Tanggal: {{ zakat.transaction_date }}</p>
             </div>
 
+            <!-- TODO refactor into table component -->
             <div class="overflow-x-auto">
               <table class="table-auto">
                 <thead class="font-bold bg-gray-300 border-b-2">

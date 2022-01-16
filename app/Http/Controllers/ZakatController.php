@@ -139,9 +139,19 @@ class ZakatController extends Controller
 
     public function confirmPayment(Request $request)
     {
-        // TODO implement confirm payment logic (use domain)
         $id = $request->route('id');
-        dd($id);
-        return Redirect::route('zakat.index');
+        $zakat = Zakat::find($id);
+
+
+        if (Auth::user()->cannot('confirmPayment', $zakat)) {
+            abort(403);
+        }
+
+        // TODO implement confirm payment logic (use domain)
+        $domain = new ZakatDomain();
+        $domain->confirmZakatPayment(Auth::user(), $zakat);
+
+
+        return Redirect::to($request->pageUrl);
     }
 }

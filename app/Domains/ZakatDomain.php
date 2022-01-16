@@ -66,6 +66,8 @@ class ZakatDomain
     {
         $sequence = SequenceNumber::where('type', 'zakat')->first();
         $format = $sequence->format;
+
+        // FIXME camelCase convention for non-DB retrieved items
         $last_number = $sequence->last_number;
         $next_number = $last_number + 1;
 
@@ -81,5 +83,14 @@ class ZakatDomain
         }
 
         return $next_format;
+    }
+
+    public function confirmZakatPayment(User $user, Zakat $zakat): Zakat
+    {
+        if ($user->can('confirmPayment', $zakat)) {
+            $zakat->zakatPIC()->associate($user);
+            $zakat->save();
+        }
+        return $zakat;
     }
 }
