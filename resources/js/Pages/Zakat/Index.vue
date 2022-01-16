@@ -8,7 +8,7 @@
       <div class="py-6 bg-white border-b border-gray-200">
         <div class="mb-4">
           <Link
-            class="px-6 py-2 mb-2 text-green-100 bg-green-500 rounded"
+            class="px-6 py-2 mb-2 text-green-100 bg-green-500 rounded print:hidden"
             :href="route('zakat.create')"
             >Buat Transaksi</Link
           >
@@ -22,7 +22,7 @@
             <td class="px-4 py-2">Periode</td>
             <td class="px-4 py-2">Kepala Keluarga</td>
             <td class="px-4 py-2">Jumlah</td>
-            <td class="px-4 py-2">Action</td>
+            <td class="px-4 py-2 print:hidden"></td>
           </thead>
           <tbody>
             <tr v-for="zakat in zakats.data" :key="zakat.id">
@@ -33,7 +33,7 @@
               <td class="px-4 py-2">{{ zakat.hijri_year }}</td>
               <td class="px-4 py-2">{{ zakat.family_head }}</td>
               <td class="px-4 py-2">{{ zakat.total_rp.toLocaleString() }}</td>
-              <td class="px-4 py-2 font-extrabold">
+              <td class="px-4 py-2 font-extrabold print:hidden">
                 <Link
                   :href="route('zakat.show', zakat.id)"
                   class="text-green-700"
