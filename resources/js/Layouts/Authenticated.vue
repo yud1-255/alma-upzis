@@ -21,6 +21,12 @@
                 >
                   Dashboard
                 </BreezeNavLink>
+                <BreezeNavLink
+                  :href="route('zakat.index')"
+                  :active="route().current('zakat.index')"
+                >
+                  Zakat
+                </BreezeNavLink>
               </div>
             </div>
 
@@ -117,6 +123,12 @@
               :active="route().current('dashboard')"
             >
               Dashboard
+            </BreezeResponsiveNavLink>
+            <BreezeResponsiveNavLink
+              :href="route('zakat.index')"
+              :active="route().current('zakat.index')"
+            >
+              Zakat
             </BreezeResponsiveNavLink>
           </div>
 
