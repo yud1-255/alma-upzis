@@ -91,6 +91,23 @@
                 <p>Lt: {{ totalFitrahLt() }}</p>
               </div>
             </div>
+            <div class="print:hidden">
+              <button
+                v-if="can.confirmPayment"
+                @click="confirmPayment(zakat.id)"
+                class="px-6 py-2 text-white bg-gray-900 rounded"
+              >
+                Konfirmasi Pembayaran
+              </button>
+
+              <button
+                v-if="can.print && zakat.zakat_pic != null"
+                @click="print()"
+                class="px-6 py-2 text-white bg-gray-900 rounded"
+              >
+                Cetak
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -110,6 +127,7 @@ export default {
   setup() {},
   props: {
     zakat: Object,
+    can: Object,
   },
   methods: {
     totalFitrahRp() {
@@ -171,6 +189,21 @@ export default {
         total += Number(line.kafarat_rp);
         return total;
       }, 0);
+    },
+    confirmPayment(id) {
+      this.$inertia.post(
+        route(`zakat.confirm`, id),
+        {
+          pageUrl: this.$page.url,
+        },
+        {
+          preserveState: true,
+          preserveScroll: true,
+        }
+      );
+    },
+    print() {
+      window.print();
     },
   },
 };

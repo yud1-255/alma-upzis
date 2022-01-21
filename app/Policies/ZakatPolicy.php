@@ -96,4 +96,9 @@ class ZakatPolicy
     {
         return $user->hasRole('administrator');
     }
+
+    public function print(User $user, Zakat $zakat)
+    {
+        return $user->hasRole('administrator');
+    }
 }

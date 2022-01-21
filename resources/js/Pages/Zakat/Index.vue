@@ -89,7 +89,6 @@ export default {
       });
     },
     confirmPayment(id) {
-      // TODO implement payment confirmation
       this.$inertia.post(
         route(`zakat.confirm`, id),
         {

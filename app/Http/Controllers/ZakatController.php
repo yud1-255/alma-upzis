@@ -33,7 +33,7 @@ class ZakatController extends Controller
             'zakats' => $zakats->paginate(10),
             'can' => [
                 'delete' => $user->can('delete', new Zakat()),
-                'confirmPayment' => $user->can('confirmPayment', new Zakat())
+                'confirmPayment' => $user->can('confirmPayment', new Zakat()),
             ]
         ]);
     }
@@ -89,12 +89,17 @@ class ZakatController extends Controller
      */
     public function show(Zakat $zakat)
     {
-        if (Auth::user()->cannot('view', $zakat)) {
+        $user = Auth::user();
+
+        if ($user->cannot('view', $zakat)) {
             abort(403);
         }
-        $zakatTx = Zakat::with('zakatLines', 'receiveFrom', 'zakatPIC', 'zakatLines.muzakki')->where('id', $zakat->id)->first();
+        $zakatTx = Zakat::with('zakatLines', 'receiveFrom', 'zakatPic', 'zakatLines.muzakki')->where('id', $zakat->id)->first();
 
-        return Inertia::render('Zakat/Show', ['zakat' => $zakatTx]);
+        return Inertia::render('Zakat/Show', [
+            'zakat' => $zakatTx,
+            'can' => ['print' => $user->can('print', $zakat), 'confirmPayment' => $user->can('confirmPayment', $zakat)]
+        ]);
     }
 
     /**
@@ -147,7 +152,6 @@ class ZakatController extends Controller
             abort(403);
         }
 
-        // TODO implement confirm payment logic (use domain)
         $domain = new ZakatDomain();
         $domain->confirmZakatPayment(Auth::user(), $zakat);
 
