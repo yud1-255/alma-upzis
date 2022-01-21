@@ -67,22 +67,21 @@ class ZakatDomain
         $sequence = SequenceNumber::where('type', 'zakat')->first();
         $format = $sequence->format;
 
-        // FIXME camelCase convention for non-DB retrieved items
-        $last_number = $sequence->last_number;
-        $next_number = $last_number + 1;
+        $lastNumber = $sequence->last_number;
+        $nextNumber = $lastNumber + 1;
 
-        $next_format = str_replace(
+        $nextFormat = str_replace(
             ['%year%', '%seq%'],
-            [(string)date("Y"), str_pad((string)$next_number, 3, "0", STR_PAD_LEFT)],
+            [(string)date("Y"), str_pad((string)$nextNumber, 3, "0", STR_PAD_LEFT)],
             $format
         );
 
         if ($save) {
-            $sequence->last_number = $last_number + 1;
+            $sequence->last_number = $lastNumber + 1;
             $sequence->save();
         }
 
-        return $next_format;
+        return $nextFormat;
     }
 
     public function confirmZakatPayment(User $user, Zakat $zakat): Zakat
