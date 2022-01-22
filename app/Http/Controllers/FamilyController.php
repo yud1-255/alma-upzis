@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Muzakki;
+use App\Models\Family;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
-class MuzakkiController extends Controller
+use Auth;
+use Session;
+
+class FamilyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +30,8 @@ class MuzakkiController extends Controller
      */
     public function create()
     {
-        //
+        $family = Session::get('family'); // if any from previous postback
+        return Inertia::render('Family/Create', ['family' => $family]);
     }
 
     /**
@@ -36,22 +42,26 @@ class MuzakkiController extends Controller
      */
     public function store(Request $request)
     {
-        $muzakki = new Muzakki();
-        $formData = $request->only($muzakki->getFillable());
-        $muzakki->fill($formData);
+        // TODO move family assignment to Zakat domain logic
+        $family = new Family();
+        $formData = $request->only($family->getFillable());
+        $family->fill($formData);
+        $family->save();
 
-        $muzakki->save();
+        $user = Auth::user();
+        $user->family()->associate($family);
+        $user->save();
 
-        return Redirect::route('zakat.create');
+        return Redirect::route('family.create')->with(['family' => $family]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Muzakki  $muzakki
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Muzakki $muzakki)
+    public function show($id)
     {
         //
     }
@@ -59,10 +69,10 @@ class MuzakkiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Muzakki  $muzakki
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Muzakki $muzakki)
+    public function edit($id)
     {
         //
     }
@@ -71,10 +81,10 @@ class MuzakkiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Muzakki  $muzakki
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Muzakki $muzakki)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -82,10 +92,10 @@ class MuzakkiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Muzakki  $muzakki
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Muzakki $muzakki)
+    public function destroy($id)
     {
         //
     }

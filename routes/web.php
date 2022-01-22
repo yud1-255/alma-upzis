@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ZakatController;
 use App\Http\Controllers\MuzakkiController;
+use App\Http\Controllers\FamilyController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +34,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('zakat', ZakatController::class);
     Route::resource('muzakki', MuzakkiController::class);
+    Route::resource('family', FamilyController::class);
 });
 
 Route::middleware(['auth', 'role:administrator'])->group(function () {

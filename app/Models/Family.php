@@ -9,6 +9,10 @@ class Family extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'head_of_family', 'phone', 'address'
+    ];
+
     public function muzakkis()
     {
         return $this->hasMany(Muzakki::class);
