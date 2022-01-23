@@ -15,6 +15,12 @@ use DB;
 class ZakatDomain
 {
     protected $errors = [];
+    private $user;
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
 
     public function submitAsMuzakki(User $user, Zakat $zakat, array $zakatLines): Zakat
     {

@@ -20,7 +20,7 @@ class ZakatController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $domain = new ZakatDomain();
+        $domain = new ZakatDomain($user);
         $zakats = array();
 
         if ($user->can('viewAny', new Zakat())) {
@@ -49,7 +49,7 @@ class ZakatController extends Controller
         $family = $user->family;
         $muzakkis = $user->family->muzakkis;
 
-        $domain = new ZakatDomain();
+        $domain = new ZakatDomain($user);
         $transaction_no = $domain->generateZakatNumber(false);
 
         return Inertia::render('Zakat/Create', [
@@ -75,7 +75,7 @@ class ZakatController extends Controller
         $zakat->fill($formData);
         $zakatLines = $request['zakat_lines'];
 
-        $domain = new ZakatDomain();
+        $domain = new ZakatDomain(Auth::user());
         $domain->submitAsMuzakki(Auth::user(), $zakat, $zakatLines);
 
         return Redirect::route('zakat.index');
@@ -137,7 +137,7 @@ class ZakatController extends Controller
             abort(403);
         }
 
-        $domain = new ZakatDomain();
+        $domain = new ZakatDomain(Auth::user());
         $domain->deleteTransaction($zakat);
         return Redirect::route('zakat.index');
     }
@@ -152,7 +152,7 @@ class ZakatController extends Controller
             abort(403);
         }
 
-        $domain = new ZakatDomain();
+        $domain = new ZakatDomain(Auth::user());
         $domain->confirmZakatPayment(Auth::user(), $zakat);
 
 

@@ -53,7 +53,7 @@ class FamilyController extends Controller
         $formData = $request->only($family->getFillable());
         $family->fill($formData);
 
-        $domain = new ZakatDomain();
+        $domain = new ZakatDomain(Auth::user());
         $domain->registerFamily(Auth::user(), $family);
 
         return Redirect::route('family.create')->with(['family' => $family]);

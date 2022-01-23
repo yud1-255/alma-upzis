@@ -93,7 +93,7 @@ class MuzakkiController extends Controller
     public function destroy(Muzakki $muzakki)
     {
         $user = Auth::user();
-        $domain = new ZakatDomain();
+        $domain = new ZakatDomain(Auth::user());
 
         $domain->deleteMuzakki($user, $muzakki);
 
