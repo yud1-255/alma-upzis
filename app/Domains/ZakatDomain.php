@@ -4,14 +4,18 @@ namespace App\Domains;
 
 use App\Models\SequenceNumber;
 use App\Models\Zakat;
+use App\Models\Family;
+use App\Models\Muzakki;
 use App\Models\User;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Validation\ValidationException;
 
 use DB;
 
-
 class ZakatDomain
 {
+    protected $errors = [];
+
     public function submitAsMuzakki(User $user, Zakat $zakat, array $zakatLines): Zakat
     {
         $zakat->zakatPIC()->associate(null);
@@ -91,5 +95,35 @@ class ZakatDomain
             $zakat->save();
         }
         return $zakat;
+    }
+
+    public function registerFamily(User $user, Family $family)
+    {
+        $family->save();
+
+        $user->family()->associate($family);
+        $user->save();
+    }
+
+
+    public function deleteMuzakki(User $user, Muzakki $muzakki)
+    {
+        if (!$this->validateForDeletion($user, $muzakki)) {
+            throw ValidationException::withMessages($this->errors);
+        }
+
+        $muzakki->delete();
+    }
+
+    private function validateForDeletion(User $user, Muzakki $muzakki): bool
+    {
+        if ($muzakki->family != $user->family) {
+            array_push($this->errors, "Muzakki {$muzakki->name} hanya bisa diubah oleh anggota keluarga");
+        }
+        if (!$muzakki->zakatLines->isEmpty()) {
+            array_push($this->errors, "Muzakki {$muzakki->name} sudah memiliki transaksi zakat");
+            return false;
+        }
+        return true;
     }
 }

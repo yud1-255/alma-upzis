@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\ZakatDomain;
 use App\Models\Muzakki;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+
+use Auth;
 
 class MuzakkiController extends Controller
 {
@@ -42,7 +46,8 @@ class MuzakkiController extends Controller
 
         $muzakki->save();
 
-        return Redirect::route('zakat.create');
+        // return Redirect::route('zakat.create');
+        return Redirect::back();
     }
 
     /**
@@ -87,6 +92,11 @@ class MuzakkiController extends Controller
      */
     public function destroy(Muzakki $muzakki)
     {
-        //
+        $user = Auth::user();
+        $domain = new ZakatDomain();
+
+        $domain->deleteMuzakki($user, $muzakki);
+
+        return Redirect::back();
     }
 }

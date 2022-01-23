@@ -111,7 +111,6 @@
               </div>
               <form @submit.prevent="addMuzakki">
                 <div>
-                  .
                   <h2>Muzakki baru</h2>
                 </div>
                 <div class="flex">
@@ -164,7 +163,6 @@ import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import Input from "@/Components/Input.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
-import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";

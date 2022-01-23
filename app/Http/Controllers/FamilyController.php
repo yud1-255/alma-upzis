@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\ZakatDomain;
 use App\Models\Family;
 
 use Illuminate\Http\Request;
@@ -30,8 +31,14 @@ class FamilyController extends Controller
      */
     public function create()
     {
-        $family = Session::get('family'); // if any from previous postback
-        return Inertia::render('Family/Create', ['family' => $family]);
+        $family = Auth::user()->family;
+
+        if ($family == null) {
+            $family = Session::get('family'); // if any from previous postback
+        } else {
+            $muzakkis = $family->muzakkis;
+        }
+        return Inertia::render('Family/Create', ['family' => $family, 'muzakkis' => $muzakkis]);
     }
 
     /**
@@ -42,15 +49,12 @@ class FamilyController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO move family assignment to Zakat domain logic
         $family = new Family();
         $formData = $request->only($family->getFillable());
         $family->fill($formData);
-        $family->save();
 
-        $user = Auth::user();
-        $user->family()->associate($family);
-        $user->save();
+        $domain = new ZakatDomain();
+        $domain->registerFamily(Auth::user(), $family);
 
         return Redirect::route('family.create')->with(['family' => $family]);
     }
