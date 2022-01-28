@@ -31,6 +31,7 @@ class FamilyController extends Controller
      */
     public function create()
     {
+        // TODO move logic in create() to index()
         $family = Auth::user()->family;
 
         if ($family == null) {
@@ -88,9 +89,13 @@ class FamilyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Family $family)
     {
-        //
+        $formData = $request->only($family->getFillable());
+        $family->fill($formData);
+
+        $family->save();
+        return Redirect::back();
     }
 
     /**

@@ -15,10 +15,19 @@
             You're logged in!
 
             <ul class="list-disc list-inside">
-              <li>Lengkapi data keluarga [link]</li>
-              <li>Mulai pengisian zakat [link]</li>
-              <li>Transfer dan konfirmasi pembayaran zakat [link]</li>
-              <li>Lihat transaksi zakat anda [link]</li>
+              <li>
+                Lengkapi data keluarga
+                <Link :href="route('family.create')">[link]</Link>
+              </li>
+              <li>
+                Mulai pengisian zakat
+                <Link :href="route('zakat.create')">[link]</Link>
+              </li>
+              <li>Transfer dan konfirmasi pembayaran zakat [link:wa]</li>
+              <li>
+                Lihat transaksi zakat anda
+                <Link :href="route('zakat.index')">[link]</Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -30,11 +39,13 @@
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
     BreezeAuthenticatedLayout,
     Head,
+    Link,
   },
 };
 </script>

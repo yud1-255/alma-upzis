@@ -27,6 +27,7 @@
                 >
                   Zakat
                 </BreezeNavLink>
+                <!-- {{ $page.props.auth.user.roles }} -->
               </div>
             </div>
 

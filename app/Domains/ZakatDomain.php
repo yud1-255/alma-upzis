@@ -17,6 +17,7 @@ class ZakatDomain
     protected $errors = [];
     private $user;
 
+    // TODO refactor user-dependent domain logic to class variable
     public function __construct(User $user)
     {
         $this->user = $user;

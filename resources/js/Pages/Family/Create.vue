@@ -56,6 +56,7 @@
                   </tr>
                 </tbody>
               </table>
+              {{ familyForm }}
             </div>
             <div class="my-4">
               <form @submit.prevent="addMuzakki">
@@ -122,6 +123,7 @@ export default {
   },
   setup(props) {
     const familyForm = useForm({
+      id: props.family?.id,
       head_of_family: props.family?.head_of_family,
       phone: props.family?.phone,
       address: props.family?.address,
@@ -145,7 +147,14 @@ export default {
   },
   methods: {
     createFamily() {
-      this.familyForm.post(route("family.store"), { preserveScroll: true });
+      if (this.familyForm.id == null) {
+        this.familyForm.post(route("family.store"), { preserveScroll: true });
+      } else {
+        this.familyForm.put(
+          route("family.update", { family: this.familyForm }),
+          { preserveScroll: true }
+        );
+      }
     },
     addMuzakki() {
       this.muzakkiForm.post(route("muzakki.store"), { preserveScroll: true });
