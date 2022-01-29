@@ -27,6 +27,12 @@
                 >
                   Zakat
                 </BreezeNavLink>
+                <BreezeNavLink
+                  :href="route('family.create')"
+                  :active="route().current('family.create')"
+                >
+                  Muzakki
+                </BreezeNavLink>
                 <!-- {{ $page.props.auth.user.roles }} -->
               </div>
             </div>
@@ -34,6 +40,7 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
               <!-- Settings Dropdown -->
               <div class="ml-3 relative">
+                <!-- TODO use for nav dropdown menu -->
                 <BreezeDropdown align="right" width="48">
                   <template #trigger>
                     <span class="inline-flex rounded-md">

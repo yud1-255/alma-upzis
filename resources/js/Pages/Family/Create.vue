@@ -56,7 +56,6 @@
                   </tr>
                 </tbody>
               </table>
-              {{ familyForm }}
             </div>
             <div class="my-4">
               <form @submit.prevent="addMuzakki">
