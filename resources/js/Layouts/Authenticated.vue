@@ -33,7 +33,13 @@
                 >
                   Muzakki
                 </BreezeNavLink>
-                <!-- {{ $page.props.auth.user.roles }} -->
+                <BreezeNavLink
+                  v-if="isAdministrator"
+                  :href="route('roles.index')"
+                  :active="route().current('roles.index')"
+                >
+                  Pengguna
+                </BreezeNavLink>
               </div>
             </div>
 
@@ -201,6 +207,16 @@ export default {
     return {
       showingNavigationDropdown: false,
     };
+  },
+
+  computed: {
+    isAdministrator() {
+      return (
+        this.$page.props.auth.user.roles.find(
+          (role) => role.name == "administrator"
+        ) != null
+      );
+    },
   },
 };
 </script>

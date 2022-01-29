@@ -43,7 +43,7 @@ Route::middleware(['auth', 'role:administrator'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:administrator'])->group(function () {
-    Route::get('/roles', [RoleController::class, 'index'])->name('roles');
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::post('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
 });
 
