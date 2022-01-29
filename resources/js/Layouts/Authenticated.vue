@@ -35,7 +35,7 @@
                 </BreezeNavLink>
                 <BreezeNavLink
                   v-if="isAdministrator"
-                  :href="route('roles.index')"
+                  :href="route('roles.index', { all: 1 })"
                   :active="route().current('roles.index')"
                 >
                   Pengguna

@@ -84,7 +84,7 @@ export default {
   },
   props: {
     errors: null,
-    users: Array,
+    users: Object,
     roles: Array,
   },
   methods: {
