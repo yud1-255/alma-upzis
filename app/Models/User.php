@@ -56,6 +56,17 @@ class User extends Authenticatable
 
     public function hasRole(string $role)
     {
-        return !$this->roles->where('name', 'administrator')->isEmpty();
+        return !$this->roles->where('name', $role)->isEmpty();
+    }
+
+    public function hasAnyRole(array $roles)
+    {
+        foreach ($roles as $role) {
+            if (!$this->roles->where('name', $role)->isEmpty()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

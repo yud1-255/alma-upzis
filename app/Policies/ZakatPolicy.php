@@ -18,7 +18,7 @@ class ZakatPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('administrator');
+        return $user->hasAnyRole(['upzis', 'administrator']);
     }
 
     /**
@@ -30,7 +30,7 @@ class ZakatPolicy
      */
     public function view(User $user, Zakat $zakat)
     {
-        return $user->id == $zakat->receive_from || $user->hasRole('administrator');
+        return $user->id == $zakat->receive_from || $user->hasAnyRole(['upzis', 'administrator']);
     }
 
     /**
@@ -94,11 +94,11 @@ class ZakatPolicy
 
     public function confirmPayment(User $user, Zakat $zakat)
     {
-        return $user->hasRole('administrator');
+        return $user->hasAnyRole(['upzis', 'administrator']);
     }
 
     public function print(User $user, Zakat $zakat)
     {
-        return $user->hasRole('administrator');
+        return $user->hasAnyRole(['upzis', 'administrator']);
     }
 }
