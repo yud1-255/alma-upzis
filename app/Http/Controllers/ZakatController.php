@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Domains\ZakatDomain;
 use App\Models\Zakat;
+use App\Models\Family;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -43,18 +45,30 @@ class ZakatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $user = Auth::user();
-        $family = $user->family;
-        $muzakkis = $user->family->muzakkis;
+        $familyId = $request->familyId;
+        $isFamilyRequested = $familyId != null && $familyId != $user->family_id;
+
+        if (
+            $user->cannot('submitForOthers', new Zakat()) &&
+            $isFamilyRequested
+        ) {
+            abort(403);
+        }
+
+        $family = $familyId == null ? $user->family : Family::find($familyId);
+        $muzakkis = $family->muzakkis;
 
         $domain = new ZakatDomain($user);
-        $transaction_no = $domain->generateZakatNumber(false);
+        $transactionNo = $domain->generateZakatNumber(false);
 
         return Inertia::render('Zakat/Create', [
-            'family' => $family, 'muzakkis' => $muzakkis,
-            'transaction_no' => $transaction_no
+            'family' => $family,
+            'muzakkis' => $muzakkis,
+            'transaction_no' => $transactionNo,
+            'can' => ['submitForOthers' => $user->can('submitForOthers', new Zakat())]
         ]);
     }
 

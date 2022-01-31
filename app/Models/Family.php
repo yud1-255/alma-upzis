@@ -13,6 +13,8 @@ class Family extends Model
         'head_of_family', 'phone', 'address'
     ];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     public function muzakkis()
     {
         return $this->hasMany(Muzakki::class);

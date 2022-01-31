@@ -13,6 +13,8 @@ class Muzakki extends Model
         'name', 'family_id', 'address', 'is_bpi', 'bpi_block_no', 'bpi_house_no'
     ];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     public function family()
     {
         return $this->belongsTo(Family::class);

@@ -101,4 +101,9 @@ class ZakatPolicy
     {
         return $user->hasAnyRole(['upzis', 'administrator']);
     }
+
+    public function submitForOthers(User $user, Zakat $zakat)
+    {
+        return $user->hasAnyRole(['upzis', 'administrator']);
+    }
 }
