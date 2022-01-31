@@ -135,14 +135,14 @@ class ZakatDomain
 
     public function deleteMuzakki(User $user, Muzakki $muzakki)
     {
-        if (!$this->validateForDeletion($user, $muzakki)) {
+        if (!$this->validateMuzakkiForDeletion($user, $muzakki)) {
             throw ValidationException::withMessages($this->errors);
         }
 
         $muzakki->delete();
     }
 
-    private function validateForDeletion(User $user, Muzakki $muzakki): bool
+    private function validateMuzakkiForDeletion(User $user, Muzakki $muzakki): bool
     {
         if ($muzakki->family != $user->family) {
             array_push($this->errors, "Muzakki {$muzakki->name} hanya bisa diubah oleh anggota keluarga");
