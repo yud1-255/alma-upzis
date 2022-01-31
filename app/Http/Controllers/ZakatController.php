@@ -158,4 +158,14 @@ class ZakatController extends Controller
 
         return Redirect::to($request->pageUrl);
     }
+
+    public function muzakkiRecap(Request $request)
+    {
+        $domain = new ZakatDomain(Auth::user());
+        $zakats = $domain->zakatMuzakkiRecap();
+
+        return Inertia::render('Zakat/MuzakkiRecap', [
+            'zakats' => $zakats->paginate(10)
+        ]);
+    }
 }

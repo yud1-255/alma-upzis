@@ -32,13 +32,8 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
-    Route::resource('zakat', ZakatController::class);
-    Route::resource('muzakki', MuzakkiController::class);
-    Route::resource('family', FamilyController::class);
-});
-
-Route::middleware(['auth', 'role:administrator'])->group(function () {
+Route::middleware(['auth', 'role:administrator,upzis'])->group(function () {
+    Route::get('/zakat/muzakki_recap', [ZakatController::class, 'muzakkiRecap'])->name('zakat.muzakkiRecap');
     Route::post('/zakat/{id}/confirm', [ZakatController::class, 'confirmPayment'])->name('zakat.confirm');
 });
 
@@ -46,5 +41,13 @@ Route::middleware(['auth', 'role:administrator'])->group(function () {
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::post('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('zakat', ZakatController::class);
+    Route::resource('muzakki', MuzakkiController::class);
+    Route::resource('family', FamilyController::class);
+});
+
+
 
 require __DIR__ . '/auth.php';

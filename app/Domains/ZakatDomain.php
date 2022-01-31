@@ -73,6 +73,26 @@ class ZakatDomain
         return $zakats;
     }
 
+    public function zakatMuzakkiRecap(): Builder
+    {
+        $zakats = DB::table('zakats')
+            ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
+            ->join('zakat_lines as zakat_lines', 'zakat_lines.zakat_id', '=', 'zakats.id')
+            ->join('muzakkis as muzakkis', 'zakat_lines.muzakki_id', '=', 'muzakkis.id')
+            ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
+            ->orderBy('transaction_no', 'desc')
+            ->select([
+                'zakats.transaction_no',
+                'zakats.transaction_date',
+                'zakat_lines.*',
+                'muzakkis.name as muzakki_name',
+                'user_receive_from.name as receive_from_name',
+                'user_zakat_pic.name as zakat_pic_name'
+            ]);
+
+        return $zakats;
+    }
+
     public function generateZakatNumber(bool $save): string
     {
         $sequence = SequenceNumber::where('type', 'zakat')->first();
