@@ -43,6 +43,7 @@
             </tr>
           </tbody>
         </table>
+        <pagination :links="zakats.links" />
       </div>
     </template>
   </BreezeAuthenticatedLayout>
