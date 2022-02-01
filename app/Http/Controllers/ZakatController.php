@@ -59,6 +59,7 @@ class ZakatController extends Controller
         }
 
         $family = $familyId == null ? $user->family : Family::find($familyId);
+        $familyPlaceholder = $familyId == null ? '' : $family->head_of_family;
         $muzakkis = $family->muzakkis;
 
         $domain = new ZakatDomain($user);
@@ -66,6 +67,7 @@ class ZakatController extends Controller
 
         return Inertia::render('Zakat/Create', [
             'family' => $family,
+            'family_placeholder' => $familyPlaceholder,
             'muzakkis' => $muzakkis,
             'transaction_no' => $transactionNo,
             'can' => ['submitForOthers' => $user->can('submitForOthers', new Zakat())]

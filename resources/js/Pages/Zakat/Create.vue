@@ -14,6 +14,16 @@
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <BreezeValidationErrors class="mb-4" />
+            <Label>family_search</Label>
+            <autocomplete
+              :placeholder="family_placeholder"
+              :items="families"
+              key="id"
+              value="head_of_family"
+              isAsync="true"
+              @input="searchFamily"
+              @selected="setFamily"
+            />
             <form @submit.prevent="submit">
               <div>
                 <Label for="transaction_no">transaction_no</Label>
@@ -160,6 +170,7 @@ import { onMounted, onUpdated } from "vue";
 
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
+import Autocomplete from "@/Components/Autocomplete.vue";
 import Input from "@/Components/Input.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
@@ -171,6 +182,7 @@ export default {
   components: {
     BreezeAuthenticatedLayout,
     BreezeValidationErrors,
+    Autocomplete,
     Link,
     Label,
     Input,
@@ -221,11 +233,18 @@ export default {
 
     return { form, muzakkiForm };
   },
+  data() {
+    return {
+      families: [],
+    };
+  },
   props: {
     errors: null,
     transaction_no: String,
     family: Object,
+    family_placeholder: String,
     muzakkis: Array,
+    can: Object,
   },
   methods: {
     calculateTotalZakat() {
@@ -243,6 +262,25 @@ export default {
       }, 0);
 
       this.form.total_rp = totalRp;
+    },
+    searchFamily(searchTerm) {
+      axios
+        .get(route("family.search", { search: searchTerm }), {
+          search: searchTerm,
+        })
+        .then((res) => {
+          this.families = res.data;
+        });
+    },
+    setFamily(result) {
+      let familyId = result.id;
+      this.$inertia.get(
+        route("zakat.create", { familyId: familyId }),
+        {},
+        {
+          preserveScroll: true,
+        }
+      );
     },
     addMuzakki() {
       this.muzakkiForm.post(route("muzakki.store"), { preserveScroll: true });

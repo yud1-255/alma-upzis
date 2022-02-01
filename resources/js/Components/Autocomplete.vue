@@ -1,8 +1,12 @@
 <template>
   <div class="autocomplete">
-    <Input v-model="search" @input="onChange"></Input>
+    <Input
+      v-model="search"
+      @input="onChange"
+      :placeholder="placeholder"
+    ></Input>
   </div>
-  <ul v-show="isOpen" class="autocomplete">
+  <ul v-show="isOpen" class="shadow-lg">
     <li v-if="isLoading" class="loading">loading ...</li>
     <li
       v-else
@@ -25,8 +29,16 @@ export default {
     items: Array,
     key: "",
     value: "",
-    isLoading: false,
     isAsync: false,
+    placeholder: "",
+  },
+  data() {
+    return {
+      search: "",
+      results: [],
+      isLoading: false,
+      isOpen: false,
+    };
   },
   watch: {
     items: function (value, oldValue) {
@@ -45,13 +57,6 @@ export default {
   },
   destroyed() {
     document.removeEventListener("click", this.handleClickOutside);
-  },
-  data() {
-    return {
-      search: "",
-      results: [],
-      isOpen: false,
-    };
   },
   emits: {
     input: null,

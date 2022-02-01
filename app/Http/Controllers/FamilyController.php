@@ -108,4 +108,13 @@ class FamilyController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $families = Family::where('head_of_family', 'like', "%{$search}%");
+
+        // json
+        return $families->take(10)->get();
+    }
 }
