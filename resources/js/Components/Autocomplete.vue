@@ -79,6 +79,11 @@ export default {
         this.isOpen = true;
       }
     },
+    handleClickOutside(event) {
+      if (!this.$el.contains(event.target)) {
+        this.isOpen = false;
+      }
+    },
   },
   setup() {},
 };
