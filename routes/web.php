@@ -33,6 +33,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'role:administrator,upzis'])->group(function () {
+    Route::get('/zakat/muzakki_list', [ZakatController::class, 'muzakkiList'])->name('zakat.muzakkiList');
     Route::get('/zakat/muzakki_recap', [ZakatController::class, 'muzakkiRecap'])->name('zakat.muzakkiRecap');
     Route::post('/zakat/{id}/confirm', [ZakatController::class, 'confirmPayment'])->name('zakat.confirm');
     Route::get('/family/search', [FamilyController::class, 'search'])->name('family.search');

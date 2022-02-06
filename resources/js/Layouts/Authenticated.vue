@@ -67,8 +67,8 @@
                         :href="route('zakat.muzakkiRecap')"
                         v-if="isAdministrator || isUpzis"
                         >Rekap berdasarkan muzakki</BreezeDropdownLink
-                      ><BreezeDropdownLink :href="route('zakat.create')"
-                        >Daftar transaksi dan kontak (TODO)</BreezeDropdownLink
+                      ><BreezeDropdownLink :href="route('zakat.muzakkiList')"
+                        >Daftar Muzakki</BreezeDropdownLink
                       >
                     </template>
                   </BreezeDropdown>

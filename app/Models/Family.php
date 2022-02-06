@@ -15,6 +15,10 @@ class Family extends Model
 
     protected $hidden = ['created_at', 'updated_at'];
 
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
     public function muzakkis()
     {
         return $this->hasMany(Muzakki::class);

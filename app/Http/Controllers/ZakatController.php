@@ -184,4 +184,16 @@ class ZakatController extends Controller
             'zakats' => $zakats->paginate(10)
         ]);
     }
+
+    public function muzakkiList(Request $request)
+    {
+        // $domain = new ZakatDomain(Auth::user());
+        // $zakats = $domain->zakatMuzakkiRecap();
+
+        $families = Family::with('muzakkis', 'user');
+
+        return Inertia::render('Zakat/MuzakkiList', [
+            'families' => $families->paginate(10)
+        ]);
+    }
 }
