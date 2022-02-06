@@ -68,7 +68,7 @@
                         v-if="isAdministrator || isUpzis"
                         >Rekap berdasarkan muzakki</BreezeDropdownLink
                       ><BreezeDropdownLink :href="route('zakat.muzakkiList')"
-                        >Daftar Muzakki</BreezeDropdownLink
+                        >Daftar muzakki</BreezeDropdownLink
                       >
                     </template>
                   </BreezeDropdown>
