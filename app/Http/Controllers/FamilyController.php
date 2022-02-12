@@ -33,6 +33,7 @@ class FamilyController extends Controller
     {
         // TODO move logic in create() to index()
         $family = Auth::user()->family;
+        $muzakkis = [];
 
         if ($family == null) {
             $family = Session::get('family'); // if any from previous postback

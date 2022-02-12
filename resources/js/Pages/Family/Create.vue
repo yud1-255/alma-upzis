@@ -144,6 +144,11 @@ export default {
     family: Object,
     muzakkis: Array,
   },
+  watch: {
+    family: function (value, oldValue) {
+      this.muzakkiForm.family_id = value.id;
+    },
+  },
   methods: {
     createFamily() {
       if (this.familyForm.id == null) {
