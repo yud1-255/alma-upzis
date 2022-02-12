@@ -191,13 +191,22 @@ class ZakatController extends Controller
 
     public function muzakkiList(Request $request)
     {
-        // $domain = new ZakatDomain(Auth::user());
-        // $zakats = $domain->zakatMuzakkiRecap();
-
         $families = Family::with('muzakkis', 'user');
 
         return Inertia::render('Zakat/MuzakkiList', [
             'families' => $families->paginate(10)
+        ]);
+    }
+
+    public function onlinePayments(Request $request)
+    {
+        $user = Auth::user();
+        $domain = new ZakatDomain(Auth::user());
+        $zakats = $domain->zakatOnlinePayments();
+
+        return Inertia::render('Zakat/OnlinePayments', [
+            'zakats' => $zakats->paginate(10),
+            'can' => ['confirmPayment' => $user->can('confirmPayment', new Zakat())]
         ]);
     }
 }

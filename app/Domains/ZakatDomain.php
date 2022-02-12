@@ -118,6 +118,26 @@ class ZakatDomain
         return $zakats;
     }
 
+    public function zakatOnlinePayments(): Builder
+    {
+        $zakats = DB::table('zakats')
+            ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
+            ->join('families', 'families.id', '=', 'user_receive_from.family_id')
+            ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
+            ->where('is_offline_submission', false)
+            ->orderBy('transaction_no', 'desc')
+            ->select([
+                'zakats.*',
+                'families.phone as receive_from_phone',
+                'families.address as receive_from_address',
+                'user_receive_from.email as receive_from_email',
+                'user_receive_from.name as receive_from_user_name',
+                'user_zakat_pic.name as zakat_pic_name'
+            ]);
+
+        return $zakats;
+    }
+
     public function muzakkiList(): Builder
     {
         $muzakkis = DB::table('muzakkis')
