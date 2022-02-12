@@ -70,7 +70,7 @@
             </div>
             <div class="flex flex-wrap py-4">
               <div>
-                <p>Terima dari: {{ zakat.receive_from.name }}</p>
+                <p>Terima dari: {{ zakat.receive_from_name }}</p>
                 <p>Petugas: {{ zakat.zakat_pic?.name }}</p>
               </div>
               <div class="mx-8 md:text-right md:px-64">
@@ -89,6 +89,12 @@
                 </p>
                 <p>Kg: {{ totalFitrahKg() + totalFidyahKg() }}</p>
                 <p>Lt: {{ totalFitrahLt() }}</p>
+                <div v-if="!zakat.is_offline_submission">
+                  <div>Biaya Unik: {{ Number(zakat.unique_number, 0) }}</div>
+                  <div>
+                    Total Transfer: {{ Number(zakat.total_transfer_rp, 0) }}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="print:hidden">
