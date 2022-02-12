@@ -23,11 +23,36 @@ class ZakatDomain
         $this->user = $user;
     }
 
-    public function submitAsMuzakki(User $user, Zakat $zakat, array $zakatLines): Zakat
+    public function submitAsMuzakki(Zakat $zakat, array $zakatLines): Zakat
     {
         $zakat->zakatPIC()->associate(null);
-        $zakat->receiveFrom()->associate($user);
+        $zakat->receiveFrom()->associate($this->user);
+        $zakat->receive_from_name = $this->user->name;
+        $zakat->is_offline_submission = false;
         $zakat->transaction_no = $this->generateZakatNumber(true);
+
+        $uniqueNumber = rand(0, 500);
+        $zakat->unique_number = $uniqueNumber;
+        $zakat->total_transfer_rp = $zakat->total_rp + $uniqueNumber;
+
+        $zakat->save();
+
+        $zakat->zakatLines()->createMany($zakatLines);
+
+        return $zakat;
+    }
+
+    public function submitAsUpzis(Zakat $zakat, array $zakatLines): Zakat
+    {
+        $zakat->zakatPIC()->associate($this->user);
+        $zakat->receiveFrom()->associate($this->user);
+
+        $zakat->receive_from_name = $zakat->receive_from_name;
+        $zakat->is_offline_submission = true;
+        $zakat->transaction_no = $this->generateZakatNumber(true);
+
+        $zakat->unique_number = 0;
+        $zakat->total_transfer_rp = $zakat->total_rp;
 
         $zakat->save();
 

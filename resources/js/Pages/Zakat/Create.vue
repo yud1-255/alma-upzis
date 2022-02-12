@@ -14,16 +14,24 @@
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <BreezeValidationErrors class="mb-4" />
-            <Label>family_search</Label>
-            <autocomplete
-              :placeholder="family_placeholder"
-              :items="families"
-              key="id"
-              value="head_of_family"
-              isAsync="true"
-              @input="searchFamily"
-              @selected="setFamily"
-            />
+            <div v-if="can.submitForOthers" class="flex">
+              <div>
+                <Label>family_search</Label>
+                <autocomplete
+                  :placeholder="family_placeholder"
+                  :items="families"
+                  key="id"
+                  value="head_of_family"
+                  isAsync="true"
+                  @input="searchFamily"
+                  @selected="setFamily"
+                />
+              </div>
+              <div>
+                <Label for="transaction_no">receive_from_name</Label>
+                <Input v-model="form.receive_from_name" />
+              </div>
+            </div>
             <form @submit.prevent="submit">
               <div>
                 <Label for="transaction_no">transaction_no</Label>
@@ -195,6 +203,7 @@ export default {
       transaction_date: new Date().toISOString().split("T")[0],
       hijri_year: 1443,
       family_head: props.family.head_of_family,
+      receive_from_name: props.family.head_of_family,
       total_rp: 0,
       zakat_lines: [],
     });

@@ -12,7 +12,7 @@ class Zakat extends Model
     protected $fillable = [
         'transaction_no', 'receive_from', 'zakat_pic',
         'transaction_date', 'hijri_year', 'family_head',
-        'total_rp'
+        'receive_from_name', 'total_rp'
     ];
 
     public function receiveFrom()

@@ -92,8 +92,12 @@ class ZakatController extends Controller
         $zakatLines = $request['zakat_lines'];
 
         $domain = new ZakatDomain(Auth::user());
-        $domain->submitAsMuzakki(Auth::user(), $zakat, $zakatLines);
 
+        if (Auth::user()->can('submitForOthers', $zakat)) {
+            $domain->submitAsUpzis($zakat, $zakatLines);
+        } else {
+            $domain->submitAsMuzakki($zakat, $zakatLines);
+        }
         return Redirect::route('zakat.index');
     }
 
