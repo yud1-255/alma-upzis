@@ -91,7 +91,7 @@ class ZakatDomain
             ->orderBy('transaction_no', 'desc')
             ->select([
                 'zakats.*',
-                'user_receive_from.name as receive_from_name',
+                'user_receive_from.name as receive_from_user_name',
                 'user_zakat_pic.name as zakat_pic_name'
             ]);
 
@@ -109,9 +109,9 @@ class ZakatDomain
             ->select([
                 'zakats.transaction_no',
                 'zakats.transaction_date',
+                'zakats.receive_from_name as receive_from_name',
                 'zakat_lines.*',
                 'muzakkis.name as muzakki_name',
-                'user_receive_from.name as receive_from_name',
                 'user_zakat_pic.name as zakat_pic_name'
             ]);
 
