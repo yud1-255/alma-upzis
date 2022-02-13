@@ -45,6 +45,8 @@
                   />
                   <Label for="is_bpi_false">Luar BPI</Label>
                 </div>
+
+                <!-- TODO refactor into select component (Vue) -->
                 <div v-if="familyForm.is_bpi" id="bpi_address">
                   <Label>Blok/Nomor</Label>
                   <select v-model="selectedBlock" @change="setAddress">
@@ -104,12 +106,14 @@
                 <table>
                   <thead class="font-bold bg-gray-300 border-b-2">
                     <td>Nama</td>
+                    <td>Telepon</td>
                     <td>Alamat</td>
                     <td></td>
                   </thead>
                   <tbody>
                     <tr v-for="muzakki in muzakkis" :key="muzakki.id">
                       <td class="px-4 py-2">{{ muzakki.name }}</td>
+                      <td class="px-4 py-2">{{ muzakki.phone }}</td>
                       <td class="px-4 py-2">{{ muzakki.address }}</td>
                       <td>
                         <Link
@@ -131,28 +135,46 @@
                   <div class="flex">
                     <Input
                       v-model="muzakkiForm.name"
-                      placeholder="name"
+                      placeholder="Nama"
                       class="w-24"
                     />
-                    <div>
+                    <Input
+                      v-model="muzakkiForm.phone"
+                      placeholder="Telepon"
+                      class="w-24"
+                    />
+                    <!-- <div>
                       <input type="checkbox" v-model="muzakkiForm.is_bpi" />
                       is_bpi
+                    </div> -->
+                    <div v-if="!useFamilyAddress">
+                      <Input
+                        v-model="muzakkiForm.address"
+                        placeholder="Alamat"
+                        class="w-80"
+                      />
+                      <!-- <Input
+                        v-model="muzakkiForm.bpi_block_no"
+                        placeholder="bpi_block_no"
+                        class="w-24"
+                      />
+                      <Input
+                        v-model="muzakkiForm.bpi_house_no"
+                        placeholder="bpi_house_no"
+                        class="w-24"
+                      /> -->
                     </div>
-                    <Input
-                      v-model="muzakkiForm.address"
-                      placeholder="address"
-                      class="w-24"
-                    />
-                    <Input
-                      v-model="muzakkiForm.bpi_block_no"
-                      placeholder="bpi_block_no"
-                      class="w-24"
-                    />
-                    <Input
-                      v-model="muzakkiForm.bpi_house_no"
-                      placeholder="bpi_house_no"
-                      class="w-24"
-                    />
+                    <div>
+                      <!-- TODO refactor into checkbox component (Vue) -->
+                      <input
+                        type="checkbox"
+                        id="use_same_address"
+                        v-model="useFamilyAddress"
+                      />
+                      <label for="use_same_address"
+                        >gunakan alamat keluarga</label
+                      >
+                    </div>
                   </div>
                   <button class="px-6 py-2 text-white bg-gray-900 rounded">
                     Tambah Muzakki
@@ -200,11 +222,12 @@ export default {
 
     const muzakkiForm = useForm({
       name: "",
+      phone: "",
       family_id: props.family?.id,
-      address: "",
-      is_bpi: true,
-      bpi_block_no: "",
-      bpi_house_no: "",
+      address: props.family?.address,
+      is_bpi: props.family?.is_bpi,
+      bpi_block_no: props.family?.bpi_block_no,
+      bpi_house_no: props.family?.bpi_house_no,
     });
 
     return { familyForm, muzakkiForm };
@@ -226,11 +249,25 @@ export default {
       selectedBlock: "",
       selectedBlockNumber: "",
       selectedHouseNumber: "",
+      useFamilyAddress: true,
     };
   },
   watch: {
     family: function (value, oldValue) {
       this.muzakkiForm.family_id = value.id;
+    },
+    useFamilyAddress: function (value, oldValue) {
+      if (value) {
+        this.muzakkiForm.address = this.family?.address;
+        this.muzakkiForm.is_bpi = this.family?.is_bpi;
+        this.muzakkiForm.bpi_block_no = this.family?.bpi_block_no;
+        this.muzakkiForm.bpi_house_no = this.family?.bpi_house_no;
+      } else {
+        this.muzakkiForm.address = "";
+        this.muzakkiForm.is_bpi = false;
+        this.muzakkiForm.bpi_block_no = "";
+        this.muzakkiForm.bpi_house_no = "";
+      }
     },
   },
   methods: {
@@ -266,7 +303,12 @@ export default {
       }
     },
     addMuzakki() {
-      this.muzakkiForm.post(route("muzakki.store"), { preserveScroll: true });
+      this.muzakkiForm.post(route("muzakki.store"), {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.muzakkiForm.reset("name", "phone", "address");
+        },
+      });
     },
     deleteMuzakki(id) {
       this.$inertia.delete(route("muzakki.destroy", id), {

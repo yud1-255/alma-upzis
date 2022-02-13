@@ -10,7 +10,7 @@ class Muzakki extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'family_id', 'address', 'is_bpi', 'bpi_block_no', 'bpi_house_no'
+        'name', 'family_id', 'phone', 'address', 'is_bpi', 'bpi_block_no', 'bpi_house_no'
     ];
 
     protected $hidden = ['created_at', 'updated_at'];
