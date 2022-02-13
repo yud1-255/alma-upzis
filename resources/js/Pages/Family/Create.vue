@@ -11,87 +11,154 @@
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <BreezeValidationErrors class="mb-4" />
-            <form @submit.prevent="createFamily()" class="md:flex">
-              <div>
-                <Label for="head_of_family">head_of_family</Label>
-                <Input v-model="familyForm.head_of_family" />
+            <form @submit.prevent="createFamily()">
+              <h2>Kepala Keluarga</h2>
+              <div class="flex">
+                <div>
+                  <Label for="head_of_family">Nama</Label>
+                  <Input v-model="familyForm.head_of_family" />
+                </div>
+                <div>
+                  <Label for="phone">Telepon</Label>
+                  <Input v-model="familyForm.phone" />
+                </div>
               </div>
               <div>
-                <Label for="phone">phone</Label>
-                <Input v-model="familyForm.phone" />
+                <h2>Alamat</h2>
+                <div class="flex">
+                  <input
+                    type="radio"
+                    id="is_bpi_true"
+                    class="mx-2"
+                    v-model="familyForm.is_bpi"
+                    :value="1"
+                    @change="setAddress"
+                  />
+                  <Label for="is_bpi_true">Warga BPI</Label>
+                  <input
+                    type="radio"
+                    id="is_bpi_false"
+                    class="mx-2"
+                    v-model="familyForm.is_bpi"
+                    :value="0"
+                    @change="setAddress"
+                  />
+                  <Label for="is_bpi_false">Luar BPI</Label>
+                </div>
+                <div v-if="familyForm.is_bpi" id="bpi_address">
+                  <Label>Blok/Nomor</Label>
+                  <select v-model="selectedBlock" @change="setAddress">
+                    <option></option>
+                    <option v-for="(_, block) in blockNumbers" :key="block">
+                      {{ block }}
+                    </option>
+                  </select>
+                  <select v-model="selectedBlockNumber" @change="setAddress">
+                    <option></option>
+                    <option
+                      v-for="blockNumber in blockNumbers[selectedBlock]"
+                      :key="blockNumber"
+                    >
+                      {{ blockNumber }}
+                    </option>
+                  </select>
+                  <select
+                    v-model="selectedHouseNumber"
+                    @change="setAddress"
+                    class="ml-4"
+                  >
+                    <option></option>
+                    <option
+                      v-for="houseNumber in houseNumbers"
+                      :key="houseNumber"
+                    >
+                      {{ houseNumber }}
+                    </option>
+                  </select>
+                </div>
+
+                <div id="ext-address">
+                  <div class="flex">
+                    <Label for="address">Alamat Lengkap</Label>
+                    <Label v-if="familyForm.is_bpi" class="mx-1"
+                      >(auto-generated)</Label
+                    >
+                  </div>
+                  <Input v-model="familyForm.address" class="w-80" />
+                </div>
               </div>
-              <div>
-                <Label for="address">address</Label>
-                <Input v-model="familyForm.address" />
-              </div>
-              <div class="flex items-center mt-4">
+              <div v-if="family == null" class="flex items-center mt-4">
                 <button class="px-6 py-2 text-white bg-gray-900 rounded">
                   Lanjut
                 </button>
               </div>
             </form>
 
-            <div>
-              <h2 class="text-l my-4 font-semibold leading-tight text-gray-800">
-                Jumlah Muzakki
-              </h2>
-              <table>
-                <thead class="font-bold bg-gray-300 border-b-2">
-                  <td>Nama</td>
-                  <td>Alamat</td>
-                  <td></td>
-                </thead>
-                <tbody>
-                  <tr v-for="muzakki in muzakkis" :key="muzakki.id">
-                    <td class="px-4 py-2">{{ muzakki.name }}</td>
-                    <td class="px-4 py-2">{{ muzakki.address }}</td>
-                    <td>
-                      <Link
-                        @click="deleteMuzakki(muzakki.id)"
-                        class="text-red-700"
-                      >
-                        Hapus
-                      </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="my-4">
-              <form @submit.prevent="addMuzakki">
-                <div>
-                  <h2>Muzakki baru</h2>
-                </div>
-                <div class="flex">
-                  <Input
-                    v-model="muzakkiForm.name"
-                    placeholder="name"
-                    class="w-24"
-                  />
+            <div v-if="family != null">
+              <div>
+                <h2
+                  class="text-l my-4 font-semibold leading-tight text-gray-800"
+                >
+                  Muzakki dalam keluarga
+                </h2>
+                <table>
+                  <thead class="font-bold bg-gray-300 border-b-2">
+                    <td>Nama</td>
+                    <td>Alamat</td>
+                    <td></td>
+                  </thead>
+                  <tbody>
+                    <tr v-for="muzakki in muzakkis" :key="muzakki.id">
+                      <td class="px-4 py-2">{{ muzakki.name }}</td>
+                      <td class="px-4 py-2">{{ muzakki.address }}</td>
+                      <td>
+                        <Link
+                          @click="deleteMuzakki(muzakki.id)"
+                          class="text-red-700"
+                        >
+                          Hapus
+                        </Link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="my-4">
+                <form @submit.prevent="addMuzakki">
                   <div>
-                    <input type="checkbox" v-model="muzakkiForm.is_bpi" />
-                    is_bpi
+                    <h2>Muzakki baru</h2>
                   </div>
-                  <Input
-                    v-model="muzakkiForm.address"
-                    placeholder="address"
-                    class="w-24"
-                  />
-                  <Input
-                    v-model="muzakkiForm.bpi_block_no"
-                    placeholder="bpi_block_no"
-                    class="w-24"
-                  />
-                  <Input
-                    v-model="muzakkiForm.bpi_house_no"
-                    placeholder="bpi_house_no"
-                    class="w-24"
-                  />
-                </div>
-                <button class="px-6 py-2 text-white bg-gray-900 rounded">
-                  Tambah Muzakki
-                </button>
-              </form>
+                  <div class="flex">
+                    <Input
+                      v-model="muzakkiForm.name"
+                      placeholder="name"
+                      class="w-24"
+                    />
+                    <div>
+                      <input type="checkbox" v-model="muzakkiForm.is_bpi" />
+                      is_bpi
+                    </div>
+                    <Input
+                      v-model="muzakkiForm.address"
+                      placeholder="address"
+                      class="w-24"
+                    />
+                    <Input
+                      v-model="muzakkiForm.bpi_block_no"
+                      placeholder="bpi_block_no"
+                      class="w-24"
+                    />
+                    <Input
+                      v-model="muzakkiForm.bpi_house_no"
+                      placeholder="bpi_house_no"
+                      class="w-24"
+                    />
+                  </div>
+                  <button class="px-6 py-2 text-white bg-gray-900 rounded">
+                    Tambah Muzakki
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -126,6 +193,9 @@ export default {
       head_of_family: props.family?.head_of_family,
       phone: props.family?.phone,
       address: props.family?.address,
+      is_bpi: props.family?.is_bpi,
+      bpi_block_no: props.family?.bpi_block_no,
+      bpi_house_no: props.family?.bpi_house_no,
     });
 
     const muzakkiForm = useForm({
@@ -139,10 +209,24 @@ export default {
 
     return { familyForm, muzakkiForm };
   },
+  mounted() {
+    this.selectedBlock = this.family?.bpi_block_no?.charAt(0);
+    this.selectedBlockNumber = this.family?.bpi_block_no?.substring(1);
+    this.selectedHouseNumber = this.family?.bpi_house_no;
+  },
   props: {
     errors: null,
     family: Object,
     muzakkis: Array,
+    blockNumbers: Object,
+    houseNumbers: Array,
+  },
+  data() {
+    return {
+      selectedBlock: "",
+      selectedBlockNumber: "",
+      selectedHouseNumber: "",
+    };
   },
   watch: {
     family: function (value, oldValue) {
@@ -150,6 +234,27 @@ export default {
     },
   },
   methods: {
+    setAddress() {
+      if (this.familyForm.is_bpi) {
+        this.familyForm.bpi_block_no = `${this.selectedBlock}${this.selectedBlockNumber}`;
+        this.familyForm.bpi_house_no = this.selectedHouseNumber;
+
+        if (
+          this.selectedBlock != "" &&
+          this.selectedBlockNumber != "" &&
+          this.selectedHouseNumber != ""
+        ) {
+          this.familyForm.address = `Bukit Pamulang Indah ${this.familyForm.bpi_block_no} no ${this.familyForm.bpi_house_no}`;
+        }
+      } else {
+        this.selectedBlock = "";
+        this.selectedBlockNumber = "";
+        this.selectedHouseNumber = "";
+
+        this.familyForm.bpi_block_no = "";
+        this.familyForm.bpi_house_no = "";
+      }
+    },
     createFamily() {
       if (this.familyForm.id == null) {
         this.familyForm.post(route("family.store"), { preserveScroll: true });

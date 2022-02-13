@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\ResidenceDomain;
 use App\Domains\ZakatDomain;
 use App\Models\Family;
 
@@ -40,7 +41,17 @@ class FamilyController extends Controller
         } else {
             $muzakkis = $family->muzakkis;
         }
-        return Inertia::render('Family/Create', ['family' => $family, 'muzakkis' => $muzakkis]);
+
+        $domain = new ResidenceDomain();
+        $blockNumbers = $domain->getBlockNumberOptions();
+        $houseNumbers = $domain->getHouseNumbers();
+
+        return Inertia::render('Family/Create', [
+            'family' => $family,
+            'muzakkis' => $muzakkis,
+            'blockNumbers' => $blockNumbers,
+            'houseNumbers' => $houseNumbers
+        ]);
     }
 
     /**

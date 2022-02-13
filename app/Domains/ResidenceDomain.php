@@ -29,6 +29,16 @@ class ResidenceDomain
         return [];
     }
 
+    public function getBlockNumberOptions(): array
+    {
+        $arr = [];
+        foreach (array_keys($this->blockNumbers) as $key) {
+            $arr[$key] = $this->getBlockNumbers($key);
+        }
+
+        return $arr;
+    }
+
     public function getHouseNumbers(): array
     {
         return range(1, $this->houseNumbers);
