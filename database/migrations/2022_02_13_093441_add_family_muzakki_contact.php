@@ -20,7 +20,9 @@ class AddFamilyMuzakkiContact extends Migration
         });
 
         Schema::table('muzakkis', function (Blueprint $table) {
-            $table->string('phone')->after('name');
+            $table->string('phone')->after('name')->nullable();
+            $table->string('bpi_block_no')->nullable()->change();
+            $table->string('bpi_house_no')->nullable()->change();
         });
     }
 
@@ -39,6 +41,8 @@ class AddFamilyMuzakkiContact extends Migration
 
         Schema::table('muzakkis', function (Blueprint $table) {
             $table->dropColumn('phone');
+            $table->string('bpi_block_no')->nullable(false)->change();
+            $table->string('bpi_house_no')->nullable(false)->change();
         });
     }
 }
