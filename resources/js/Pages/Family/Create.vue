@@ -256,7 +256,13 @@ export default {
   },
   watch: {
     family: function (value, oldValue) {
+      this.familyForm.id = value.id;
+
       this.muzakkiForm.family_id = value.id;
+      this.muzakkiForm.address = value.address;
+      this.muzakkiForm.is_bpi = value.is_bpi;
+      this.muzakkiForm.bpi_block_no = value.bpi_block_no;
+      this.muzakkiForm.bpi_house_no = value.bpi_house_no;
     },
     useFamilyAddress: function (value, oldValue) {
       if (value) {

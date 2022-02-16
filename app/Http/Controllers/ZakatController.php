@@ -51,14 +51,17 @@ class ZakatController extends Controller
         $familyId = $request->familyId;
         $isFamilyRequested = $familyId != null && $familyId != $user->family_id;
 
+        $family = $familyId == null ? $user->family : Family::find($familyId);
+
         if (
             $user->cannot('submitForOthers', new Zakat()) &&
             $isFamilyRequested
         ) {
             abort(403);
+        } elseif ($family == null) {
+            return Redirect::route("family.create");
         }
 
-        $family = $familyId == null ? $user->family : Family::find($familyId);
         $familyPlaceholder = $familyId == null ? '' : $family->head_of_family;
         $muzakkis = $family->muzakkis;
 
