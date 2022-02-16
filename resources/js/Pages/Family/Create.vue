@@ -103,83 +103,85 @@
                 >
                   Muzakki dalam keluarga
                 </h2>
-                <table>
-                  <thead class="font-bold bg-gray-300 border-b-2">
-                    <td>Nama</td>
-                    <td>Telepon</td>
-                    <td>Alamat</td>
-                    <td></td>
-                  </thead>
-                  <tbody>
-                    <tr v-for="muzakki in muzakkis" :key="muzakki.id">
-                      <td class="px-4 py-2">{{ muzakki.name }}</td>
-                      <td class="px-4 py-2">{{ muzakki.phone }}</td>
-                      <td class="px-4 py-2">{{ muzakki.address }}</td>
-                      <td>
-                        <Link
-                          @click="deleteMuzakki(muzakki.id)"
-                          class="text-red-700"
-                        >
-                          Hapus
-                        </Link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="my-4">
                 <form @submit.prevent="addMuzakki">
-                  <div>
-                    <h2>Muzakki baru</h2>
-                  </div>
-                  <div class="flex">
-                    <Input
-                      v-model="muzakkiForm.name"
-                      placeholder="Nama"
-                      class="w-24"
-                    />
-                    <Input
-                      v-model="muzakkiForm.phone"
-                      placeholder="Telepon"
-                      class="w-24"
-                    />
-                    <!-- <div>
-                      <input type="checkbox" v-model="muzakkiForm.is_bpi" />
-                      is_bpi
-                    </div> -->
-                    <div v-if="!useFamilyAddress">
-                      <Input
-                        v-model="muzakkiForm.address"
-                        placeholder="Alamat"
-                        class="w-80"
-                      />
-                      <!-- <Input
-                        v-model="muzakkiForm.bpi_block_no"
-                        placeholder="bpi_block_no"
-                        class="w-24"
-                      />
-                      <Input
-                        v-model="muzakkiForm.bpi_house_no"
-                        placeholder="bpi_house_no"
-                        class="w-24"
-                      /> -->
-                    </div>
-                    <div>
-                      <!-- TODO refactor into checkbox component (Vue) -->
-                      <input
-                        type="checkbox"
-                        id="use_same_address"
-                        v-model="useFamilyAddress"
-                      />
-                      <label for="use_same_address"
-                        >gunakan alamat keluarga</label
-                      >
-                    </div>
-                  </div>
-                  <button class="px-6 py-2 text-white bg-gray-900 rounded">
-                    Tambah Muzakki
-                  </button>
+                  <table>
+                    <thead class="font-bold border-b-2">
+                      <td>Nama</td>
+                      <td>Telepon</td>
+                      <td>Alamat</td>
+                      <td></td>
+                    </thead>
+                    <tbody>
+                      <tr v-for="muzakki in muzakkis" :key="muzakki.id">
+                        <td class="py-2">{{ muzakki.name }}</td>
+                        <td class="py-2">{{ muzakki.phone }}</td>
+                        <td class="py-2">{{ muzakki.address }}</td>
+                        <td>
+                          <Link
+                            @click="deleteMuzakki(muzakki.id)"
+                            class="text-red-700"
+                          >
+                            Hapus
+                          </Link>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td>
+                          <Input
+                            v-model="muzakkiForm.name"
+                            placeholder="Nama"
+                            class="w-24"
+                          />
+                        </td>
+                        <td>
+                          <Input
+                            v-model="muzakkiForm.phone"
+                            placeholder="Telepon"
+                            class="w-24"
+                          />
+                        </td>
+                        <td>
+                          <div v-bind:class="{ invisible: useFamilyAddress }">
+                            <Input
+                              v-model="muzakkiForm.address"
+                              placeholder="Alamat"
+                              class="w-80"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <button class="text-green-700">Tambah Muzakki</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="4">
+                          <div>
+                            <!-- TODO refactor into checkbox component (Vue) -->
+                            <input
+                              type="checkbox"
+                              id="use_same_address"
+                              v-model="useFamilyAddress"
+                            />
+                            <label for="use_same_address"
+                              >gunakan alamat keluarga</label
+                            >
+                          </div>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </form>
+
+                <div v-if="family != null" class="flex items-center mt-4">
+                  <button
+                    @click="updateFamily"
+                    class="px-6 py-2 text-white bg-gray-900 rounded"
+                  >
+                    Simpan
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -277,11 +279,13 @@ export default {
         this.familyForm.bpi_house_no = this.selectedHouseNumber;
 
         if (
-          this.selectedBlock != "" &&
-          this.selectedBlockNumber != "" &&
-          this.selectedHouseNumber != ""
+          !!this.selectedBlock &&
+          !!this.selectedBlockNumber &&
+          !!this.selectedHouseNumber
         ) {
           this.familyForm.address = `Bukit Pamulang Indah ${this.familyForm.bpi_block_no} no ${this.familyForm.bpi_house_no}`;
+        } else {
+          this.familyForm.address = "";
         }
       } else {
         this.selectedBlock = "";
@@ -302,11 +306,20 @@ export default {
         );
       }
     },
+    updateFamily() {
+      this.familyForm.put(route("family.update", { family: this.familyForm }), {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.$inertia.visit(route("dashboard"));
+        },
+      });
+    },
     addMuzakki() {
       this.muzakkiForm.post(route("muzakki.store"), {
         preserveScroll: true,
         onSuccess: () => {
           this.muzakkiForm.reset("name", "phone", "address");
+          this.useFamilyAddress = true;
         },
       });
     },
