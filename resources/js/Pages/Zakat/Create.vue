@@ -14,6 +14,9 @@
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <BreezeValidationErrors class="mb-4" />
+            <h2 class="text-l my-4 font-semibold leading-tight text-gray-800">
+              Penerimaan zakat
+            </h2>
             <div v-if="can.submitForOthers" class="flex">
               <div>
                 <Label>family_search</Label>
@@ -33,31 +36,29 @@
               </div>
             </div>
             <form @submit.prevent="submit">
-              <div>
-                <Label for="transaction_no">transaction_no</Label>
-                <Input v-model="form.transaction_no" />
-              </div>
-              <div>
-                <Label for="transaction_date">transaction_date</Label>
-                <Input v-model="form.transaction_date" />
-              </div>
-              <div>
-                <Label for="family_head">family_head</Label>
-                <Input v-model="form.family_head" />
-              </div>
-              <div>
-                <Label for="total_rp">total_rp</Label>
-                <Input v-model="form.total_rp" />
-              </div>
-              <div>
-                <Label for="hijri_year">hijri_year</Label>
-                <Input v-model="form.hijri_year" />
+              <div class="flex flex-wrap">
+                <div>
+                  <Label for="family_head">Kepala Keluarga</Label>
+                  <Input v-model="form.family_head" />
+                </div>
+                <div>
+                  <Label for="total_rp">Total (Rp)</Label>
+                  <Input v-model="form.total_rp" class="text-right" readonly />
+                </div>
+                <div>
+                  <Label for="hijri_year">Periode Zakat</Label>
+                  <Input
+                    v-model="form.hijri_year"
+                    class="text-right"
+                    readonly
+                  />
+                </div>
               </div>
               <div class="overflow-auto">
                 <h2
                   class="text-l my-4 font-semibold leading-tight text-gray-800"
                 >
-                  Jumlah Muzakki
+                  Keterangan Muzakki
                 </h2>
                 <div
                   v-for="zakat_line in form.zakat_lines"
@@ -127,39 +128,24 @@
                   </div>
                 </div>
               </div>
-              <form @submit.prevent="addMuzakki">
+              <form @submit.prevent="addMuzakki" class="py-4">
                 <div>
-                  <h2>Muzakki baru</h2>
+                  <h2>Tambah muzakki baru?</h2>
                 </div>
                 <div class="flex">
                   <Input
                     v-model="muzakkiForm.name"
-                    placeholder="name"
-                    class="w-24"
-                  />
-                  <div>
-                    <input type="checkbox" v-model="muzakkiForm.is_bpi" />
-                    is_bpi
-                  </div>
-                  <Input
-                    v-model="muzakkiForm.address"
-                    placeholder="address"
+                    placeholder="Nama"
                     class="w-24"
                   />
                   <Input
-                    v-model="muzakkiForm.bpi_block_no"
-                    placeholder="bpi_block_no"
+                    v-model="muzakkiForm.phone"
+                    placeholder="Telepon"
                     class="w-24"
                   />
-                  <Input
-                    v-model="muzakkiForm.bpi_house_no"
-                    placeholder="bpi_house_no"
-                    class="w-24"
-                  />
+
+                  <button class="text-green-700">Tambah Muzakki</button>
                 </div>
-                <button class="px-6 py-2 text-white bg-gray-900 rounded">
-                  Tambah Muzakki
-                </button>
               </form>
               <div class="flex items-center mt-4">
                 <button class="px-6 py-2 text-white bg-gray-900 rounded">
@@ -233,11 +219,12 @@ export default {
 
     const muzakkiForm = useForm({
       name: "",
+      phone: "",
       family_id: props.family.id,
-      address: "",
-      is_bpi: true,
-      bpi_block_no: "",
-      bpi_house_no: "",
+      address: props.family.address,
+      is_bpi: props.family.is_bpi,
+      bpi_block_no: props.family.bpi_block_no,
+      bpi_house_no: props.family.bpi_house_no,
     });
 
     return { form, muzakkiForm };
@@ -292,7 +279,12 @@ export default {
       );
     },
     addMuzakki() {
-      this.muzakkiForm.post(route("muzakki.store"), { preserveScroll: true });
+      this.muzakkiForm.post(route("muzakki.store"), {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.muzakkiForm.reset("name", "phone");
+        },
+      });
     },
     submit() {
       this.form.zakat_lines.forEach((item) => {
