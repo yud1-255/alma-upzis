@@ -75,11 +75,13 @@
                     />
                     <Input
                       v-model="zakat_line.fitrah_kg"
+                      @change="calculateTotalZakat"
                       placeholder="Fitrah (kg)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fitrah_lt"
+                      @change="calculateTotalZakat"
                       placeholder="Fitrah (lt)"
                       class="w-24"
                     />
@@ -115,6 +117,7 @@
                     />
                     <Input
                       v-model="zakat_line.fidyah_kg"
+                      @change="calculateTotalZakat"
                       placeholder="Fidyah (kg)"
                       class="w-24"
                     />
@@ -243,7 +246,12 @@ export default {
     can: Object,
   },
   methods: {
-    calculateTotalZakat() {
+    calculateTotalZakat(event) {
+      if (isNaN(event.target.value)) {
+        event.target.value = "";
+        return;
+      }
+
       let totalRp = this.form.zakat_lines.reduce((total, line) => {
         total =
           total +
