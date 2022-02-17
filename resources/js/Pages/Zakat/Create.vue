@@ -70,58 +70,58 @@
                     <Input
                       v-model="zakat_line.fitrah_rp"
                       @change="calculateTotalZakat"
-                      placeholder="fitrah_rp"
+                      placeholder="Fitrah (Rp)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fitrah_kg"
-                      placeholder="fitrah_kg"
+                      placeholder="Fitrah (kg)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fitrah_lt"
-                      placeholder="fitrah_lt"
+                      placeholder="Fitrah (lt)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.maal_rp"
                       @change="calculateTotalZakat"
-                      placeholder="maal_rp"
+                      placeholder="Maal (Rp)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.profesi_rp"
                       @change="calculateTotalZakat"
-                      placeholder="profesi_rp"
+                      placeholder="Profesi (Rp)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.infaq_rp"
                       @change="calculateTotalZakat"
-                      placeholder="infaq_rp"
+                      placeholder="Infaq (Rp)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.wakaf_rp"
                       @change="calculateTotalZakat"
-                      placeholder="wakaf_rp"
+                      placeholder="Wakaf (Rp)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fidyah_rp"
                       @change="calculateTotalZakat"
-                      placeholder="fidyah_rp"
+                      placeholder="Fidyah (Rp)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.fidyah_kg"
-                      placeholder="fidyah_kg"
+                      placeholder="Fidyah (kg)"
                       class="w-24"
                     />
                     <Input
                       v-model="zakat_line.kafarat_rp"
                       @change="calculateTotalZakat"
-                      placeholder="kafarat_rp"
+                      placeholder="Kafarat (Rp)"
                       class="w-24"
                     />
                     <!-- TODO implement minus button -->
