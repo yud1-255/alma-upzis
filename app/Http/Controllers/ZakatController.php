@@ -19,23 +19,26 @@ class ZakatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $domain = new ZakatDomain($user);
         $zakats = array();
 
+        $searchTerm = $request->searchTerm ?? "";
+
         if ($user->can('viewAny', new Zakat())) {
-            $zakats = $domain->transactionSummary();
+            $zakats = $domain->transactionSummary($searchTerm);
         } else {
             $zakats = $domain->ownTransactionSummary($user);
         }
 
         return Inertia::render('Zakat/Index', [
-            'zakats' => $zakats->paginate(10),
+            'zakats' => $zakats->paginate(10)->withQueryString(),
             'can' => [
                 'delete' => $user->can('delete', new Zakat()),
                 'confirmPayment' => $user->can('confirmPayment', new Zakat()),
+                'viewAny' => $user->can('viewAny', new Zakat())
             ]
         ]);
     }
