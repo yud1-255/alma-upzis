@@ -15,9 +15,9 @@ class RoleController extends Controller
     {
         // TODO refactor into UserDomain
         if ($request->has('all')) {
-            $users = User::paginate(1)->withQueryString();
+            $users = User::paginate(5)->withQueryString();
         } else {
-            $users = User::has('roles')->paginate(1)->withQueryString();
+            $users = User::has('roles')->paginate(5)->withQueryString();
         }
 
         $roles = Role::all();
