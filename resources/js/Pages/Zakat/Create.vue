@@ -14,29 +14,55 @@
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <BreezeValidationErrors class="mb-4" />
-            <h2 class="text-l my-4 font-semibold leading-tight text-gray-800">
-              Penerimaan zakat
-            </h2>
-            <div v-if="can.submitForOthers" class="flex">
-              <div>
-                <Label>family_search</Label>
-                <autocomplete
-                  :placeholder="family_placeholder"
-                  :items="families"
-                  key="id"
-                  value="head_of_family"
-                  isAsync="true"
-                  @input="searchFamily"
-                  @selected="setFamily"
-                />
-              </div>
-              <div>
-                <Label for="transaction_no">receive_from_name</Label>
-                <Input v-model="form.receive_from_name" />
+            <div v-if="can.submitForOthers">
+              <h2 class="text-l my-4 font-semibold leading-tight text-gray-800">
+                Penerimaan oleh Panitia
+              </h2>
+              <div class="flex">
+                <div>
+                  <Label>Kepala Keluarga</Label>
+                  <autocomplete
+                    placeholder="Ketik untuk mencari"
+                    :items="families"
+                    key="id"
+                    value="head_of_family"
+                    isAsync="true"
+                    @input="searchFamily"
+                    @selected="setFamily"
+                  />
+                </div>
+                <div>
+                  <Label for="transaction_no">Terima dari</Label>
+                  <Input v-model="form.receive_from_name" />
+                </div>
+                <div>
+                  <Label for="total_rp">Total (Rp)</Label>
+                  <InputNumeric
+                    v-model="form.total_rp"
+                    placeholder="0"
+                    class="text-right"
+                    readonly
+                  />
+                </div>
+                <div>
+                  <Label for="hijri_year">Periode Zakat</Label>
+                  <Input
+                    v-model="form.hijri_year"
+                    class="text-right"
+                    readonly
+                  />
+                </div>
               </div>
             </div>
+
             <form @submit.prevent="submit">
-              <div class="flex flex-wrap">
+              <h2
+                v-if="!can.submitForOthers"
+                class="text-l my-4 font-semibold leading-tight text-gray-800"
+              >
+                Penerimaan zakat
+              </h2>
+              <div v-if="!can.submitForOthers" class="flex flex-wrap">
                 <div>
                   <Label for="family_head">Kepala Keluarga</Label>
                   <Input v-model="form.family_head" />
