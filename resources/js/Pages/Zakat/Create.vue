@@ -43,7 +43,12 @@
                 </div>
                 <div>
                   <Label for="total_rp">Total (Rp)</Label>
-                  <Input v-model="form.total_rp" class="text-right" readonly />
+                  <InputNumeric
+                    v-model="form.total_rp"
+                    placeholder="0"
+                    class="text-right"
+                    readonly
+                  />
                 </div>
                 <div>
                   <Label for="hijri_year">Periode Zakat</Label>
@@ -67,61 +72,61 @@
                   <!-- TODO implement checkbox to disallow at backend -->
                   <div class="flex">muzakki: {{ zakat_line.muzakki_name }}</div>
                   <div class="flex flex-wrap py-2">
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.fitrah_rp"
                       @change="calculateTotalZakat"
                       placeholder="Fitrah (Rp)"
                       class="w-24"
                     />
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.fitrah_kg"
                       @change="calculateTotalZakat"
                       placeholder="Fitrah (kg)"
                       class="w-24"
                     />
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.fitrah_lt"
                       @change="calculateTotalZakat"
                       placeholder="Fitrah (lt)"
                       class="w-24"
                     />
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.maal_rp"
                       @change="calculateTotalZakat"
                       placeholder="Maal (Rp)"
                       class="w-24"
                     />
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.profesi_rp"
                       @change="calculateTotalZakat"
                       placeholder="Profesi (Rp)"
                       class="w-24"
                     />
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.infaq_rp"
                       @change="calculateTotalZakat"
                       placeholder="Infaq (Rp)"
                       class="w-24"
                     />
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.wakaf_rp"
                       @change="calculateTotalZakat"
                       placeholder="Wakaf (Rp)"
                       class="w-24"
                     />
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.fidyah_rp"
                       @change="calculateTotalZakat"
                       placeholder="Fidyah (Rp)"
                       class="w-24"
                     />
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.fidyah_kg"
                       @change="calculateTotalZakat"
                       placeholder="Fidyah (kg)"
                       class="w-24"
                     />
-                    <Input
+                    <InputNumeric
                       v-model="zakat_line.kafarat_rp"
                       @change="calculateTotalZakat"
                       placeholder="Kafarat (Rp)"
@@ -169,6 +174,7 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import Autocomplete from "@/Components/Autocomplete.vue";
 import Input from "@/Components/Input.vue";
+import InputNumeric from "@/Components/InputNumeric.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
 import { Head } from "@inertiajs/inertia-vue3";
@@ -183,6 +189,7 @@ export default {
     Link,
     Label,
     Input,
+    InputNumeric,
     Checkbox,
     Head,
   },
@@ -246,12 +253,7 @@ export default {
     can: Object,
   },
   methods: {
-    calculateTotalZakat(event) {
-      if (isNaN(event.target.value)) {
-        event.target.value = "";
-        return;
-      }
-
+    calculateTotalZakat() {
       let totalRp = this.form.zakat_lines.reduce((total, line) => {
         total =
           total +
