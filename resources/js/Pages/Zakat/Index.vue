@@ -2,9 +2,7 @@
   <Head title="Zakat"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h1 class="text-xl font-semibold leading-tight text-gray-800">
-        Transaksi Zakat
-      </h1>
+      <h1>Transaksi Zakat</h1>
     </template>
     <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-2">

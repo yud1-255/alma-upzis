@@ -2,9 +2,7 @@
   <Head title="Daftar muzakki"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h1 class="text-xl font-semibold leading-tight text-gray-800">
-        Daftarkan muzakki
-      </h1>
+      <h1>Daftarkan muzakki</h1>
     </template>
     <div class="py-6">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -80,7 +78,7 @@
                 </div>
 
                 <div id="ext-address">
-                  <div class="flex">
+                  <div class="flex mt-4">
                     <Label for="address">Alamat Lengkap</Label>
                     <Label v-if="familyForm.is_bpi" class="mx-1"
                       >(auto-generated)</Label
@@ -98,11 +96,7 @@
 
             <div v-if="family != null">
               <div>
-                <h2
-                  class="text-l my-4 font-semibold leading-tight text-gray-800"
-                >
-                  Muzakki dalam keluarga
-                </h2>
+                <h2 class="mt-6">Muzakki dalam keluarga</h2>
                 <form @submit.prevent="addMuzakki">
                   <table>
                     <thead class="font-bold border-b-2">

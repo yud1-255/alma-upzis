@@ -2,9 +2,7 @@
   <Head title="Rekap Zakat"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h1 class="text-xl font-semibold leading-tight text-gray-800">
-        Rekap Pendapatan Zakat
-      </h1>
+      <h1>Rekap Pendapatan Zakat</h1>
       <div class="py-6 bg-white border-b border-gray-200">
         <table>
           <thead class="font-bold bg-gray-300 border-b-2">

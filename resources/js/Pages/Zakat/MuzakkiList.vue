@@ -2,11 +2,9 @@
   <Head title="Muzakki"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h1 class="text-xl font-semibold leading-tight text-gray-800">
-        Daftar Muzakki
-      </h1>
+      <h1>Daftar Muzakki</h1>
       <div class="py-6 bg-white border-b border-gray-200">
-        <table>
+        <table class="w-full">
           <thead class="font-bold bg-gray-300 border-b-2">
             <tr>
               <td rowspan="2" class="px-4 py-2">Kepala Keluarga</td>

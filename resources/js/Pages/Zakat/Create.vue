@@ -2,9 +2,7 @@
   <Head title="Buat zakat baru"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h1 class="text-xl font-semibold leading-tight text-gray-800">
-        Buat Transaksi Zakat
-      </h1>
+      <h1>Buat Transaksi Zakat</h1>
     </template>
 
     <!-- TODO modify styling for Create -->
@@ -15,9 +13,7 @@
           <div class="p-6 bg-white border-b border-gray-200">
             <BreezeValidationErrors class="mb-4" />
             <div v-if="can.submitForOthers">
-              <h2 class="text-l my-4 font-semibold leading-tight text-gray-800">
-                Penerimaan oleh Panitia
-              </h2>
+              <h2>Penerimaan oleh Panitia</h2>
               <div class="flex">
                 <div>
                   <Label>Kepala Keluarga</Label>
@@ -56,12 +52,7 @@
             </div>
 
             <form @submit.prevent="submit">
-              <h2
-                v-if="!can.submitForOthers"
-                class="text-l my-4 font-semibold leading-tight text-gray-800"
-              >
-                Penerimaan zakat
-              </h2>
+              <h2 v-if="!can.submitForOthers">Penerimaan zakat</h2>
               <div v-if="!can.submitForOthers" class="flex flex-wrap">
                 <div>
                   <Label for="family_head">Kepala Keluarga</Label>
@@ -86,11 +77,7 @@
                 </div>
               </div>
               <div class="overflow-auto">
-                <h2
-                  class="text-l my-4 font-semibold leading-tight text-gray-800"
-                >
-                  Keterangan Muzakki
-                </h2>
+                <h2>Keterangan Muzakki</h2>
                 <div
                   v-for="zakat_line in form.zakat_lines"
                   :key="zakat_line.id"

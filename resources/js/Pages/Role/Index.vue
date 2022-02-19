@@ -2,15 +2,13 @@
   <Head title="Zakat"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h1 class="text-xl font-semibold leading-tight text-gray-800">
-        Pengaturan Pengguna
-      </h1>
+      <h1>Pengaturan Pengguna</h1>
     </template>
     <div class="py-6">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <table>
+            <table class="w-4/5">
               <thead class="font-bold bg-gray-300 border-b-2">
                 <td class="px-4 py-2">ID</td>
                 <td class="px-4 py-2">Nama</td>

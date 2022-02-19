@@ -2,9 +2,7 @@
   <Head title="Rekap Zakat"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h1 class="text-xl font-semibold leading-tight text-gray-800">
-        Pembayaran Online
-      </h1>
+      <h1>Pembayaran Online</h1>
       <div class="py-6 bg-white border-b border-gray-200">
         <table>
           <thead class="font-bold bg-gray-300 border-b-2">
@@ -14,7 +12,7 @@
             <td class="px-4 py-2">Telepon</td>
             <td class="px-4 py-2">Email</td>
             <td class="px-4 py-2">Konfirmasi Petugas</td>
-            <td class="px-4 py-2">Jumlah</td>
+            <td class="px-4 py-2">Jumlah (Rp)</td>
             <td class="px-4 py-2"></td>
           </thead>
           <tbody>
@@ -25,7 +23,15 @@
               <td class="px-4 py-2">{{ zakat.receive_from_phone }}</td>
               <td class="px-4 py-2">{{ zakat.receive_from_email }}</td>
               <td class="px-4 py-2">{{ zakat.zakat_pic_name }}</td>
-              <td class="px-4 py-2">{{ zakat.total_rp }}</td>
+              <td class="px-4 py-2 text-right">
+                {{
+                  Number(
+                    zakat.total_transfer_rp > 0
+                      ? zakat.total_transfer_rp
+                      : zakat.total_rp
+                  ).toLocaleString("id")
+                }}
+              </td>
               <td v-if="can.confirmPayment" class="px-4 py-2">
                 <Link
                   v-if="zakat.zakat_pic_name == null"
