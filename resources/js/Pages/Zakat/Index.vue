@@ -5,18 +5,20 @@
       <h1 class="text-xl font-semibold leading-tight text-gray-800">
         Transaksi Zakat
       </h1>
-      <div class="py-6 bg-white border-b border-gray-200">
-        <div class="mb-4">
-          <Link
-            class="px-6 py-2 mb-2 text-green-100 bg-green-500 rounded print:hidden"
-            :href="route('zakat.create')"
-            >Buat Transaksi</Link
-          >
-        </div>
+    </template>
+    <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-2">
         <table>
           <thead>
             <tr v-if="can.viewAny">
-              <td colspan="9" class="text-right">
+              <td colspan="2" class="py-4">
+                <Link
+                  class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
+                  :href="route('zakat.create')"
+                  >Buat Transaksi</Link
+                >
+              </td>
+              <td colspan="7" class="text-right">
                 <Input
                   v-model="searchTerm"
                   placeholder="Cari berdasarkan nama"
@@ -79,11 +81,12 @@
             </tr>
           </tbody>
         </table>
+
+        <pagination :links="zakats.links" />
       </div>
-      <pagination :links="zakats.links" />
 
       <confirmation ref="confirmation">></confirmation>
-    </template>
+    </div>
   </BreezeAuthenticatedLayout>
 </template>
 
