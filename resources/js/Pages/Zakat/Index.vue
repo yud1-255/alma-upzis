@@ -60,14 +60,14 @@
                 >
                   Lihat
                 </Link>
-                <Link
+                <button
                   v-if="can.confirmPayment"
-                  @click="confirmPayment(zakat.id)"
+                  @click="confirmPayment(zakat)"
                   class="text-orange-700 mx-2"
                   :class="{ invisible: zakat.zakat_pic == null }"
                 >
                   Konfirmasi
-                </Link>
+                </button>
                 <Link
                   v-if="can.delete"
                   @click="destroy(zakat.id)"
@@ -81,6 +81,8 @@
         </table>
       </div>
       <pagination :links="zakats.links" />
+
+      <confirmation ref="confirmation">></confirmation>
     </template>
   </BreezeAuthenticatedLayout>
 </template>
@@ -91,6 +93,7 @@ import Input from "@/Components/Input.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination.vue";
+import Confirmation from "@/Components/Confirmation.vue";
 
 import debounce from "lodash/debounce";
 
@@ -101,6 +104,7 @@ export default {
     Link,
     Input,
     Pagination,
+    Confirmation,
   },
   props: {
     zakats: Object,
@@ -124,17 +128,27 @@ export default {
         preserveScroll: true,
       });
     },
-    confirmPayment(id) {
-      this.$inertia.post(
-        route(`zakat.confirm`, id),
-        {
-          pageUrl: this.$page.url,
-        },
-        {
-          preserveState: true,
-          preserveScroll: true,
-        }
-      );
+    async confirmPayment(zakat) {
+      const isConfirmed = await this.$refs.confirmation.show({
+        title: "Konfirmasi",
+        message: `Konfirmasi pembayaran dari ${zakat.receive_from_name} untuk keluarga ${zakat.family_head}?`,
+        okButton: "Lanjut",
+        cancelButton: "Batal",
+      });
+
+      if (isConfirmed) {
+        console.log(zakat);
+        this.$inertia.post(
+          route(`zakat.confirm`, zakat.id),
+          {
+            pageUrl: this.$page.url,
+          },
+          {
+            preserveState: true,
+            preserveScroll: true,
+          }
+        );
+      }
     },
   },
 };

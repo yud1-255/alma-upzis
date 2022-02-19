@@ -22,7 +22,7 @@
                 <div>
                   <Label>Kepala Keluarga</Label>
                   <autocomplete
-                    placeholder="Ketik untuk mencari"
+                    placeholder="Cari berdasarkan nama"
                     :items="families"
                     key="id"
                     value="head_of_family"
