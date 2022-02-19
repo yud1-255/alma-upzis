@@ -74,6 +74,7 @@ class ZakatDomain
             ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
             ->where('receive_from_name', 'like', "%{$searchTerm}%")
             ->orWhere('user_zakat_pic.name', 'like', "%{$searchTerm}%")
+            ->orWhere('family_head', 'like', "%{$searchTerm}%")
             ->orderBy('transaction_no', 'desc')
             ->select([
                 'zakats.*',
