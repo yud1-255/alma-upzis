@@ -68,13 +68,13 @@
                 >
                   Konfirmasi
                 </button>
-                <Link
+                <button
                   v-if="can.delete"
-                  @click="destroy(zakat.id)"
+                  @click="destroy(zakat)"
                   class="text-red-700"
                 >
                   Hapus
-                </Link>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -123,10 +123,19 @@ export default {
     }, 300),
   },
   methods: {
-    destroy(id) {
-      this.$inertia.delete(route("zakat.destroy", id), {
-        preserveScroll: true,
+    async destroy(zakat) {
+      const isConfirmed = await this.$refs.confirmation.show({
+        title: "Konfirmasi",
+        message: `Hapus zakat dari ${zakat.receive_from_name} untuk keluarga ${zakat.family_head}?`,
+        okButton: "Lanjut",
+        cancelButton: "Batal",
       });
+
+      if (isConfirmed) {
+        this.$inertia.delete(route("zakat.destroy", zakat.id), {
+          preserveScroll: true,
+        });
+      }
     },
     async confirmPayment(zakat) {
       const isConfirmed = await this.$refs.confirmation.show({
