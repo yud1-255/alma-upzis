@@ -8,27 +8,26 @@
         Transaksi Zakat
       </h1>
     </template>
+    <!-- TODO refactor into printable component -->
     <div class="py-6 print:text-xs">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200 print:font-mono">
-            <!-- {{ zakat }} -->
             <div class="py-4">
               <p>Transaksi no: {{ zakat.transaction_no }}</p>
               <p>Tanggal: {{ zakat.transaction_date }}</p>
             </div>
 
-            <!-- TODO refactor into table component -->
             <div class="overflow-x-auto">
               <table class="table-auto">
                 <thead class="font-bold bg-gray-300 border-b-2">
                   <tr>
                     <td rowspan="2" class="px-4 py-2">Nama</td>
-                    <td colspan="3" class="px-4 py-2">Fitrah (rp kg lt)</td>
+                    <td colspan="3" class="px-4 py-2">Fitrah</td>
                     <td rowspan="2" class="px-4 py-2">Maal</td>
                     <td rowspan="2" class="px-4 py-2">Profesi</td>
                     <td rowspan="2" class="px-4 py-2">Infaq/Shadaqah</td>
-                    <td colspan="2" class="px-4 py-2">Fidyah (rp kg)</td>
+                    <td colspan="2" class="px-4 py-2">Fidyah</td>
                     <td rowspan="2" class="px-4 py-2">Wakaf</td>
                     <td rowspan="2" class="px-4 py-2">Kafarat</td>
                   </tr>

@@ -13,6 +13,7 @@
           :class="{ 'bg-blue-700 text-white': link.active }"
           :href="link.url"
           v-html="link.label"
+          preserve-scroll
         />
       </template>
     </div>

@@ -11,7 +11,7 @@
             <td class="px-4 py-2">Fitrah (rp kg lt)</td>
             <td class="px-4 py-2">Maal</td>
             <td class="px-4 py-2">Profesi</td>
-            <td class="px-4 py-2">Infaq/Shadaqah</td>
+            <td class="px-4 py-2">Infaq Shadaqah</td>
             <td class="px-4 py-2">Fidyah (rp kg)</td>
             <td class="px-4 py-2">Wakaf</td>
             <td class="px-4 py-2">Kafarat</td>
@@ -28,18 +28,32 @@
               </td>
               <td>{{ zakat_line.muzakki_name }}</td>
               <td class="text-right">
-                {{ zakat_line.fitrah_rp }} | {{ zakat_line.fitrah_kg }} |
-                {{ zakat_line.fitrah_lt }}
+                {{ Number(zakat_line.fitrah_rp).toLocaleString("id") }} |
+                {{ Number(zakat_line.fitrah_kg).toLocaleString("id") }} |
+                {{ Number(zakat_line.fitrah_lt).toLocaleString("id") }}
               </td>
-              <td class="text-right">{{ zakat_line.maal_rp }}</td>
-              <td class="text-right">{{ zakat_line.profesi_rp }}</td>
-              <td class="text-right">{{ zakat_line.infaq_rp }}</td>
               <td class="text-right">
-                {{ zakat_line.fidyah_rp }} | {{ zakat_line.fidyah_kg }}
+                {{ Number(zakat_line.maal_rp).toLocaleString("id") }}
               </td>
-              <td class="text-right">{{ zakat_line.wakaf_rp }}</td>
-              <td class="text-right">{{ zakat_line.kafarat_rp }}</td>
-              <td class="text-right">{{ zakat_line.transaction_date }}</td>
+              <td class="text-right">
+                {{ Number(zakat_line.profesi_rp).toLocaleString("id") }}
+              </td>
+              <td class="text-right">
+                {{ Number(zakat_line.infaq_rp).toLocaleString("id") }}
+              </td>
+              <td class="text-right">
+                {{ Number(zakat_line.fidyah_rp).toLocaleString("id") }} |
+                {{ Number(zakat_line.fidyah_kg).toLocaleString("id") }}
+              </td>
+              <td class="text-right">
+                {{ Number(zakat_line.wakaf_rp).toLocaleString("id") }}
+              </td>
+              <td class="text-right">
+                {{ Number(zakat_line.kafarat_rp).toLocaleString("id") }}
+              </td>
+              <td class="text-right">
+                {{ zakat_line.transaction_date }}
+              </td>
               <td class="text-right">{{ zakat_line.receive_from_name }}</td>
               <td class="text-right">{{ zakat_line.zakat_pic_name }}</td>
             </tr>

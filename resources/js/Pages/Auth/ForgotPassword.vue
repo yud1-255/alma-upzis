@@ -1,5 +1,5 @@
 <template>
-  <Head title="Forgot Password" />
+  <Head title="Reset Password" />
 
   <div class="mb-4 text-sm text-gray-600">
     Lupa password anda? Tidak masalah. Masukkan email anda dan kami akan
