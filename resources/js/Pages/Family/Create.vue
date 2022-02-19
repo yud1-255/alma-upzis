@@ -23,29 +23,33 @@
               </div>
               <div>
                 <h2>Alamat</h2>
-                <div class="flex">
+                <div class="flex space-x-2">
                   <input
                     type="radio"
                     id="is_bpi_true"
-                    class="mx-2"
+                    class="text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     v-model="familyForm.is_bpi"
                     :value="1"
                     @change="setAddress"
                   />
-                  <Label for="is_bpi_true">Warga BPI</Label>
+                  <Label for="is_bpi_true" class="cursor-pointer"
+                    >Warga BPI</Label
+                  >
                   <input
                     type="radio"
                     id="is_bpi_false"
-                    class="mx-2"
+                    class="text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     v-model="familyForm.is_bpi"
                     :value="0"
                     @change="setAddress"
                   />
-                  <Label for="is_bpi_false">Luar BPI</Label>
+                  <Label for="is_bpi_false" class="cursor-pointer"
+                    >Luar BPI</Label
+                  >
                 </div>
 
                 <!-- TODO refactor into select component (Vue) -->
-                <div v-if="familyForm.is_bpi" id="bpi_address">
+                <div v-if="familyForm.is_bpi" id="bpi_address" class="my-2">
                   <Label>Blok/Nomor</Label>
                   <select v-model="selectedBlock" @change="setAddress">
                     <option></option>
@@ -151,15 +155,16 @@
                       </tr>
                       <tr>
                         <td colspan="4">
-                          <div>
+                          <div class="flex my-2 space-x-2 align-top">
                             <!-- TODO refactor into checkbox component (Vue) -->
-                            <input
-                              type="checkbox"
+
+                            <Checkbox
                               id="use_same_address"
                               v-model="useFamilyAddress"
+                              :checked="useFamilyAddress"
                             />
-                            <label for="use_same_address"
-                              >gunakan alamat keluarga</label
+                            <Label for="use_same_address" class="cursor-pointer"
+                              >gunakan alamat keluarga</Label
                             >
                           </div>
                         </td>
