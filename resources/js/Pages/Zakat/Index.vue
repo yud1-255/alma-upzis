@@ -92,6 +92,8 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination.vue";
 
+import debounce from "lodash/debounce";
+
 export default {
   components: {
     BreezeAuthenticatedLayout,
@@ -110,11 +112,11 @@ export default {
     };
   },
   watch: {
-    searchTerm(newValue, oldValue) {
+    searchTerm: debounce(function (newValue) {
       this.$inertia.replace(
-        this.route("zakat.index", { searchTerm: this.searchTerm })
+        this.route("zakat.index", { searchTerm: newValue })
       );
-    },
+    }, 300),
   },
   methods: {
     destroy(id) {
