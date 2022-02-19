@@ -11,7 +11,7 @@
     <div class="py-6 print:text-xs">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-          <div class="p-6 bg-white border-b border-gray-200">
+          <div class="p-6 bg-white border-b border-gray-200 print:font-mono">
             <!-- {{ zakat }} -->
             <div class="py-4">
               <p>Transaksi no: {{ zakat.transaction_no }}</p>
@@ -22,97 +22,157 @@
             <div class="overflow-x-auto">
               <table class="table-auto">
                 <thead class="font-bold bg-gray-300 border-b-2">
-                  <td class="px-4 py-2">Nama</td>
-                  <td class="px-4 py-2">Fitrah (rp kg lt)</td>
-                  <td class="px-4 py-2">Maal</td>
-                  <td class="px-4 py-2">Profesi</td>
-                  <td class="px-4 py-2">Infaq/Shadaqah</td>
-                  <td class="px-4 py-2">Fidyah (rp kg)</td>
-                  <td class="px-4 py-2">Wakaf</td>
-                  <td class="px-4 py-2">Kafarat</td>
+                  <tr>
+                    <td rowspan="2" class="px-4 py-2">Nama</td>
+                    <td colspan="3" class="px-4 py-2">Fitrah (rp kg lt)</td>
+                    <td rowspan="2" class="px-4 py-2">Maal</td>
+                    <td rowspan="2" class="px-4 py-2">Profesi</td>
+                    <td rowspan="2" class="px-4 py-2">Infaq/Shadaqah</td>
+                    <td colspan="2" class="px-4 py-2">Fidyah (rp kg)</td>
+                    <td rowspan="2" class="px-4 py-2">Wakaf</td>
+                    <td rowspan="2" class="px-4 py-2">Kafarat</td>
+                  </tr>
+                  <tr>
+                    <td>Rp</td>
+                    <td>Kg</td>
+                    <td>Lt</td>
+                    <td>Rp</td>
+                    <td>Kg</td>
+                  </tr>
                 </thead>
+
                 <tbody>
                   <tr
                     v-for="zakat_line in zakat.zakat_lines"
                     :key="zakat_line.id"
                   >
-                    <td>{{ zakat_line.muzakki.name }}</td>
-                    <td class="text-right">
-                      {{ zakat_line.fitrah_rp }} | {{ zakat_line.fitrah_kg }} |
-                      {{ zakat_line.fitrah_lt }}
+                    <td class="px-2">{{ zakat_line.muzakki.name }}</td>
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.fitrah_rp) }}
                     </td>
-                    <td class="text-right">{{ zakat_line.maal_rp }}</td>
-                    <td class="text-right">{{ zakat_line.profesi_rp }}</td>
-                    <td class="text-right">{{ zakat_line.infaq_rp }}</td>
-                    <td class="text-right">
-                      {{ zakat_line.fidyah_rp }} | {{ zakat_line.fidyah_kg }}
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.fitrah_kg) }}
                     </td>
-                    <td class="text-right">{{ zakat_line.wakaf_rp }}</td>
-                    <td class="text-right">{{ zakat_line.kafarat_rp }}</td>
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.fitrah_lt) }}
+                    </td>
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.maal_rp) }}
+                    </td>
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.profesi_rp) }}
+                    </td>
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.infaq_rp) }}
+                    </td>
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.fidyah_rp) }}
+                    </td>
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.fidyah_kg) }}
+                    </td>
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.wakaf_rp) }}
+                    </td>
+                    <td class="text-right px-2">
+                      {{ formatNumber(zakat_line.kafarat_rp) }}
+                    </td>
                   </tr>
                 </tbody>
-                <tfoot>
-                  <th>Total</th>
-                  <th class="text-right">
-                    {{ totalFitrahRp() }} | {{ totalFitrahKg() }} |
-                    {{ totalFitrahLt() }}
-                  </th>
-                  <th class="text-right">{{ totalMaalRp() }}</th>
-                  <th class="text-right">{{ totalProfesiRp() }}</th>
-                  <th class="text-right">{{ totalInfaqRp() }}</th>
-                  <th class="text-right">
-                    {{ totalFidyahRp() }} | {{ totalFidyahKg() }}
-                  </th>
-                  <th class="text-right">{{ totalWakafRp() }}</th>
-                  <th class="text-right">{{ totalKafaratRp() }}</th>
+                <tfoot class="border-t border-gray-200">
+                  <tr>
+                    <th class="text-left px-2">Total</th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalFitrahRp()) }}
+                    </th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalFitrahKg()) }}
+                    </th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalFitrahLt()) }}
+                    </th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalMaalRp()) }}
+                    </th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalProfesiRp()) }}
+                    </th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalInfaqRp()) }}
+                    </th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalFidyahRp()) }}
+                    </th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalFidyahKg()) }}
+                    </th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalWakafRp()) }}
+                    </th>
+                    <th class="text-right px-2">
+                      {{ formatNumber(totalKafaratRp()) }}
+                    </th>
+                  </tr>
+                  <tr class="align-top">
+                    <td colspan="6" class="pt-12 text-left">
+                      <p>Terima dari: {{ zakat.receive_from_name }}</p>
+                      <p>Petugas: {{ zakat.zakat_pic?.name }}</p>
+                    </td>
+                    <td colspan="5" class="pt-12 text-right">
+                      <div>
+                        <p>Jumlah:</p>
+                        <p>
+                          Rp:
+                          {{
+                            formatNumber(
+                              totalFitrahRp() +
+                                totalMaalRp() +
+                                totalProfesiRp() +
+                                totalInfaqRp() +
+                                totalFidyahRp() +
+                                totalWakafRp() +
+                                totalKafaratRp()
+                            )
+                          }}
+                        </p>
+                        <p>
+                          Kg:
+                          {{ formatNumber(totalFitrahKg() + totalFidyahKg()) }}
+                        </p>
+                        <p>Lt: {{ formatNumber(totalFitrahLt()) }}</p>
+                        <div v-if="!zakat.is_offline_submission">
+                          <div>
+                            Biaya Unik:
+                            {{ formatNumber(Number(zakat.unique_number, 0)) }}
+                          </div>
+                          <div>
+                            Total Transfer:
+                            {{
+                              formatNumber(Number(zakat.total_transfer_rp, 0))
+                            }}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
                 </tfoot>
               </table>
             </div>
-            <div class="flex flex-wrap py-4">
-              <div>
-                <p>Terima dari: {{ zakat.receive_from_name }}</p>
-                <p>Petugas: {{ zakat.zakat_pic?.name }}</p>
-              </div>
-              <div class="mx-8 md:text-right md:px-64">
-                <p>Jumlah:</p>
-                <p>
-                  Rp:
-                  {{
-                    totalFitrahRp() +
-                    totalMaalRp() +
-                    totalProfesiRp() +
-                    totalInfaqRp() +
-                    totalFidyahRp() +
-                    totalWakafRp() +
-                    totalKafaratRp()
-                  }}
-                </p>
-                <p>Kg: {{ totalFitrahKg() + totalFidyahKg() }}</p>
-                <p>Lt: {{ totalFitrahLt() }}</p>
-                <div v-if="!zakat.is_offline_submission">
-                  <div>Biaya Unik: {{ Number(zakat.unique_number, 0) }}</div>
-                  <div>
-                    Total Transfer: {{ Number(zakat.total_transfer_rp, 0) }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="print:hidden">
-              <button
+
+            <div class="pt-6 space-x-2 print:hidden">
+              <Button
                 v-if="can.confirmPayment"
                 @click="confirmPayment(zakat.id)"
-                class="px-6 py-2 text-white bg-gray-900 rounded"
               >
                 Konfirmasi Pembayaran
-              </button>
+              </Button>
 
-              <button
+              <Button
                 v-if="can.print && zakat.zakat_pic != null"
                 @click="print()"
-                class="px-6 py-2 text-white bg-gray-900 rounded"
               >
                 Cetak
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -123,12 +183,14 @@
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import Button from "@/Components/Button.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
     BreezeAuthenticatedLayout,
     Head,
+    Button,
   },
   setup() {},
   props: {
@@ -136,6 +198,9 @@ export default {
     can: Object,
   },
   methods: {
+    formatNumber(amount) {
+      return Number(amount).toLocaleString("id");
+    },
     totalFitrahRp() {
       return this.zakat.zakat_lines.reduce((total, line) => {
         total += Number(line.fitrah_rp);

@@ -4,7 +4,7 @@
       class="bg-gray-600 bg-opacity-50 fixed z-1 inset-x-0 inset-y-0 flex"
       v-if="isVisible"
     >
-      <div class="bg-white shadow m-auto p-4 text-center max-w-2xl min-h-min">
+      <div class="bg-white shadow m-auto p-4 max-w-2xl min-h-min">
         <slot></slot>
       </div>
     </div>

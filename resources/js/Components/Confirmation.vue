@@ -3,7 +3,7 @@
     <h2>{{ title }}</h2>
     <p>{{ message }}</p>
 
-    <div class="flex space-x-2 my-2">
+    <div class="flex space-x-2 mb-2 mt-6">
       <Button @click="cancel">{{ cancelButton }}</Button>
       <Button @click="confirm">{{ okButton }}</Button>
     </div>

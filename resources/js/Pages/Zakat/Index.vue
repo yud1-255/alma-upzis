@@ -30,7 +30,7 @@
               <td class="px-4 py-2">Petugas</td>
               <td class="px-4 py-2">Periode</td>
               <td class="px-4 py-2">Kepala Keluarga</td>
-              <td class="px-4 py-2">Terima lewat</td>
+              <td class="px-4 py-2 w-24 text-center">Terima lewat</td>
               <td class="px-4 py-2">Jumlah (Rp)</td>
               <td class="px-4 py-2"></td>
             </tr>
@@ -49,7 +49,9 @@
               <td class="px-4 py-2">{{ zakat.zakat_pic_name }}</td>
               <td class="px-4 py-2">{{ zakat.hijri_year }}</td>
               <td class="px-4 py-2">{{ zakat.family_head }}</td>
-              <td>{{ zakat.is_offline_submission ? "Gerai" : "Online" }}</td>
+              <td class="text-center">
+                {{ zakat.is_offline_submission ? "Gerai" : "Online" }}
+              </td>
               <td class="px-4 py-2 text-right">
                 {{ Number(zakat.total_rp).toLocaleString("id") }}
               </td>
