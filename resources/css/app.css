@@ -9,4 +9,8 @@
   h2 {
     @apply text-base my-4 font-bold leading-tight text-gray-800;
   }
+  table td,
+  table th {
+    @apply px-2;
+  }
 }

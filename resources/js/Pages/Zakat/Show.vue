@@ -46,69 +46,69 @@
                     :key="zakat_line.id"
                   >
                     <td class="px-2">{{ zakat_line.muzakki.name }}</td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.fitrah_rp) }}
                     </td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.fitrah_kg) }}
                     </td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.fitrah_lt) }}
                     </td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.maal_rp) }}
                     </td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.profesi_rp) }}
                     </td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.infaq_rp) }}
                     </td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.fidyah_rp) }}
                     </td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.fidyah_kg) }}
                     </td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.wakaf_rp) }}
                     </td>
-                    <td class="text-right px-2">
+                    <td class="text-right">
                       {{ formatNumber(zakat_line.kafarat_rp) }}
                     </td>
                   </tr>
                 </tbody>
                 <tfoot class="border-t border-gray-200">
                   <tr>
-                    <th class="text-left px-2">Total</th>
-                    <th class="text-right px-2">
+                    <th class="text-left">Total</th>
+                    <th class="text-right">
                       {{ formatNumber(totalFitrahRp()) }}
                     </th>
-                    <th class="text-right px-2">
+                    <th class="text-right">
                       {{ formatNumber(totalFitrahKg()) }}
                     </th>
-                    <th class="text-right px-2">
+                    <th class="text-right">
                       {{ formatNumber(totalFitrahLt()) }}
                     </th>
-                    <th class="text-right px-2">
+                    <th class="text-right">
                       {{ formatNumber(totalMaalRp()) }}
                     </th>
-                    <th class="text-right px-2">
+                    <th class="text-right">
                       {{ formatNumber(totalProfesiRp()) }}
                     </th>
-                    <th class="text-right px-2">
+                    <th class="text-right">
                       {{ formatNumber(totalInfaqRp()) }}
                     </th>
-                    <th class="text-right px-2">
+                    <th class="text-right">
                       {{ formatNumber(totalFidyahRp()) }}
                     </th>
-                    <th class="text-right px-2">
+                    <th class="text-right">
                       {{ formatNumber(totalFidyahKg()) }}
                     </th>
-                    <th class="text-right px-2">
+                    <th class="text-right">
                       {{ formatNumber(totalWakafRp()) }}
                     </th>
-                    <th class="text-right px-2">
+                    <th class="text-right">
                       {{ formatNumber(totalKafaratRp()) }}
                     </th>
                   </tr>
