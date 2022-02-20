@@ -5,7 +5,7 @@
       <h1>Pembayaran Online</h1>
       <div class="py-6 bg-white border-b border-gray-200">
         <table>
-          <thead class="font-bold bg-gray-300 border-b-2">
+          <thead class="font-bold border-b-2">
             <td class="px-4 py-2">No. Zakat</td>
             <td class="px-4 py-2">Tanggal</td>
             <td class="px-4 py-2">Terima dari</td>

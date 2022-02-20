@@ -20,7 +20,7 @@
 
             <div class="overflow-x-auto">
               <table class="table-auto">
-                <thead class="font-bold bg-gray-300 border-b-2">
+                <thead class="font-bold border-b-2">
                   <tr>
                     <td rowspan="2" class="px-4 py-2">Nama</td>
                     <td colspan="3" class="px-4 py-2">Fitrah</td>

@@ -9,7 +9,7 @@
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <table>
-              <thead class="font-bold bg-gray-300 border-b-2">
+              <thead class="font-bold border-b-2">
                 <tr>
                   <td rowspan="2" class="px-4 py-2">No. Zakat</td>
                   <td rowspan="2" class="px-4 py-2">Muzakki</td>
