@@ -4,7 +4,10 @@
     <template #header>
       <h1>Pembayaran Online</h1>
       <div class="py-6 bg-white border-b border-gray-200">
-        <table>
+        <div class="w-full text-right mb-2">
+          <Input v-model="searchTerm" placeholder="Cari berdasarkan nama" />
+        </div>
+        <table class="w-full">
           <thead class="font-bold border-b-2">
             <td class="px-4 py-2">No. Zakat</td>
             <td class="px-4 py-2">Tanggal</td>
@@ -13,17 +16,17 @@
             <td class="px-4 py-2">Email</td>
             <td class="px-4 py-2">Konfirmasi Petugas</td>
             <td class="px-4 py-2">Jumlah (Rp)</td>
-            <td class="px-4 py-2"></td>
+            <td class="px-4 py-2 w-28"></td>
           </thead>
           <tbody>
             <tr v-for="zakat in zakats.data" :key="zakat.id">
-              <td class="px-4 py-2">{{ zakat.transaction_no }}</td>
-              <td class="px-4 py-2">{{ zakat.transaction_date }}</td>
-              <td class="px-4 py-2">{{ zakat.receive_from_name }}</td>
-              <td class="px-4 py-2">{{ zakat.receive_from_phone }}</td>
-              <td class="px-4 py-2">{{ zakat.receive_from_email }}</td>
-              <td class="px-4 py-2">{{ zakat.zakat_pic_name }}</td>
-              <td class="px-4 py-2 text-right">
+              <td>{{ zakat.transaction_no }}</td>
+              <td>{{ zakat.transaction_date }}</td>
+              <td>{{ zakat.receive_from_name }}</td>
+              <td>{{ zakat.receive_from_phone }}</td>
+              <td>{{ zakat.receive_from_email }}</td>
+              <td>{{ zakat.zakat_pic_name }}</td>
+              <td class="text-right">
                 {{
                   Number(
                     zakat.total_transfer_rp > 0
@@ -32,7 +35,7 @@
                   ).toLocaleString("id")
                 }}
               </td>
-              <td v-if="can.confirmPayment" class="px-4 py-2">
+              <td v-if="can.confirmPayment">
                 <Link
                   v-if="zakat.zakat_pic_name == null"
                   @click="confirmPayment(zakat.id)"
@@ -54,18 +57,38 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
+import Input from "@/Components/Input.vue";
 import Pagination from "@/Components/Pagination.vue";
+import debounce from "lodash/debounce";
 
 export default {
   components: {
     BreezeAuthenticatedLayout,
     Head,
     Link,
+    Input,
     Pagination,
   },
   props: {
     zakats: Object,
     can: Object,
+  },
+  data() {
+    return {
+      searchTerm: "",
+    };
+  },
+  watch: {
+    searchTerm: debounce(function (newValue) {
+      this.$inertia.get(
+        this.route("zakat.onlinePayments"),
+        { searchTerm: newValue },
+        {
+          preserveState: true,
+          preserveScroll: true,
+        }
+      );
+    }, 300),
   },
   methods: {
     confirmPayment(id) {

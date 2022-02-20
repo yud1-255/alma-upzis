@@ -209,8 +209,10 @@ class ZakatController extends Controller
     public function onlinePayments(Request $request)
     {
         $user = Auth::user();
+        $searchTerm = $request->searchTerm ?? "";
+
         $domain = new ZakatDomain(Auth::user());
-        $zakats = $domain->zakatOnlinePayments();
+        $zakats = $domain->zakatOnlinePayments($searchTerm);
 
         return Inertia::render('Zakat/OnlinePayments', [
             'zakats' => $zakats->paginate(10),
