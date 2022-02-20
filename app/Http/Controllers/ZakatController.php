@@ -187,8 +187,10 @@ class ZakatController extends Controller
 
     public function muzakkiRecap(Request $request)
     {
+        $searchTerm = $request->searchTerm ?? "";
+
         $domain = new ZakatDomain(Auth::user());
-        $zakats = $domain->zakatMuzakkiRecap();
+        $zakats = $domain->zakatMuzakkiRecap($searchTerm);
 
         return Inertia::render('Zakat/MuzakkiRecap', [
             'zakats' => $zakats->paginate(10)

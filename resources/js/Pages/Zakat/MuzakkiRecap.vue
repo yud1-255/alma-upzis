@@ -8,7 +8,10 @@
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <table>
+            <div class="w-full text-right mb-2">
+              <Input v-model="searchTerm" placeholder="Cari berdasarkan nama" />
+            </div>
+            <table class="w-full">
               <thead class="font-bold border-b-2">
                 <tr>
                   <td rowspan="2" class="px-4 py-2">No. Zakat</td>
@@ -91,6 +94,8 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination.vue";
+import Input from "@/Components/Input.vue";
+import debounce from "lodash/debounce";
 
 export default {
   components: {
@@ -98,9 +103,22 @@ export default {
     Head,
     Link,
     Pagination,
+    Input,
   },
   props: {
     zakats: Object,
+  },
+  data() {
+    return {
+      searchTerm: "",
+    };
+  },
+  watch: {
+    searchTerm: debounce(function (newValue) {
+      this.$inertia.replace(
+        this.route("zakat.muzakkiRecap", { searchTerm: newValue })
+      );
+    }, 300),
   },
 };
 </script>
