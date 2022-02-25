@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Domains\ZakatDomain;
+use App\Exports\ZakatExport;
 use App\Models\Zakat;
 use App\Models\Family;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+
+use Maatwebsite\Excel\Facades\Excel;
 
 use Auth;
 
@@ -218,5 +221,10 @@ class ZakatController extends Controller
             'zakats' => $zakats->paginate(10),
             'can' => ['confirmPayment' => $user->can('confirmPayment', new Zakat())]
         ]);
+    }
+
+    public function export()
+    {
+        return Excel::download(new ZakatExport(), 'zakat.xlsx');
     }
 }
