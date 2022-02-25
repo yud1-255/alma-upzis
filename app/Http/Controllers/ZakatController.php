@@ -6,6 +6,7 @@ use App\Domains\ZakatDomain;
 use App\Exports\ZakatExport;
 use App\Exports\MuzakkiListExport;
 use App\Exports\MuzakkiRecapExport;
+use App\Exports\OnlinePaymentsExport;
 use App\Models\Zakat;
 use App\Models\Family;
 
@@ -234,6 +235,8 @@ class ZakatController extends Controller
                 return Excel::download(new MuzakkiListExport(Auth::user()), 'muzakki_list.xlsx');
             case 'muzakki_recap':
                 return Excel::download(new MuzakkiRecapExport(Auth::user()), 'muzakki_recap.xlsx');
+            case 'online_payments':
+                return Excel::download(new OnlinePaymentsExport(Auth::user()), 'online_payments.xlsx');
             default:
                 abort(404);
         }

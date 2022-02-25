@@ -1,57 +1,76 @@
 <template>
-  <Head title="Rekap Zakat"></Head>
+  <Head title="Pembayaran Online"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
       <h1>Pembayaran Online</h1>
-      <div class="py-6 bg-white border-b border-gray-200">
-        <div class="w-full text-right mb-2">
-          <Input v-model="searchTerm" placeholder="Cari berdasarkan nama" />
-        </div>
-        <table class="w-full">
-          <thead class="font-bold border-b-2">
-            <td class="px-4 py-2">No. Zakat</td>
-            <td class="px-4 py-2">Tanggal</td>
-            <td class="px-4 py-2">Terima dari</td>
-            <td class="px-4 py-2">Telepon</td>
-            <td class="px-4 py-2">Email</td>
-            <td class="px-4 py-2">Konfirmasi Petugas</td>
-            <td class="px-4 py-2">Jumlah (Rp)</td>
-            <td class="px-4 py-2 w-28"></td>
-          </thead>
-          <tbody>
-            <tr v-for="zakat in zakats.data" :key="zakat.id">
-              <td>{{ zakat.transaction_no }}</td>
-              <td>{{ zakat.transaction_date }}</td>
-              <td>{{ zakat.receive_from_name }}</td>
-              <td>{{ zakat.receive_from_phone }}</td>
-              <td>{{ zakat.receive_from_email }}</td>
-              <td>{{ zakat.zakat_pic_name }}</td>
-              <td class="text-right">
-                {{
-                  Number(
-                    zakat.total_transfer_rp > 0
-                      ? zakat.total_transfer_rp
-                      : zakat.total_rp
-                  ).toLocaleString("id")
-                }}
-              </td>
-              <td v-if="can.confirmPayment">
-                <button
-                  v-if="zakat.zakat_pic_name == null"
-                  @click="confirmPayment(zakat)"
-                  class="text-orange-700"
-                >
-                  Konfirmasi
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <pagination :links="zakats.links" />
-
-        <confirmation ref="confirmation">></confirmation>
-      </div>
     </template>
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+          <div class="p-6 bg-white border-b border-gray-200">
+            <div class="w-full mb-4 flex">
+              <div class="w-1/2">
+                <a
+                  class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
+                  :href="route('zakat.export', 'online_payments')"
+                  >Ekspor ke Excel</a
+                >
+              </div>
+
+              <div class="w-1/2 text-right">
+                <Input
+                  v-model="searchTerm"
+                  placeholder="Cari berdasarkan nama"
+                />
+              </div>
+            </div>
+            <table class="w-full">
+              <thead class="font-bold border-b-2">
+                <td class="px-4 py-2">No. Zakat</td>
+                <td class="px-4 py-2">Tanggal</td>
+                <td class="px-4 py-2">Terima dari</td>
+                <td class="px-4 py-2">Telepon</td>
+                <td class="px-4 py-2">Email</td>
+                <td class="px-4 py-2">Konfirmasi Petugas</td>
+                <td class="px-4 py-2">Jumlah (Rp)</td>
+                <td class="px-4 py-2 w-28"></td>
+              </thead>
+              <tbody>
+                <tr v-for="zakat in zakats.data" :key="zakat.id">
+                  <td>{{ zakat.transaction_no }}</td>
+                  <td>{{ zakat.transaction_date }}</td>
+                  <td>{{ zakat.receive_from_name }}</td>
+                  <td>{{ zakat.receive_from_phone }}</td>
+                  <td>{{ zakat.receive_from_email }}</td>
+                  <td>{{ zakat.zakat_pic_name }}</td>
+                  <td class="text-right">
+                    {{
+                      Number(
+                        zakat.total_transfer_rp > 0
+                          ? zakat.total_transfer_rp
+                          : zakat.total_rp
+                      ).toLocaleString("id")
+                    }}
+                  </td>
+                  <td v-if="can.confirmPayment">
+                    <button
+                      v-if="zakat.zakat_pic_name == null"
+                      @click="confirmPayment(zakat)"
+                      class="text-orange-700"
+                    >
+                      Konfirmasi
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination :links="zakats.links" />
+
+            <confirmation ref="confirmation">></confirmation>
+          </div>
+        </div>
+      </div>
+    </div>
   </BreezeAuthenticatedLayout>
 </template>
 
