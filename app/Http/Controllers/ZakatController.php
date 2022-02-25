@@ -223,8 +223,13 @@ class ZakatController extends Controller
         ]);
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new ZakatExport(Auth::user()), 'zakat.xlsx');
+        switch ($request->type) {
+            case 'summary':
+                return Excel::download(new ZakatExport(Auth::user()), 'zakat.xlsx');
+            default:
+                abort(404);
+        }
     }
 }

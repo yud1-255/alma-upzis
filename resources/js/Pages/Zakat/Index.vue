@@ -6,14 +6,19 @@
     </template>
     <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-2">
-        <table>
+        <table class="w-full">
           <thead>
             <tr v-if="can.viewAny">
-              <td colspan="2" class="py-4">
+              <td colspan="2" class="py-4 space-x-2">
                 <Link
                   class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
                   :href="route('zakat.create')"
                   >Buat Transaksi</Link
+                >
+                <a
+                  class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
+                  :href="route('zakat.export', 'summary')"
+                  >Ekspor ke Excel</a
                 >
               </td>
               <td colspan="7" class="text-right">
@@ -82,7 +87,9 @@
           </tbody>
         </table>
 
-        <pagination :links="zakats.links" />
+        <div class="w-full flex">
+          <pagination :links="zakats.links" />
+        </div>
       </div>
 
       <confirmation ref="confirmation">></confirmation>
