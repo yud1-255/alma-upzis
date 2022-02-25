@@ -156,7 +156,6 @@ export default {
       });
 
       if (isConfirmed) {
-        console.log(zakat);
         this.$inertia.post(
           route(`zakat.confirm`, zakat.id),
           {
