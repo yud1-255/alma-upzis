@@ -3,7 +3,10 @@
 use App\Http\Controllers\ZakatController;
 use App\Http\Controllers\MuzakkiController;
 use App\Http\Controllers\FamilyController;
+
+use App\Http\Controllers\AppConfigController;
 use App\Http\Controllers\RoleController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,6 +49,10 @@ Route::middleware(['auth', 'role:administrator,upzis'])->group(function () {
 Route::middleware(['auth', 'role:administrator'])->group(function () {
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::post('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
+});
+
+Route::middleware(['auth', 'role:administrator'])->group(function () {
+    Route::resource('app_config', AppConfigController::class);
 });
 
 Route::middleware(['auth'])->group(function () {
