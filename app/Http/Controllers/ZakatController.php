@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Domains\ZakatDomain;
 use App\Exports\ZakatExport;
+use App\Exports\MuzakkiListExport;
+use App\Exports\MuzakkiRecapExport;
 use App\Models\Zakat;
 use App\Models\Family;
 
@@ -228,6 +230,10 @@ class ZakatController extends Controller
         switch ($request->type) {
             case 'summary':
                 return Excel::download(new ZakatExport(Auth::user()), 'zakat.xlsx');
+            case 'muzakki_list':
+                return Excel::download(new MuzakkiListExport(Auth::user()), 'muzakki_list.xlsx');
+            case 'muzakki_recap':
+                return Excel::download(new MuzakkiRecapExport(Auth::user()), 'muzakki_recap.xlsx');
             default:
                 abort(404);
         }

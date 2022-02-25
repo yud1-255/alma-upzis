@@ -8,8 +8,20 @@
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <div class="w-full text-right mb-2">
-              <Input v-model="searchTerm" placeholder="Cari berdasarkan nama" />
+            <div class="w-full mb-2 flex">
+              <div class="w-1/2">
+                <a
+                  class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
+                  :href="route('zakat.export', 'muzakki_recap')"
+                  >Ekspor ke Excel</a
+                >
+              </div>
+              <div class="w-1/2 text-right">
+                <Input
+                  v-model="searchTerm"
+                  placeholder="Cari berdasarkan nama"
+                />
+              </div>
             </div>
             <table class="w-full">
               <thead class="font-bold border-b-2">
@@ -93,8 +105,8 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination.vue";
 import Input from "@/Components/Input.vue";
+import Pagination from "@/Components/Pagination.vue";
 import debounce from "lodash/debounce";
 
 export default {

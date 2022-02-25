@@ -144,17 +144,6 @@ class ZakatDomain
         return $zakats;
     }
 
-    public function muzakkiList(): Builder
-    {
-        $muzakkis = DB::table('muzakkis')
-            ->join('families', 'families.id', '=', 'muzakkis.family_id')
-            ->orderBy('head_of_family', 'asc')
-            ->select(['muzakkis.*', 'families.*']);
-
-        return $muzakkis;
-    }
-
-
     public function generateZakatNumber(bool $save): string
     {
         $sequence = SequenceNumber::where('type', 'zakat')->first();

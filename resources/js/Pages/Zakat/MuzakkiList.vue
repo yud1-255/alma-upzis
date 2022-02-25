@@ -6,8 +6,15 @@
     </template>
     <div class="py-6">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-          <div class="p-6 bg-white border-b border-gray-200">
+        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-2">
+          <div class="bg-white border-b border-gray-200">
+            <div class="my-4">
+              <a
+                class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
+                :href="route('zakat.export', 'muzakki_list')"
+                >Ekspor ke Excel</a
+              >
+            </div>
             <table class="w-full">
               <thead class="font-bold border-b-2">
                 <tr>

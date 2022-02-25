@@ -4,8 +4,8 @@ namespace App\Exports;
 
 use DateTime;
 
-use App\Domains\ZakatDomain;
 use App\Models\User;
+use App\Models\Family;
 
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
@@ -18,7 +18,7 @@ use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 
-class ZakatExport implements
+class MuzakkiListExport implements
     FromQuery,
     WithMapping,
     WithColumnFormatting,
@@ -36,37 +36,34 @@ class ZakatExport implements
     public function headings(): array
     {
         return [
-            'No. Zakat', 'Tanggal', 'Terima dari', 'Petugas',
-            'Periode', 'Kepala Keluarga', 'Terima lewat', 'Jumlah Bayar (Rp)'
+            'Kepala Keluarga', 'Alamat', 'Kontak', 'Muzakki',
+            'Akun Pengguna (Email)', 'Akun Pengguna (Nama)'
 
         ];
     }
 
     public function query()
     {
-        $domain = new ZakatDomain($this->user);
-        return $domain->transactionSummary("");
+        return Family::with('muzakkis', 'user');
     }
 
-    public function map($zakat): array
+    public function map($family): array
     {
         return [
-            $zakat->transaction_no,
-            Date::dateTimeToExcel(new DateTime($zakat->transaction_date)),
-            $zakat->receive_from_name,
-            $zakat->zakat_pic_name,
-            $zakat->hijri_year,
-            $zakat->family_head,
-            $zakat->is_offline_submission ? 'Gerai' : 'Online',
-            $zakat->total_transfer_rp
+            $family->head_of_family,
+            $family->address,
+            $family->phone,
+            $family->muzakkis->map(function ($item) {
+                return $item->name;
+            })->join(", "),
+            $family->user != null ? $family->user->email : '',
+            $family->user != null ? $family->user->name : ''
         ];
     }
 
     public function columnFormats(): array
     {
-        return [
-            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY
-        ];
+        return [];
     }
 
     public function styles(Worksheet $sheet)

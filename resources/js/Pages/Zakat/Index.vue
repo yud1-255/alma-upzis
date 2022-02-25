@@ -9,7 +9,7 @@
         <table class="w-full">
           <thead>
             <tr v-if="can.viewAny">
-              <td colspan="2" class="py-4 space-x-2">
+              <td colspan="4" class="py-4 space-x-2">
                 <Link
                   class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
                   :href="route('zakat.create')"
@@ -21,7 +21,7 @@
                   >Ekspor ke Excel</a
                 >
               </td>
-              <td colspan="7" class="text-right">
+              <td colspan="5" class="text-right">
                 <Input
                   v-model="searchTerm"
                   placeholder="Cari berdasarkan nama"
