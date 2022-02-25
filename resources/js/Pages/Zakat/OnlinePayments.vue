@@ -36,18 +36,20 @@
                 }}
               </td>
               <td v-if="can.confirmPayment">
-                <Link
+                <button
                   v-if="zakat.zakat_pic_name == null"
-                  @click="confirmPayment(zakat.id)"
+                  @click="confirmPayment(zakat)"
                   class="text-orange-700"
                 >
                   Konfirmasi
-                </Link>
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
         <pagination :links="zakats.links" />
+
+        <confirmation ref="confirmation">></confirmation>
       </div>
     </template>
   </BreezeAuthenticatedLayout>
@@ -59,6 +61,8 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import Input from "@/Components/Input.vue";
 import Pagination from "@/Components/Pagination.vue";
+import Confirmation from "@/Components/Confirmation.vue";
+
 import debounce from "lodash/debounce";
 
 export default {
@@ -68,6 +72,7 @@ export default {
     Link,
     Input,
     Pagination,
+    Confirmation,
   },
   props: {
     zakats: Object,
@@ -91,17 +96,26 @@ export default {
     }, 300),
   },
   methods: {
-    confirmPayment(id) {
-      this.$inertia.post(
-        route(`zakat.confirm`, id),
-        {
-          pageUrl: this.$page.url,
-        },
-        {
-          preserveState: true,
-          preserveScroll: true,
-        }
-      );
+    async confirmPayment(zakat) {
+      const isConfirmed = await this.$refs.confirmation.show({
+        title: "Konfirmasi",
+        message: `Konfirmasi pembayaran dari ${zakat.receive_from_name} untuk keluarga ${zakat.family_head}?`,
+        okButton: "Lanjut",
+        cancelButton: "Batal",
+      });
+
+      if (isConfirmed) {
+        this.$inertia.post(
+          route(`zakat.confirm`, zakat.id),
+          {
+            pageUrl: this.$page.url,
+          },
+          {
+            preserveState: true,
+            preserveScroll: true,
+          }
+        );
+      }
     },
   },
 };
