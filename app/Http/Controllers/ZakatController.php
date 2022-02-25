@@ -225,6 +225,6 @@ class ZakatController extends Controller
 
     public function export()
     {
-        return Excel::download(new ZakatExport(), 'zakat.xlsx');
+        return Excel::download(new ZakatExport(Auth::user()), 'zakat.xlsx');
     }
 }
