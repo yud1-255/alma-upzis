@@ -326,6 +326,9 @@ export default {
           this.muzakkiForm.reset("name", "phone", "address");
           this.useFamilyAddress = true;
         },
+        onError: () => {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        },
       });
     },
     deleteMuzakki(id) {
