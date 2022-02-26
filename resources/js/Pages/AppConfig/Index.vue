@@ -18,13 +18,13 @@
                   class="align-top text-left"
                   rowspan="3"
                 >
-                  {{ appConfig.key }}
+                  {{ configTranslation[appConfig.key] ?? appConfig.key }}
                 </th>
                 <th
                   v-else-if="appConfig.key != 'fitrah_amount'"
                   class="text-left"
                 >
-                  {{ appConfig.key }}
+                  {{ configTranslation[appConfig.key] ?? appConfig.key }}
                 </th>
                 <td>
                   <Input v-model="appConfig.value" class="w-96"></Input>
@@ -60,6 +60,9 @@ export default {
     Button,
     Head,
   },
+  props: {
+    appConfigs: Array,
+  },
   setup() {
     const appConfigForm = useForm({
       id: "",
@@ -69,8 +72,19 @@ export default {
 
     return { appConfigForm };
   },
-  props: {
-    appConfigs: Array,
+  data() {
+    return {
+      configTranslation: {
+        hijri_year: "Tahun Hijriyah",
+        fitrah_amount: "Pilihan Zakat Fitrah (Rp)",
+        bank_account: "Rekening Panitia",
+        confirmation_phone: "Kontak Panitia (WhatsApp)",
+        remove_qr_start_date: "Mulai nonaktifkan display QR",
+        remove_qr_end_date: "Akhir nonaktifkan display QR",
+        remove_transfer_start_date: "Mulai nonaktifkan transfer rekening",
+        remove_transfer_end_date: "Akhir nonaktifkan transfer rekening",
+      },
+    };
   },
   computed: {
     uniqueKeys() {
