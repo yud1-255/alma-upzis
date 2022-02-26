@@ -33,27 +33,6 @@
                 >
                   Muzakki
                 </BreezeNavLink>
-                <div
-                  class="cursor-pointer inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
-                >
-                  <BreezeDropdown align="left" v-if="isAdministrator">
-                    <template #trigger>
-                      <button class="inline-flex">
-                        Pengaturan
-
-                        <icon-dropdown />
-                      </button>
-                    </template>
-                    <template #content>
-                      <BreezeDropdownLink
-                        :href="route('roles.index', { all: 1 })"
-                        >Pengguna</BreezeDropdownLink
-                      ><BreezeDropdownLink :href="route('app_config.index')"
-                        >Konfigurasi Aplikasi</BreezeDropdownLink
-                      >
-                    </template>
-                  </BreezeDropdown>
-                </div>
 
                 <!-- TODO refactor into dropdown menu component -->
                 <div
@@ -77,6 +56,28 @@
                         >Pembayaran online</BreezeDropdownLink
                       ><BreezeDropdownLink :href="route('zakat.muzakkiList')"
                         >Daftar muzakki</BreezeDropdownLink
+                      >
+                    </template>
+                  </BreezeDropdown>
+                </div>
+
+                <div
+                  class="cursor-pointer inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
+                >
+                  <BreezeDropdown align="left" v-if="isAdministrator">
+                    <template #trigger>
+                      <button class="inline-flex">
+                        Pengaturan
+
+                        <icon-dropdown />
+                      </button>
+                    </template>
+                    <template #content>
+                      <BreezeDropdownLink
+                        :href="route('roles.index', { all: 1 })"
+                        >Pengguna</BreezeDropdownLink
+                      ><BreezeDropdownLink :href="route('app_config.index')"
+                        >Konfigurasi Aplikasi</BreezeDropdownLink
                       >
                     </template>
                   </BreezeDropdown>
