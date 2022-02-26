@@ -49,8 +49,9 @@
                   />
                 </div>
               </div>
-              <div>
+              <div class="py-2">
                 <Label>Besaran zakat fitrah</Label>
+                <span class="mr-3">Rp</span>
                 <select v-model="defaultFitrahAmount" @change="setFitrahAmount">
                   <option
                     v-for="(amount, idx) in fitrah_amount"
@@ -95,7 +96,15 @@
                   :key="zakat_line.id"
                 >
                   <!-- TODO implement checkbox to disallow at backend -->
-                  <div class="flex">muzakki: {{ zakat_line.muzakki_name }}</div>
+                  <div class="flex">
+                    <div>muzakki: {{ zakat_line.muzakki_name }}</div>
+                    <span
+                      class="cursor-pointer ml-4 text-red-600"
+                      @click="removeZakatLine(zakat_line)"
+                    >
+                      ✕
+                    </span>
+                  </div>
                   <div class="flex flex-wrap py-2">
                     <InputNumeric
                       v-model="zakat_line.fitrah_rp"
@@ -165,7 +174,7 @@
                 <div>
                   <h2>Tambah muzakki baru?</h2>
                 </div>
-                <div class="flex">
+                <div v-if="removedMuzakkiCount == 0" class="flex">
                   <Input
                     v-model="muzakkiForm.name"
                     placeholder="Nama"
@@ -176,8 +185,17 @@
                     placeholder="Telepon"
                     class="w-24"
                   />
-
                   <button class="text-green-700">Tambah Muzakki</button>
+                </div>
+                <div v-else>
+                  <span class="italic mr-4"
+                    >{{ removedMuzakkiCount }} muzakki tidak diikutkan</span
+                  >
+                  <span
+                    class="cursor-pointer text-green-700"
+                    @click="resetMuzakkiForm"
+                    >Tampilkan kembali</span
+                  >
                 </div>
               </form>
               <div class="flex items-center mt-4">
@@ -202,6 +220,7 @@ import Input from "@/Components/Input.vue";
 import InputNumeric from "@/Components/InputNumeric.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
+import Button from "@/Components/Button.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -216,6 +235,7 @@ export default {
     Input,
     InputNumeric,
     Checkbox,
+    Button,
     Head,
   },
   setup(props) {
@@ -262,12 +282,13 @@ export default {
       bpi_house_no: props.family.bpi_house_no,
     });
 
-    return { form, muzakkiForm };
+    return { form, muzakkiForm, refreshMuzakki };
   },
   data() {
     return {
       families: [],
       defaultFitrahAmount: "",
+      removedMuzakkiCount: 0,
     };
   },
   props: {
@@ -320,6 +341,7 @@ export default {
       this.form.zakat_lines.forEach((line) => {
         line.fitrah_rp = this.defaultFitrahAmount;
       });
+      this.calculateTotalZakat();
     },
     addMuzakki() {
       this.muzakkiForm.post(route("muzakki.store"), {
@@ -328,6 +350,18 @@ export default {
           this.muzakkiForm.reset("name", "phone");
         },
       });
+    },
+    removeZakatLine(zakatLine) {
+      this.form.zakat_lines = this.form.zakat_lines.filter(
+        (line) => line.muzakki_id != zakatLine.muzakki_id
+      );
+      this.removedMuzakkiCount++;
+    },
+    resetMuzakkiForm() {
+      this.defaultFitrahAmount = "";
+      this.removedMuzakkiCount = 0;
+      this.refreshMuzakki();
+      this.calculateTotalZakat();
     },
     submit() {
       this.form.zakat_lines.forEach((item) => {
