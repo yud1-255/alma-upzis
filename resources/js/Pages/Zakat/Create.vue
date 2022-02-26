@@ -210,7 +210,7 @@ export default {
     const form = useForm({
       transaction_no: props.transaction_no,
       transaction_date: new Date().toISOString().split("T")[0],
-      hijri_year: 1443,
+      hijri_year: props.hijri_year,
       family_head: props.family.head_of_family,
       receive_from_name: props.family.head_of_family,
       total_rp: 0,
@@ -263,6 +263,7 @@ export default {
     family: Object,
     family_placeholder: String,
     muzakkis: Array,
+    hijri_year: String,
     can: Object,
   },
   methods: {

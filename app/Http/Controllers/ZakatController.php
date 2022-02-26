@@ -7,6 +7,7 @@ use App\Exports\ZakatExport;
 use App\Exports\MuzakkiListExport;
 use App\Exports\MuzakkiRecapExport;
 use App\Exports\OnlinePaymentsExport;
+use App\Models\AppConfig;
 use App\Models\Zakat;
 use App\Models\Family;
 
@@ -76,12 +77,14 @@ class ZakatController extends Controller
 
         $domain = new ZakatDomain($user);
         $transactionNo = $domain->generateZakatNumber(false);
+        $hijri_year = AppConfig::getConfigValue('hijri_year');
 
         return Inertia::render('Zakat/Create', [
             'family' => $family,
             'family_placeholder' => $familyPlaceholder,
             'muzakkis' => $muzakkis,
             'transaction_no' => $transactionNo,
+            'hijri_year' => $hijri_year,
             'can' => ['submitForOthers' => $user->can('submitForOthers', new Zakat())]
         ]);
     }

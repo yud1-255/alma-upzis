@@ -10,4 +10,9 @@ class AppConfig extends Model
 
     protected $fillable = ['key', 'value'];
     protected $hidden = ['created_at', 'updated_at'];
+
+    public static function getConfigValue(string $key): string
+    {
+        return (new static)::where('key', $key)->value('value');
+    }
 }
