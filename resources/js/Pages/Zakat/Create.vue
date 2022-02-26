@@ -100,6 +100,7 @@
                     <div>muzakki: {{ zakat_line.muzakki_name }}</div>
                     <span
                       class="cursor-pointer ml-4 text-red-600"
+                      title="Hapus"
                       @click="removeZakatLine(zakat_line)"
                     >
                       ✕
@@ -348,6 +349,9 @@ export default {
         preserveScroll: true,
         onSuccess: () => {
           this.muzakkiForm.reset("name", "phone");
+        },
+        onError: () => {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         },
       });
     },
