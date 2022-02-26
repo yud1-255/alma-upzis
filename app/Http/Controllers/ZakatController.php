@@ -77,14 +77,14 @@ class ZakatController extends Controller
 
         $domain = new ZakatDomain($user);
         $transactionNo = $domain->generateZakatNumber(false);
-        $hijri_year = AppConfig::getConfigValue('hijri_year');
 
         return Inertia::render('Zakat/Create', [
             'family' => $family,
             'family_placeholder' => $familyPlaceholder,
             'muzakkis' => $muzakkis,
             'transaction_no' => $transactionNo,
-            'hijri_year' => $hijri_year,
+            'hijri_year' => AppConfig::getConfigValue('hijri_year'),
+            'fitrah_amount' => AppConfig::getConfigValues('fitrah_amount'),
             'can' => ['submitForOthers' => $user->can('submitForOthers', new Zakat())]
         ]);
     }

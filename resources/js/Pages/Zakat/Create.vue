@@ -49,6 +49,18 @@
                   />
                 </div>
               </div>
+              <div>
+                <Label>Besaran zakat fitrah</Label>
+                <select v-model="defaultFitrahAmount" @change="setFitrahAmount">
+                  <option
+                    v-for="(amount, idx) in fitrah_amount"
+                    :key="idx"
+                    :value="amount"
+                  >
+                    {{ Number(amount).toLocaleString("id") }}
+                  </option>
+                </select>
+              </div>
             </div>
 
             <form @submit.prevent="submit">
@@ -255,6 +267,7 @@ export default {
   data() {
     return {
       families: [],
+      defaultFitrahAmount: "",
     };
   },
   props: {
@@ -264,6 +277,7 @@ export default {
     family_placeholder: String,
     muzakkis: Array,
     hijri_year: String,
+    fitrah_amount: Array,
     can: Object,
   },
   methods: {
@@ -301,6 +315,11 @@ export default {
           preserveScroll: true,
         }
       );
+    },
+    setFitrahAmount() {
+      this.form.zakat_lines.forEach((line) => {
+        line.fitrah_rp = this.defaultFitrahAmount;
+      });
     },
     addMuzakki() {
       this.muzakkiForm.post(route("muzakki.store"), {

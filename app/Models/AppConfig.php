@@ -15,4 +15,9 @@ class AppConfig extends Model
     {
         return (new static)::where('key', $key)->value('value');
     }
+
+    public static function getConfigValues(string $key): array
+    {
+        return (new static)::where('key', $key)->pluck('value')->all();
+    }
 }
