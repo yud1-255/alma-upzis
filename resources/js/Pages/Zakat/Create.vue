@@ -186,14 +186,14 @@
                     placeholder="Telepon"
                     class="w-24"
                   />
-                  <button class="text-green-700">Tambah Muzakki</button>
+                  <button class="text-green-600">Tambah Muzakki</button>
                 </div>
                 <div v-else>
                   <span class="italic mr-4"
                     >{{ removedMuzakkiCount }} muzakki tidak diikutkan</span
                   >
                   <span
-                    class="cursor-pointer text-green-700"
+                    class="cursor-pointer text-green-600"
                     @click="resetMuzakkiForm"
                     >Tampilkan kembali</span
                   >

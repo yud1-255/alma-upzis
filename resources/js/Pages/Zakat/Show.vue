@@ -181,8 +181,8 @@
                         Kirim lewat QRIS
                         <span
                           @click="this.$refs.popup.open()"
-                          class="cursor-pointer"
-                          >[tampilkan]</span
+                          class="cursor-pointer text-green-600 ml-2"
+                          >Tampilkan</span
                         >
                       </li>
                       <li v-if="!displayQRIS && !displayBankAccount">
@@ -194,8 +194,11 @@
                   </li>
                   <li>
                     Kirimkan bukti transfer dan konfirmasi kepada petugas
-                    <a href="http://bit.ly/sayazakat" target="_blank"
-                      >[WhatsApp]</a
+                    <a
+                      href="http://bit.ly/sayazakat"
+                      target="_blank"
+                      class="cursor-pointer text-green-600 ml-2"
+                      >WhatsApp</a
                     >
                   </li>
                   <li>
