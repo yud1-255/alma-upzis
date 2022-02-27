@@ -206,6 +206,20 @@ class ZakatController extends Controller
         ]);
     }
 
+    public function dailyRecap(Request $request)
+    {
+        $domain = new ZakatDomain(Auth::user());
+        $zakats = $domain->zakatMuzakkiRecap("")
+            ->reorder()
+            ->orderBy('transaction_date', 'asc')
+            ->orderBy('transaction_no', 'asc')->get();
+
+        return Inertia::render('Zakat/DailyRecap', [
+            'zakats' => $zakats,
+            'hijri_year' => AppConfig::getConfigValue('hijri_year')
+        ]);
+    }
+
     public function muzakkiList(Request $request)
     {
         $families = Family::with('muzakkis', 'user');

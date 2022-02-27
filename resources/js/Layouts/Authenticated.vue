@@ -52,6 +52,8 @@
                     <template #content>
                       <BreezeDropdownLink :href="route('zakat.muzakkiRecap')"
                         >Rekap berdasarkan muzakki</BreezeDropdownLink
+                      ><BreezeDropdownLink :href="route('zakat.dailyRecap')"
+                        >Rekap penerimaan harian</BreezeDropdownLink
                       ><BreezeDropdownLink :href="route('zakat.onlinePayments')"
                         >Pembayaran online</BreezeDropdownLink
                       ><BreezeDropdownLink :href="route('zakat.muzakkiList')"
