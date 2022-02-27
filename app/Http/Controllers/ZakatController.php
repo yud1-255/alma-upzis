@@ -13,6 +13,7 @@ use App\Models\Family;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Date;
 use Inertia\Inertia;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -129,11 +130,20 @@ class ZakatController extends Controller
         if ($user->cannot('view', $zakat)) {
             abort(403);
         }
-        $zakatTx = Zakat::with('zakatLines', 'receiveFrom', 'zakatPic', 'zakatLines.muzakki')->where('id', $zakat->id)->first();
+
+        $domain = new ZakatDomain(Auth::user());
+        $zakatTx = Zakat::with('zakatLines', 'receiveFrom', 'zakatPic', 'zakatLines.muzakki')
+            ->where('id', $zakat->id)->first();
 
         return Inertia::render('Zakat/Show', [
             'zakat' => $zakatTx,
-            'can' => ['print' => $user->can('print', $zakat), 'confirmPayment' => $user->can('confirmPayment', $zakat)]
+            'displayBankAccount' => $domain->isInBankTransferPeriod(Date::now()),
+            'displayQRIS' => $domain->isInQRISPaymentPeriod(Date::now()),
+            'bankAccount' => AppConfig::getConfigValue('bank_account'),
+            'can' => [
+                'print' => $user->can('print', $zakat),
+                'confirmPayment' => $user->can('confirmPayment', $zakat)
+            ]
         ]);
     }
 

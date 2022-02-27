@@ -2,6 +2,7 @@
 
 namespace App\Domains;
 
+use App\Models\AppConfig;
 use App\Models\SequenceNumber;
 use App\Models\Zakat;
 use App\Models\Family;
@@ -11,6 +12,8 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Validation\ValidationException;
 
 use DB;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 class ZakatDomain
 {
@@ -21,6 +24,28 @@ class ZakatDomain
     public function __construct(User $user)
     {
         $this->user = $user;
+    }
+
+    public function isInBankTransferPeriod(Carbon $date)
+    {
+        $startCfg = AppConfig::getConfigValue('remove_transfer_start_date');
+        $endCfg = AppConfig::getConfigValue('remove_transfer_end_date');
+
+        $startDate = Date::createFromFormat('Y-m-d', $startCfg);
+        $endDate = Date::createFromFormat('Y-m-d', $endCfg);
+
+        return !$date->between($startDate, $endDate);
+    }
+
+    public function isInQRISPaymentPeriod(Carbon $date)
+    {
+        $startCfg = AppConfig::getConfigValue('remove_qr_start_date');
+        $endCfg = AppConfig::getConfigValue('remove_qr_end_date');
+
+        $startDate = Date::createFromFormat('Y-m-d', $startCfg);
+        $endDate = Date::createFromFormat('Y-m-d', $endCfg);
+
+        return !$date->between($startDate, $endDate);
     }
 
     public function submitAsMuzakki(Zakat $zakat, array $zakatLines): Zakat
