@@ -16,7 +16,7 @@ class AddOfflineColumnsToZakatsTable extends Migration
         Schema::table('zakats', function (Blueprint $table) {
             $table->string('receive_from_name')->after('family_head');
             $table->boolean('is_offline_submission')->after('receive_from_name');
-            $table->decimal('total_transfer_rp')->after('total_rp');
+            $table->decimal('total_transfer_rp', 13, 2)->after('total_rp');
             $table->decimal('unique_number')->after('total_rp');
         });
     }
