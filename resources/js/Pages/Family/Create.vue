@@ -156,8 +156,6 @@
                       <tr>
                         <td colspan="4">
                           <div class="flex my-2 space-x-2 align-top">
-                            <!-- TODO refactor into checkbox component (Vue) -->
-
                             <Checkbox
                               id="use_same_address"
                               v-model="useFamilyAddress"
