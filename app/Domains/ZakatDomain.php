@@ -152,7 +152,7 @@ class ZakatDomain
     {
         $zakats = DB::table('zakats')
             ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
-            ->join('families', 'families.id', '=', 'user_receive_from.family_id')
+            ->leftJoin('families', 'families.id', '=', 'user_receive_from.family_id')
             ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
             ->where('is_offline_submission', false)
             ->where('receive_from_name', 'like', "%{$searchTerm}%")

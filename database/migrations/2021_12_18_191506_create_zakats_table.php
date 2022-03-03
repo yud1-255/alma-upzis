@@ -26,7 +26,12 @@ class CreateZakatsTable extends Migration
             $table->date('transaction_date');
             $table->string('hijri_year');
             $table->string('family_head');
+            $table->string('receive_from_name');
+            $table->boolean('is_offline_submission');
+            $table->decimal('total_transfer_rp', 13, 2);
+            $table->decimal('unique_number');
             $table->decimal('total_rp', 13, 2);
+
             $table->timestamps();
         });
     }

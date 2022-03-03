@@ -16,10 +16,12 @@ class CreateMuzakkisTable extends Migration
         Schema::create('muzakkis', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('phone')->nullable();
             $table->string('address');
             $table->boolean('is_bpi');
-            $table->string('bpi_block_no');
-            $table->string('bpi_house_no');
+            $table->string('bpi_block_no')->nullable();
+            $table->string('bpi_house_no')->nullable();
+            $table->boolean('is_active');
             $table->timestamps();
         });
 
