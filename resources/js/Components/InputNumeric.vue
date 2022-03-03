@@ -32,8 +32,8 @@ export default {
         }
       },
       set: function (newValue) {
-        if (isNaN(newValue)) {
-          newValue = "";
+        if (isNaN(newValue) || newValue == "") {
+          newValue = null;
         }
 
         this.$emit("update:modelValue", newValue);
