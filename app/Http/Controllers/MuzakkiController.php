@@ -41,8 +41,7 @@ class MuzakkiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required'],
-            'phone' => ['required']
+            'name' => ['required']
         ]);
 
         $muzakki = new Muzakki();

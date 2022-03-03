@@ -35,6 +35,15 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['auth', 'role:administrator'])->group(function () {
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::post('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
+});
+
+Route::middleware(['auth', 'role:administrator'])->group(function () {
+    Route::resource('app_config', AppConfigController::class);
+});
+
 Route::middleware(['auth', 'role:administrator,upzis'])->group(function () {
     Route::get('/zakat/muzakki_list', [ZakatController::class, 'muzakkiList'])->name('zakat.muzakkiList');
     Route::get('/zakat/muzakki_recap', [ZakatController::class, 'muzakkiRecap'])->name('zakat.muzakkiRecap');
@@ -47,13 +56,9 @@ Route::middleware(['auth', 'role:administrator,upzis'])->group(function () {
     Route::get('/family/search', [FamilyController::class, 'search'])->name('family.search');
 });
 
-Route::middleware(['auth', 'role:administrator'])->group(function () {
-    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::post('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
-});
-
-Route::middleware(['auth', 'role:administrator'])->group(function () {
-    Route::resource('app_config', AppConfigController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/family/check_kk', [FamilyController::class, 'checkKkNumber'])->name('family.checkKk');
+    Route::post('/family/assign/{id}', [FamilyController::class, 'assign'])->name('family.assign');
 });
 
 Route::middleware(['auth'])->group(function () {

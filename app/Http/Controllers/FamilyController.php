@@ -62,6 +62,11 @@ class FamilyController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'head_of_family' => ['required'],
+            'phone' => ['required']
+        ]);
+
         $family = new Family();
         $formData = $request->only($family->getFillable());
         $family->fill($formData);
@@ -103,6 +108,13 @@ class FamilyController extends Controller
      */
     public function update(Request $request, Family $family)
     {
+        $request->validate([
+            'head_of_family' => ['required'],
+            'phone' => ['required'],
+            'bpi_block_no' => ['required_if:is_bpi,1'],
+            'bpi_house_no' => ['required_if:is_bpi,1']
+        ]);
+
         $formData = $request->only($family->getFillable());
         $family->fill($formData);
 
@@ -110,23 +122,33 @@ class FamilyController extends Controller
         return Redirect::back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function assign($id)
     {
-        //
+        $family = Family::find($id);
+
+        if ($family != null) {
+            $domain = new ZakatDomain(Auth::user());
+            $domain->registerFamily(Auth::user(), $family);
+        }
+
+        return Redirect::route('family.create');
     }
 
     public function search(Request $request)
     {
+        $domain = new ResidenceDomain();
         $search = $request->search;
-        $families = Family::where('head_of_family', 'like', "%{$search}%");
 
         // json
-        return $families->take(10)->get();
+        return $domain->searchFamily($search);;
+    }
+
+    public function checkKkNumber(Request $request)
+    {
+        $kkNumber = $request->kkNumber;
+        $domain = new ResidenceDomain();
+
+        // json
+        return $domain->getFamily($kkNumber);
     }
 }

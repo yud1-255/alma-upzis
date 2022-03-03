@@ -2,9 +2,11 @@
 
 namespace App\Domains;
 
+use App\Models\Family;
 use Illuminate\Validation\ValidationException;
 
 use DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class ResidenceDomain
 {
@@ -42,5 +44,16 @@ class ResidenceDomain
     public function getHouseNumbers(): array
     {
         return range(1, $this->houseNumbers);
+    }
+
+    public function getFamily(string $kkNumber): Family
+    {
+        return Family::where('kk_number', $kkNumber)->orderBy('id', 'desc')->first();
+    }
+
+    public function searchFamily(string $search): Collection
+    {
+        $families = Family::where('head_of_family', 'like', "%{$search}%");
+        return $families->take(10)->get();
     }
 }

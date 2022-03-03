@@ -20,6 +20,19 @@
                   <Label for="phone">Telepon</Label>
                   <Input v-model="familyForm.phone" />
                 </div>
+                <div>
+                  <Label for="phone"
+                    >Nomor Kartu Keluarga (opsional, apabila pernah
+                    didaftarkan)</Label
+                  >
+                  <Input v-model="familyForm.kk_number" />
+                  <span
+                    class="cursor-pointer text-green-700"
+                    @click="checkKkNumber(familyForm.kk_number)"
+                  >
+                    Cek
+                  </span>
+                </div>
               </div>
               <div>
                 <h2>Alamat</h2>
@@ -97,6 +110,7 @@
                 </button>
               </div>
             </form>
+            <confirmation ref="confirmation">></confirmation>
 
             <div v-if="family != null">
               <div>
@@ -194,6 +208,7 @@ import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import Input from "@/Components/Input.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
+import Confirmation from "@/Components/Confirmation.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -207,12 +222,14 @@ export default {
     Input,
     Checkbox,
     Head,
+    Confirmation,
   },
   setup(props) {
     const familyForm = useForm({
       id: props.family?.id,
       head_of_family: props.family?.head_of_family,
       phone: props.family?.phone,
+      kk_number: props.family?.kk_number,
       address: props.family?.address,
       is_bpi: props.family?.is_bpi,
       bpi_block_no: props.family?.bpi_block_no,
@@ -254,6 +271,13 @@ export default {
   watch: {
     family: function (value, oldValue) {
       this.familyForm.id = value.id;
+      this.familyForm.head_of_family = value.head_of_family;
+      this.familyForm.phone = value.phone;
+      this.familyForm.kk_number = value.kk_number;
+      this.familyForm.address = value.address;
+      this.familyForm.is_bpi = value.is_bpi;
+      this.familyForm.bpi_block_no = value.bpi_block_no;
+      this.familyForm.bpi_house_no = value.bpi_house_no;
 
       this.muzakkiForm.family_id = value.id;
       this.muzakkiForm.address = value.address;
@@ -299,6 +323,30 @@ export default {
         this.familyForm.bpi_house_no = "";
       }
     },
+    checkKkNumber(kkNumber) {
+      axios
+        .get(route("family.checkKk", { kkNumber: kkNumber }), {})
+        .then((res) => {
+          if (res?.data?.id) {
+            this.promptFamilyLoad(res.data);
+          }
+        });
+    },
+    async promptFamilyLoad(family) {
+      const isConfirmed = await this.$refs.confirmation.show({
+        title: "Konfirmasi",
+        message: `Data keluarga ditemukan atas nama ${family.head_of_family}. Gunakan data keluarga ini?`,
+        okButton: "Lanjut",
+        cancelButton: "Batal",
+      });
+
+      if (isConfirmed) {
+        console.log("here");
+        this.familyForm.post(route("family.assign", family.id), {
+          preserveScroll: true,
+        });
+      }
+    },
     createFamily() {
       if (this.familyForm.id == null) {
         this.familyForm.post(route("family.store"), { preserveScroll: true });
@@ -314,6 +362,9 @@ export default {
         preserveScroll: true,
         onSuccess: () => {
           this.$inertia.visit(route("dashboard"));
+        },
+        onError: () => {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         },
       });
     },
@@ -332,6 +383,9 @@ export default {
     deleteMuzakki(id) {
       this.$inertia.delete(route("muzakki.destroy", id), {
         preserveScroll: true,
+        onError: () => {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        },
       });
     },
   },
