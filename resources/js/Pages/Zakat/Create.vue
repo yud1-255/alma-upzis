@@ -49,19 +49,6 @@
                   />
                 </div>
               </div>
-              <div class="py-2">
-                <Label>Besaran zakat fitrah</Label>
-                <span class="mr-3">Rp</span>
-                <select v-model="defaultFitrahAmount" @change="setFitrahAmount">
-                  <option
-                    v-for="(amount, idx) in fitrah_amount"
-                    :key="idx"
-                    :value="amount"
-                  >
-                    {{ Number(amount).toLocaleString("id") }}
-                  </option>
-                </select>
-              </div>
             </div>
 
             <form @submit.prevent="submit">
@@ -88,6 +75,19 @@
                     readonly
                   />
                 </div>
+              </div>
+              <div class="py-2">
+                <Label>Besaran zakat fitrah</Label>
+                <span class="mr-3">Rp</span>
+                <select v-model="defaultFitrahAmount" @change="setFitrahAmount">
+                  <option
+                    v-for="(amount, idx) in fitrah_amount"
+                    :key="idx"
+                    :value="amount"
+                  >
+                    {{ Number(amount).toLocaleString("id") }}
+                  </option>
+                </select>
               </div>
               <div class="overflow-auto">
                 <h2>Keterangan Muzakki</h2>

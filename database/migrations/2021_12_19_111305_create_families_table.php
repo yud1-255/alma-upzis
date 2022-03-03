@@ -17,7 +17,7 @@ class CreateFamiliesTable extends Migration
             $table->id();
             $table->string('head_of_family');
             $table->string('phone');
-            $table->string('kk_number');
+            $table->string('kk_number')->nullable();
             $table->string('address');
             $table->boolean('is_bpi');
             $table->string('bpi_block_no')->nullable();

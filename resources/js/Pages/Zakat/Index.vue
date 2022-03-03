@@ -9,7 +9,7 @@
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr v-if="can.viewAny">
+              <tr>
                 <td colspan="4" class="py-4 space-x-2">
                   <Link
                     class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
@@ -17,6 +17,7 @@
                     >Buat Transaksi</Link
                   >
                   <a
+                    v-if="can.viewAny"
                     class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
                     :href="route('zakat.export', 'summary')"
                     >Ekspor ke Excel</a
@@ -24,6 +25,7 @@
                 </td>
                 <td colspan="5" class="text-right">
                   <Input
+                    v-if="can.viewAny"
                     v-model="searchTerm"
                     placeholder="Cari berdasarkan nama"
                   />

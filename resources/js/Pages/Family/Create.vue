@@ -21,12 +21,13 @@
                   <Input v-model="familyForm.phone" />
                 </div>
                 <div>
-                  <Label for="phone"
+                  <Label for="kk_number"
                     >Nomor Kartu Keluarga (opsional, apabila pernah
                     didaftarkan)</Label
                   >
                   <Input v-model="familyForm.kk_number" />
                   <span
+                    v-if="family?.id == null"
                     class="cursor-pointer text-green-700"
                     @click="checkKkNumber(familyForm.kk_number)"
                   >

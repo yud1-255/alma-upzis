@@ -47,6 +47,7 @@ class MuzakkiController extends Controller
         $muzakki = new Muzakki();
         $formData = $request->only($muzakki->getFillable());
         $muzakki->fill($formData);
+        $muzakki->is_active = true;
 
         $muzakki->save();
 
