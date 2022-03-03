@@ -209,23 +209,20 @@ class ZakatDomain
     }
 
 
-    public function deleteMuzakki(User $user, Muzakki $muzakki)
+    public function deactivateMuzakki(User $user, Muzakki $muzakki)
     {
         if (!$this->validateMuzakkiForDeletion($user, $muzakki)) {
             throw ValidationException::withMessages($this->errors);
         }
 
-        $muzakki->delete();
+        $muzakki->is_active = false;
+        $muzakki->save();
     }
 
     private function validateMuzakkiForDeletion(User $user, Muzakki $muzakki): bool
     {
         if ($muzakki->family != $user->family) {
             array_push($this->errors, "Muzakki {$muzakki->name} hanya bisa diubah oleh anggota keluarga");
-        }
-        if (!$muzakki->zakatLines->isEmpty()) {
-            array_push($this->errors, "Muzakki {$muzakki->name} sudah memiliki transaksi zakat");
-            return false;
         }
         return true;
     }

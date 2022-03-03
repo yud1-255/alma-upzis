@@ -99,7 +99,7 @@ class MuzakkiController extends Controller
         $user = Auth::user();
         $domain = new ZakatDomain(Auth::user());
 
-        $domain->deleteMuzakki($user, $muzakki);
+        $domain->deactivateMuzakki($user, $muzakki);
 
         return Redirect::back();
     }

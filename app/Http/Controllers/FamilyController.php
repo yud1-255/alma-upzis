@@ -39,7 +39,7 @@ class FamilyController extends Controller
         if ($family == null) {
             $family = Session::get('family'); // if any from previous postback
         } else {
-            $muzakkis = $family->muzakkis;
+            $muzakkis = $family->muzakkis->where('is_active', true);
         }
 
         $domain = new ResidenceDomain();

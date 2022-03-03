@@ -297,7 +297,7 @@ export default {
     transaction_no: String,
     family: Object,
     family_placeholder: String,
-    muzakkis: Array,
+    muzakkis: Object,
     hijri_year: String,
     fitrah_amount: Array,
     can: Object,

@@ -74,7 +74,7 @@ class ZakatController extends Controller
         }
 
         $familyPlaceholder = $familyId == null ? '' : $family->head_of_family;
-        $muzakkis = $family->muzakkis;
+        $muzakkis = $family->muzakkis->where('is_active', true)->values();
 
         $domain = new ZakatDomain($user);
         $transactionNo = $domain->generateZakatNumber(false);

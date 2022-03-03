@@ -129,32 +129,32 @@
                         <td class="py-2">{{ muzakki.phone }}</td>
                         <td class="py-2">{{ muzakki.address }}</td>
                         <td>
-                          <Link
-                            @click="deleteMuzakki(muzakki.id)"
-                            class="text-red-700"
+                          <span
+                            class="cursor-pointer text-red-700"
+                            @click="deleteMuzakki(muzakki)"
                           >
                             Hapus
-                          </Link>
+                          </span>
                         </td>
                       </tr>
                     </tbody>
-                    <tfoot>
+                    <tfoot class="border-t border-gray-200">
                       <tr>
-                        <td>
+                        <td class="py-2">
                           <Input
                             v-model="muzakkiForm.name"
                             placeholder="Nama"
                             class="w-24"
                           />
                         </td>
-                        <td>
+                        <td class="py-2">
                           <Input
                             v-model="muzakkiForm.phone"
                             placeholder="Telepon"
                             class="w-24"
                           />
                         </td>
-                        <td>
+                        <td class="py-2">
                           <div v-bind:class="{ invisible: useFamilyAddress }">
                             <Input
                               v-model="muzakkiForm.address"
@@ -163,7 +163,7 @@
                             />
                           </div>
                         </td>
-                        <td>
+                        <td class="py-2">
                           <button class="text-green-700">Tambah Muzakki</button>
                         </td>
                       </tr>
@@ -380,13 +380,22 @@ export default {
         },
       });
     },
-    deleteMuzakki(id) {
-      this.$inertia.delete(route("muzakki.destroy", id), {
-        preserveScroll: true,
-        onError: () => {
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        },
+    async deleteMuzakki(muzakki) {
+      const isConfirmed = await this.$refs.confirmation.show({
+        title: "Konfirmasi",
+        message: `Hapus muzakki ${muzakki.name} dari keluarga?`,
+        okButton: "Lanjut",
+        cancelButton: "Batal",
       });
+
+      if (isConfirmed) {
+        this.$inertia.delete(route("muzakki.destroy", muzakki.id), {
+          preserveScroll: true,
+          onError: () => {
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          },
+        });
+      }
     },
   },
 };
