@@ -75,7 +75,8 @@ export default {
   data() {
     return {
       configTranslation: {
-        hijri_year: "Tahun Hijriyah",
+        hijri_year: "Tahun Hijriyah (Saat ini)",
+        hijri_year_beginning: "Tahun Hijriyah (Awal Entri Data)",
         fitrah_amount: "Pilihan Zakat Fitrah (Rp)",
         bank_account: "Rekening Panitia",
         confirmation_phone: "Kontak Panitia (WhatsApp)",
