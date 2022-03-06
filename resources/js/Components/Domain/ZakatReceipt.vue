@@ -1,12 +1,27 @@
 <template>
-  <div class="py-4 font-semibold">
-    <p>Transaksi no: {{ zakat.transaction_no }}</p>
-    <p>Tanggal: {{ zakat.transaction_date }}</p>
-  </div>
-
   <div class="overflow-x-auto">
     <table class="table-auto">
       <thead class="font-bold border-b-2">
+        <tr>
+          <th colspan="11" class="text-center py-2">
+            <div class="flex sm:hidden print:visible w-full justify-between">
+              <img src="/assets/yam-logo-bw.png" class="object-contain h-12" />
+              <div class="text-center font-semibold">
+                Yayasan Al Munawwarah<br />
+                Unit Pengelolaan Zakat, Infaq, dan Shadaqah <br />
+                UPZIS Masjid Al Muhajirin
+              </div>
+              <img
+                src="/assets/upzis-logo-bw.png"
+                class="object-contain h-12 invisible"
+              />
+            </div>
+            <div class="py-4 font-semibold text-left">
+              <p>Transaksi no: {{ zakat.transaction_no }}</p>
+              <p>Tanggal: {{ zakat.transaction_date }}</p>
+            </div>
+          </th>
+        </tr>
         <tr>
           <td rowspan="2" class="px-4 py-2">Nama</td>
           <td colspan="3" class="px-4 py-2">Fitrah</td>
@@ -133,6 +148,13 @@
                 </div>
               </div>
             </div>
+          </td>
+        </tr>
+        <tr class="sm:hidden print:visible">
+          <td colspan="11">
+            *) tanda terima diterbitkan secara otomatis oleh aplikasi UPZIS
+            <br />
+            **) harap simpan tanda terima ini sebagai bukti pembayaran
           </td>
         </tr>
       </tfoot>

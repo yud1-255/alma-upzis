@@ -14,12 +14,12 @@
           <div class="p-6 bg-white border-b border-gray-200">
             <h1>Assalamualaikum, Muzakki</h1>
 
-            <p>
+            <p class="py-2 mt-4">
               Selamat datang di aplikasi zakat UPZIS Al Munawwarah/Masjid Al
               Muhajirin. Proses zakat anda dalam empat langkah mudah:
             </p>
 
-            <ol class="list-decimal list-inside">
+            <ol class="list-decimal list-inside ml-4">
               <li>
                 Lengkapi data keluarga
                 <Link :href="route('family.create')" class="text-green-600 ml-2"
@@ -49,8 +49,10 @@
               </li>
             </ol>
 
-            <p>Untuk keterangan lebih lanjut, hubungi panitia UPZIS:</p>
-            <ul class="list-disc list-inside">
+            <p class="py-2">
+              Untuk keterangan lebih lanjut, hubungi panitia UPZIS:
+            </p>
+            <ul class="list-disc list-inside ml-4">
               <li>
                 melalui WhatsApp:
                 <a
@@ -60,7 +62,7 @@
                   >[klik di sini]</a
                 >
               </li>
-              <li>gerai zakat di Masjid Al Muhajirin (Bukit Pamulang Indah)</li>
+              <li>gerai zakat di Masjid Al Muhajirin, Bukit Pamulang Indah</li>
             </ul>
           </div>
         </div>

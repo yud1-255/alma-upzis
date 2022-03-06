@@ -15,7 +15,7 @@
             <ZakatReceipt :zakat="zakat"></ZakatReceipt>
 
             <div v-if="printWithCopy" class="sm:hidden print:visible">
-              <div class="pt-4 text-center">
+              <div class="py-4 text-center">
                 sisi untuk muzakki
                 <hr />
                 sisi untuk petugas
