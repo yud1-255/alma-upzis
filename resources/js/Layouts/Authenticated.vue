@@ -22,17 +22,38 @@
                   Dashboard
                 </BreezeNavLink>
                 <BreezeNavLink
-                  :href="route('zakat.index')"
-                  :active="route().current('zakat.index')"
-                >
-                  Zakat
-                </BreezeNavLink>
-                <BreezeNavLink
                   :href="route('family.create')"
                   :active="route().current('family.create')"
                 >
                   Muzakki
                 </BreezeNavLink>
+                <div
+                  class="cursor-pointer inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
+                >
+                  <BreezeDropdown align="left">
+                    <template #trigger>
+                      <button class="inline-flex">
+                        Zakat
+
+                        <icon-dropdown />
+                      </button>
+                    </template>
+                    <template #content>
+                      <BreezeDropdownLink :href="route('zakat.create')"
+                        >Buat zakat baru</BreezeDropdownLink
+                      ><BreezeDropdownLink
+                        v-if="!isAdministrator && !isUpzis"
+                        :href="route('zakat.index')"
+                        >Transaksi zakat saya</BreezeDropdownLink
+                      >
+                      <BreezeDropdownLink
+                        v-if="isAdministrator || isUpzis"
+                        :href="route('zakat.index')"
+                        >Transaksi zakat</BreezeDropdownLink
+                      >
+                    </template>
+                  </BreezeDropdown>
+                </div>
 
                 <!-- TODO refactor into dropdown menu component -->
                 <div
