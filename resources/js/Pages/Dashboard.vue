@@ -12,22 +12,55 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            You're logged in!
+            <h1>Assalamualaikum, Muzakki</h1>
 
-            <ul class="list-disc list-inside">
+            <p>
+              Selamat datang di aplikasi zakat UPZIS Al Munawwarah/Masjid Al
+              Muhajirin. Proses zakat anda dalam empat langkah mudah:
+            </p>
+
+            <ol class="list-decimal list-inside">
               <li>
                 Lengkapi data keluarga
-                <Link :href="route('family.create')">[link]</Link>
+                <Link :href="route('family.create')" class="text-green-600 ml-2"
+                  >[link]</Link
+                >
               </li>
               <li>
                 Mulai pengisian zakat
-                <Link :href="route('zakat.create')">[link]</Link>
+                <Link :href="route('zakat.create')" class="text-green-600 ml-2"
+                  >[link]</Link
+                >
               </li>
-              <li>Transfer dan konfirmasi pembayaran zakat [link:wa]</li>
+              <li>
+                Transfer dan konfirmasi pembayaran zakat
+                <a
+                  href="http://bit.ly/sayazakat"
+                  target="_blank"
+                  class="cursor-pointer text-green-600 ml-2"
+                  >[link:wa]</a
+                >
+              </li>
               <li>
                 Lihat transaksi zakat anda
-                <Link :href="route('zakat.index')">[link]</Link>
+                <Link :href="route('zakat.index')" class="text-green-600 ml-2"
+                  >[link]</Link
+                >
               </li>
+            </ol>
+
+            <p>Untuk keterangan lebih lanjut, hubungi panitia UPZIS:</p>
+            <ul class="list-disc list-inside">
+              <li>
+                melalui WhatsApp:
+                <a
+                  href="http://bit.ly/sayazakat"
+                  target="_blank"
+                  class="cursor-pointer text-green-600 ml-2"
+                  >[klik di sini]</a
+                >
+              </li>
+              <li>gerai zakat di Masjid Al Muhajirin (Bukit Pamulang Indah)</li>
             </ul>
           </div>
         </div>

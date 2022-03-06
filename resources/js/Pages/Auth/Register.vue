@@ -5,7 +5,7 @@
 
   <form @submit.prevent="submit">
     <div>
-      <BreezeLabel for="name" value="Name" />
+      <BreezeLabel for="name" value="Nama" />
       <BreezeInput
         id="name"
         type="text"
@@ -42,7 +42,7 @@
     </div>
 
     <div class="mt-4">
-      <BreezeLabel for="password_confirmation" value="Confirm Password" />
+      <BreezeLabel for="password_confirmation" value="Konfirmasi Passsword" />
       <BreezeInput
         id="password_confirmation"
         type="password"
@@ -66,7 +66,7 @@
         :class="{ 'opacity-25': form.processing }"
         :disabled="form.processing"
       >
-        Register
+        Daftarkan Akun
       </BreezeButton>
     </div>
   </form>

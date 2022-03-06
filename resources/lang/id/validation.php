@@ -157,6 +157,7 @@ return [
 
     'attributes' => [
         'name' => 'Nama',
+        'head_of_family' => 'Kepala Keluarga',
         'phone' => 'Telepon',
         'is_bpi' => 'Warga BPI',
         'bpi_block_no' => 'Nomor blok',
