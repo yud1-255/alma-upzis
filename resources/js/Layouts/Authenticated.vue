@@ -189,13 +189,35 @@
               :href="route('dashboard')"
               :active="route().current('dashboard')"
             >
-              Dashboard
+              Beranda
+            </BreezeResponsiveNavLink>
+
+            <BreezeResponsiveNavLink :href="route('zakat.index')">
+              Zakat
             </BreezeResponsiveNavLink>
             <BreezeResponsiveNavLink
+              class="pl-6"
               :href="route('zakat.index')"
               :active="route().current('zakat.index')"
             >
-              Zakat
+              Transaksi saya
+            </BreezeResponsiveNavLink>
+            <BreezeResponsiveNavLink
+              class="pl-6"
+              :href="route('zakat.create')"
+              :active="route().current('zakat.create')"
+            >
+              Buat transaksi
+            </BreezeResponsiveNavLink>
+            <BreezeResponsiveNavLink :href="route('family.create')">
+              Muzakki
+            </BreezeResponsiveNavLink>
+            <BreezeResponsiveNavLink
+              class="pl-6"
+              :href="route('family.create')"
+              :active="route().current('family.create')"
+            >
+              Set data muzakki
             </BreezeResponsiveNavLink>
           </div>
 
