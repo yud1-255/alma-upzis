@@ -7,11 +7,17 @@
     @apply text-xl font-semibold leading-tight text-gray-800;
   }
   h2 {
-    @apply text-base my-4 font-bold leading-tight text-gray-800;
+    @apply text-base my-4 font-bold leading-tight text-lime-700;
   }
   table td,
   table th {
     @apply px-2;
+  }
+  table thead td {
+    @apply text-lime-700;
+  }
+  table tfoot th {
+    @apply text-lime-700;
   }
   select {
     @apply rounded border-gray-300 text-gray-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
