@@ -18,7 +18,7 @@
             <ol class="list-none list-inside ml-4">
               <li class="flex">
                 <div
-                  class="rounded-full bg-lime-600 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
+                  class="rounded-full bg-lime-700 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
                 >
                   1
                 </div>
@@ -33,7 +33,7 @@
               </li>
               <li class="flex">
                 <div
-                  class="rounded-full bg-lime-600 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
+                  class="rounded-full bg-lime-700 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
                 >
                   2
                 </div>
@@ -48,7 +48,7 @@
               </li>
               <li class="flex">
                 <div
-                  class="rounded-full bg-lime-600 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
+                  class="rounded-full bg-lime-700 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
                 >
                   3
                 </div>
@@ -65,7 +65,7 @@
               </li>
               <li class="flex">
                 <div
-                  class="rounded-full bg-lime-600 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
+                  class="rounded-full bg-lime-700 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
                 >
                   4
                 </div>
@@ -85,7 +85,7 @@
             <ul class="list-none list-inside ml-4">
               <li class="flex">
                 <div
-                  class="rounded-full bg-lime-600 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
+                  class="rounded-full bg-lime-700 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
                 >
                   &check;
                 </div>
@@ -101,7 +101,7 @@
               </li>
               <li class="flex">
                 <div
-                  class="rounded-full bg-lime-600 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
+                  class="rounded-full bg-lime-700 text-gray-100 mt-1 w-5 h-5 text-center text-sm ring-2 ring-yellow-300"
                 >
                   &check;
                 </div>
