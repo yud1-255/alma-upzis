@@ -127,7 +127,9 @@
                     <tbody>
                       <tr v-for="muzakki in muzakkis" :key="muzakki.id">
                         <td class="py-2">{{ muzakki.name }}</td>
-                        <td class="py-2">{{ muzakki.phone }}</td>
+                        <td class="py-2">
+                          {{ muzakki.phone ? muzakki.phone : "-" }}
+                        </td>
                         <td class="py-2 hidden md:table-cell">
                           {{ muzakki.address }}
                         </td>
@@ -170,7 +172,7 @@
                           <button class="text-green-700">Tambah Muzakki</button>
                         </td>
                       </tr>
-                      <tr class="md:visible hidden">
+                      <tr class="md:table-row hidden">
                         <td colspan="4">
                           <div class="flex my-2 space-x-2 align-top">
                             <Checkbox
