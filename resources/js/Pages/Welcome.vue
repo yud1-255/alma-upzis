@@ -1,40 +1,40 @@
 <template>
-  <Head title="Welcome" />
+  <Head title="Selamat datang" />
+  <div
+    class="flex justify-left align-middle p-4 pt-8 sm:pt-0 bg-white border-b-2 border-yellow-200"
+  >
+    <img src="/assets/yam-logo.png" class="h-12 mr-8 mt-4" />
+    <h1 class="mt-6">Assalamualaikum, Muzakki.</h1>
+  </div>
+  <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+    <Link
+      v-if="$page.props.auth.user"
+      :href="route('dashboard')"
+      class="text-sm text-gray-700 underline"
+    >
+      Beranda
+    </Link>
 
+    <template v-else>
+      <Link :href="route('login')" class="text-sm text-gray-700 underline">
+        Log in
+      </Link>
+
+      <Link
+        v-if="canRegister"
+        :href="route('register')"
+        class="ml-4 text-sm text-gray-700 underline"
+      >
+        Daftar
+      </Link>
+    </template>
+  </div>
   <div
     class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"
   >
-    <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-      <Link
-        v-if="$page.props.auth.user"
-        :href="route('dashboard')"
-        class="text-sm text-gray-700 underline"
-      >
-        Dashboard
-      </Link>
-
-      <template v-else>
-        <Link :href="route('login')" class="text-sm text-gray-700 underline">
-          Log in
-        </Link>
-
-        <Link
-          v-if="canRegister"
-          :href="route('register')"
-          class="ml-4 text-sm text-gray-700 underline"
-        >
-          Daftar
-        </Link>
-      </template>
-    </div>
-
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-      <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-        <h1>Assalamualaikum, Muzakki.</h1>
-      </div>
-
       <div
-        class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg"
+        class="mt-4 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg"
       >
         <div class="p-6">
           <p>
@@ -57,7 +57,7 @@
             <div class="flex items-center">
               <svg
                 fill="none"
-                stroke="currentColor"
+                stroke="#fcd34d"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -69,7 +69,7 @@
                 ></path>
               </svg>
               <div class="ml-4 text-lg leading-7 font-semibold">
-                <span class="text-gray-900 dark:text-white"
+                <span class="text-lime-700 dark:text-white"
                   >Registrasi data muzakki</span
                 >
               </div>
@@ -77,12 +77,12 @@
 
             <div class="ml-12">
               <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                <p>
+                <p class="py-2">
                   Daftarkan data pengguna anda di aplikasi. Gunakan email untuk
                   login, tambahkan dan update data muzakki dalam keluarga secara
                   mandiri.
                 </p>
-                <p>
+                <p class="py-2">
                   Sudah pernah menggunakan aplikasi tahun lalu? Tidak masalah.
                   Daftarkan ulang pengguna anda, data muzakki dan transaksi
                   sebelumnya akan terikut secara otomatis.
@@ -97,7 +97,7 @@
             <div class="flex items-center">
               <svg
                 fill="none"
-                stroke="currentColor"
+                stroke="#fcd34d"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -110,7 +110,7 @@
                 <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
               </svg>
               <div class="ml-4 text-lg leading-7 font-semibold">
-                <span class="text-gray-900 dark:text-white"
+                <span class="text-lime-700 dark:text-white"
                   >Buat Transaksi Zakat</span
                 >
               </div>
@@ -118,14 +118,14 @@
 
             <div class="ml-12">
               <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                <p>
+                <p class="py-2">
                   Isikan data zakat fitrah, maal, profesi, sampai dengan wakaf
                   dan kafarat dalam satu isian singkat. Pilih besaran zakat
                   fitrah anda, isikan dengan mudah dan ringkas&mdash;di bawah
                   lima menit.
                 </p>
 
-                <p>
+                <p class="py-2">
                   Opsi pembayaran online meliputi transfer bank atau via
                   e-wallet melalui QRIS sesuai kenyamanan anda.
                 </p>
@@ -137,7 +137,7 @@
             <div class="flex items-center">
               <svg
                 fill="none"
-                stroke="currentColor"
+                stroke="#fcd34d"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -149,7 +149,7 @@
                 ></path>
               </svg>
               <div class="ml-4 text-lg leading-7 font-semibold">
-                <span class="text-gray-900 dark:text-white"
+                <span class="text-lime-700 dark:text-white"
                   >Konfirmasi Panitia</span
                 >
               </div>
@@ -157,12 +157,10 @@
 
             <div class="ml-12">
               <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                <p>
+                <p class="py-2">
                   Kirimkan bukti pembayaran anda kepada panitia UPZIS, terima
                   bukti penerimaan zakat anda secara online. Transaksi secara
                   <span class="italic">cashless</span> menjadi opsi untuk anda.
-                </p>
-                <p>
                   Untuk pembayaran langsung, anda juga bisa datang ke gerai
                   zakat di masjid Al Muhajirin Bukit Pamulang Indah.
                 </p>
@@ -176,7 +174,7 @@
             <div class="flex items-center">
               <svg
                 fill="none"
-                stroke="currentColor"
+                stroke="#fcd34d"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -188,7 +186,7 @@
                 ></path>
               </svg>
               <div
-                class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white"
+                class="ml-4 text-lg leading-7 font-semibold text-lime-700 dark:text-white"
               >
                 Review zakat anda
               </div>
@@ -196,7 +194,7 @@
 
             <div class="ml-12">
               <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                <p>
+                <p class="py-2">
                   Simpan dan telaah transaksi zakat anda sejak tahun-tahun
                   sebelumnya. Baik untuk pembayaran online maupun datang ke
                   gerai zakat, transaksi zakat anda dalam genggaman anda.
