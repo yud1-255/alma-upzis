@@ -114,7 +114,9 @@ class FamilyController extends Controller
             'head_of_family' => ['required'],
             'phone' => ['required'],
             'bpi_block_no' => ['required_if:is_bpi,1'],
-            'bpi_house_no' => ['required_if:is_bpi,1']
+            'bpi_house_no' => ['required_if:is_bpi,1'],
+            'is_bpi' => ['required'],
+            'address' => ['required']
         ]);
 
         $formData = $request->only($family->getFillable());
