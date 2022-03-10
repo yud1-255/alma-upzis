@@ -14,7 +14,7 @@
           <div class="p-6 bg-white border-b border-gray-200 print:font-mono">
             <ZakatReceipt :zakat="zakat"></ZakatReceipt>
 
-            <div v-if="printWithCopy" class="sm:hidden print:visible">
+            <div v-if="printWithCopy" class="hidden print:block">
               <div class="py-4 text-center">
                 sisi untuk muzakki
                 <hr />

@@ -4,7 +4,7 @@
       <thead class="font-bold border-b-2">
         <tr>
           <th colspan="11" class="text-center py-2">
-            <div class="flex sm:hidden print:visible w-full justify-between">
+            <div class="hidden print:flex w-full justify-between">
               <img src="/assets/yam-logo-bw.png" class="object-contain h-12" />
               <div class="text-center font-semibold">
                 Yayasan Al Munawwarah<br />
@@ -150,7 +150,7 @@
             </div>
           </td>
         </tr>
-        <tr class="sm:hidden print:visible">
+        <tr class="hidden print:table-row">
           <td colspan="11">
             *) tanda terima diterbitkan secara otomatis oleh aplikasi UPZIS
             <br />

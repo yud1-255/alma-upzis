@@ -5,9 +5,11 @@
       <h1>Transaksi Zakat</h1>
     </template>
     <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-      <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-2">
+      <div
+        class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-2 min-h-screen"
+      >
         <div class="overflow-x-auto">
-          <table class="w-full min-h-screen">
+          <table class="w-full">
             <thead>
               <tr>
                 <td colspan="4" class="py-4 space-x-2">
