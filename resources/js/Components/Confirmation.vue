@@ -4,8 +4,12 @@
     <p>{{ message }}</p>
 
     <div class="flex space-x-2 mb-2 mt-6">
-      <Button @click="cancel">{{ cancelButton }}</Button>
-      <Button @click="confirm">{{ okButton }}</Button>
+      <Button @click="cancel" class="text-gray-100 bg-amber-500">{{
+        cancelButton
+      }}</Button>
+      <Button @click="confirm" class="text-green-100 bg-lime-700">{{
+        okButton
+      }}</Button>
     </div>
   </popup-modal>
 </template>

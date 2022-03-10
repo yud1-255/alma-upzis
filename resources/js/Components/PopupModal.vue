@@ -6,7 +6,7 @@
       @click="this.isVisible = false"
     >
       <div
-        class="bg-white shadow m-auto p-4 max-w-2xl min-h-min"
+        class="bg-white shadow m-auto p-4 max-w-2xl min-h-min rounded-lg"
         @click.stop=""
       >
         <slot></slot>

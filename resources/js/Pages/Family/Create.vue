@@ -121,14 +121,16 @@
                     <thead class="font-bold border-b-2">
                       <td>Nama</td>
                       <td>Telepon</td>
-                      <td>Alamat</td>
+                      <td class="hidden md:table-cell">Alamat</td>
                       <td></td>
                     </thead>
                     <tbody>
                       <tr v-for="muzakki in muzakkis" :key="muzakki.id">
                         <td class="py-2">{{ muzakki.name }}</td>
                         <td class="py-2">{{ muzakki.phone }}</td>
-                        <td class="py-2">{{ muzakki.address }}</td>
+                        <td class="py-2 hidden md:table-cell">
+                          {{ muzakki.address }}
+                        </td>
                         <td>
                           <span
                             class="cursor-pointer text-red-700"
@@ -155,7 +157,7 @@
                             class="w-24"
                           />
                         </td>
-                        <td class="py-2">
+                        <td class="py-2 hidden md:table-cell">
                           <div v-bind:class="{ invisible: useFamilyAddress }">
                             <Input
                               v-model="muzakkiForm.address"
@@ -168,7 +170,7 @@
                           <button class="text-green-700">Tambah Muzakki</button>
                         </td>
                       </tr>
-                      <tr>
+                      <tr class="md:visible hidden">
                         <td colspan="4">
                           <div class="flex my-2 space-x-2 align-top">
                             <Checkbox
@@ -189,7 +191,7 @@
                 <div v-if="family != null" class="flex items-center mt-4">
                   <button
                     @click="updateFamily"
-                    class="px-6 py-2 text-white bg-gray-900 rounded"
+                    class="px-6 py-2 text-green-100 bg-lime-700 rounded"
                   >
                     Simpan
                   </button>

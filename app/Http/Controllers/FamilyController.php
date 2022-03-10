@@ -64,7 +64,9 @@ class FamilyController extends Controller
     {
         $request->validate([
             'head_of_family' => ['required'],
-            'phone' => ['required']
+            'phone' => ['required'],
+            'is_bpi' => ['required'],
+            'address' => ['required']
         ]);
 
         $family = new Family();
