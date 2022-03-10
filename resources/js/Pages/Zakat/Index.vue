@@ -7,18 +7,18 @@
     <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-2">
         <div class="overflow-x-auto">
-          <table class="w-full">
+          <table class="w-full min-h-screen">
             <thead>
               <tr>
                 <td colspan="4" class="py-4 space-x-2">
                   <Link
-                    class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
+                    class="px-2 py-2 text-green-100 bg-lime-700 rounded print:hidden"
                     :href="route('zakat.create')"
                     >Buat Transaksi</Link
                   >
                   <a
                     v-if="can.viewAny"
-                    class="px-2 py-2 text-green-100 bg-green-500 rounded print:hidden"
+                    class="px-2 py-2 text-green-100 bg-lime-700 rounded print:hidden"
                     :href="route('zakat.export', 'summary')"
                     >Ekspor ke Excel</a
                   >

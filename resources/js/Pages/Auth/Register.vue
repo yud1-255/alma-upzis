@@ -58,7 +58,7 @@
         :href="route('login')"
         class="underline text-sm text-gray-600 hover:text-gray-900"
       >
-        Sudah terdaftar? Login di sini
+        Sudah daftar? Login di sini
       </Link>
 
       <BreezeButton
@@ -66,7 +66,7 @@
         :class="{ 'opacity-25': form.processing }"
         :disabled="form.processing"
       >
-        Daftarkan Akun
+        Daftarkan akun
       </BreezeButton>
     </div>
   </form>

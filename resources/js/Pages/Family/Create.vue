@@ -11,7 +11,7 @@
             <BreezeValidationErrors class="mb-4" />
             <form @submit.prevent="createFamily()">
               <h2>Kepala Keluarga</h2>
-              <div class="flex">
+              <div class="md:flex">
                 <div>
                   <Label for="head_of_family">Nama</Label>
                   <Input v-model="familyForm.head_of_family" />
@@ -41,7 +41,7 @@
                   <input
                     type="radio"
                     id="is_bpi_true"
-                    class="text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    class="text-lime-600 shadow-sm focus:border-lime-300 focus:ring focus:ring-lime-200 focus:ring-opacity-50"
                     v-model="familyForm.is_bpi"
                     :value="1"
                     @change="setAddress"
@@ -52,7 +52,7 @@
                   <input
                     type="radio"
                     id="is_bpi_false"
-                    class="text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    class="text-lime-600 shadow-sm focus:border-lime-300 focus:ring focus:ring-lime-200 focus:ring-opacity-50"
                     v-model="familyForm.is_bpi"
                     :value="0"
                     @change="setAddress"

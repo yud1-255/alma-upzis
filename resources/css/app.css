@@ -20,6 +20,6 @@
     @apply text-lime-700;
   }
   select {
-    @apply rounded border-gray-300 text-gray-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+    @apply rounded border-gray-300 text-gray-600 shadow-sm focus:border-none focus:ring focus:ring-lime-700 focus:ring-opacity-25;
   }
 }
