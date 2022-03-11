@@ -4,7 +4,7 @@
     <template #header>
       <h1>Transaksi Zakat</h1>
     </template>
-    <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="py-2 md:py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div
         class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-2 min-h-screen"
       >
