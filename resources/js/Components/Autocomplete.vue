@@ -4,6 +4,7 @@
       v-model="search"
       @input="onChange"
       :placeholder="placeholder"
+      class="w-full md:w-auto"
     ></Input>
   </div>
   <ul v-show="isOpen" class="shadow-lg">

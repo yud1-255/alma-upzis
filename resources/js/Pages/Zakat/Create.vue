@@ -14,8 +14,8 @@
             <BreezeValidationErrors class="mb-4" />
             <div v-if="can.submitForOthers">
               <h2>Penerimaan oleh Panitia</h2>
-              <div class="flex">
-                <div>
+              <div class="md:flex">
+                <div class="py-1">
                   <Label>Kepala Keluarga</Label>
                   <autocomplete
                     placeholder="Cari berdasarkan nama"
@@ -27,24 +27,27 @@
                     @selected="setFamily"
                   />
                 </div>
-                <div>
+                <div class="py-1">
                   <Label for="transaction_no">Terima dari</Label>
-                  <Input v-model="form.receive_from_name" />
+                  <Input
+                    v-model="form.receive_from_name"
+                    class="w-full md:w-auto"
+                  />
                 </div>
-                <div>
+                <div class="py-1">
                   <Label for="total_rp">Total (Rp)</Label>
                   <InputNumeric
                     v-model="form.total_rp"
                     placeholder="0"
-                    class="text-right"
+                    class="text-right w-full md:w-auto"
                     readonly
                   />
                 </div>
-                <div>
+                <div class="py-1">
                   <Label for="hijri_year">Periode Zakat</Label>
                   <Input
                     v-model="form.hijri_year"
-                    class="text-right"
+                    class="text-right w-full md:w-auto"
                     readonly
                   />
                 </div>
@@ -54,11 +57,11 @@
             <form @submit.prevent="submit">
               <h2 v-if="!can.submitForOthers">Penerimaan zakat</h2>
               <div v-if="!can.submitForOthers" class="md:flex md:flex-wrap">
-                <div>
+                <div class="py-1">
                   <Label for="family_head">Kepala Keluarga</Label>
                   <Input v-model="form.family_head" class="w-full md:w-auto" />
                 </div>
-                <div>
+                <div class="py-1">
                   <Label for="total_rp">Total (Rp)</Label>
                   <InputNumeric
                     v-model="form.total_rp"
@@ -67,7 +70,7 @@
                     readonly
                   />
                 </div>
-                <div class="hidden md:inline-block">
+                <div class="py-1 hidden md:inline-block">
                   <Label for="hijri_year">Periode Zakat</Label>
                   <Input
                     v-model="form.hijri_year"
@@ -95,7 +98,6 @@
                   v-for="zakat_line in form.zakat_lines"
                   :key="zakat_line.id"
                 >
-                  <!-- TODO implement checkbox to disallow at backend -->
                   <div class="flex">
                     <div>muzakki: {{ zakat_line.muzakki_name }}</div>
                     <span
@@ -111,63 +113,62 @@
                       v-model="zakat_line.fitrah_rp"
                       @change="calculateTotalZakat"
                       placeholder="Fitrah (Rp)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
                     <InputNumeric
                       v-model="zakat_line.fitrah_kg"
                       @change="calculateTotalZakat"
                       placeholder="Fitrah (kg)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
                     <InputNumeric
                       v-model="zakat_line.fitrah_lt"
                       @change="calculateTotalZakat"
                       placeholder="Fitrah (lt)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
                     <InputNumeric
                       v-model="zakat_line.maal_rp"
                       @change="calculateTotalZakat"
                       placeholder="Maal (Rp)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
                     <InputNumeric
                       v-model="zakat_line.profesi_rp"
                       @change="calculateTotalZakat"
                       placeholder="Profesi (Rp)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
                     <InputNumeric
                       v-model="zakat_line.infaq_rp"
                       @change="calculateTotalZakat"
                       placeholder="Infaq (Rp)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
                     <InputNumeric
                       v-model="zakat_line.wakaf_rp"
                       @change="calculateTotalZakat"
                       placeholder="Wakaf (Rp)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
                     <InputNumeric
                       v-model="zakat_line.fidyah_rp"
                       @change="calculateTotalZakat"
                       placeholder="Fidyah (Rp)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
                     <InputNumeric
                       v-model="zakat_line.fidyah_kg"
                       @change="calculateTotalZakat"
                       placeholder="Fidyah (kg)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
                     <InputNumeric
                       v-model="zakat_line.kafarat_rp"
                       @change="calculateTotalZakat"
                       placeholder="Kafarat (Rp)"
-                      class="w-24"
+                      class="w-24 m-1"
                     />
-                    <!-- TODO implement minus button -->
                   </div>
                 </div>
               </div>

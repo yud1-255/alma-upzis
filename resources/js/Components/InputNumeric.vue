@@ -1,6 +1,6 @@
 <template>
   <input
-    class="mr-2 px-1 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+    class="mr-2 px-1 border rounded-md focus:outline-none focus:ring-1 focus:border-none focus:ring-yellow-500"
     v-model="formattedValue"
     @focus="isInputActive = true"
     @blur="isInputActive = false"
