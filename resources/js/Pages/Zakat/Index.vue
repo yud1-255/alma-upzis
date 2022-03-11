@@ -63,7 +63,7 @@
                   {{ zakat.is_offline_submission ? "Gerai" : "Online" }}
                 </td>
                 <td class="px-4 py-2 text-right">
-                  {{ Number(zakat.total_rp).toLocaleString("id") }}
+                  {{ Number(zakat.total_transfer_rp).toLocaleString("id") }}
                 </td>
                 <td class="px-4 py-2 print:hidden">
                   <Link
@@ -76,7 +76,7 @@
                     v-if="can.confirmPayment"
                     @click="confirmPayment(zakat)"
                     class="text-orange-700"
-                    :class="{ invisible: zakat.zakat_pic == null }"
+                    :class="{ invisible: zakat.zakat_pic != null }"
                   >
                     Konfirmasi
                   </button>
@@ -156,7 +156,11 @@ export default {
     async confirmPayment(zakat) {
       const isConfirmed = await this.$refs.confirmation.show({
         title: "Konfirmasi",
-        message: `Konfirmasi pembayaran dari ${zakat.receive_from_name} untuk keluarga ${zakat.family_head}?`,
+        message: `Konfirmasi pembayaran dari ${
+          zakat.receive_from_name
+        } sejumlah Rp. ${Number(zakat.total_transfer_rp).toLocaleString(
+          "id"
+        )}?`,
         okButton: "Lanjut",
         cancelButton: "Batal",
       });
