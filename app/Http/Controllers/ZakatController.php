@@ -99,7 +99,7 @@ class ZakatController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'total_rp' => ['numeric'],
+            'total_rp' => ['required', 'numeric', 'gt:0'],
             'family_head' => ['required']
         ]);
         $zakat = new Zakat();

@@ -163,6 +163,7 @@ return [
         'is_bpi' => 'Warga BPI',
         'bpi_block_no' => 'Nomor blok',
         'bpi_house_no' => 'Nomor rumah',
+        'total_rp' => 'Total (Rupiah)'
     ],
 
 ];

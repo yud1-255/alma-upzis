@@ -7,7 +7,7 @@
 
     <!-- TODO modify styling for Create -->
 
-    <div class="py-6">
+    <div class="py-2 md:py-6">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
@@ -53,25 +53,25 @@
 
             <form @submit.prevent="submit">
               <h2 v-if="!can.submitForOthers">Penerimaan zakat</h2>
-              <div v-if="!can.submitForOthers" class="flex flex-wrap">
+              <div v-if="!can.submitForOthers" class="md:flex md:flex-wrap">
                 <div>
                   <Label for="family_head">Kepala Keluarga</Label>
-                  <Input v-model="form.family_head" />
+                  <Input v-model="form.family_head" class="w-full md:w-auto" />
                 </div>
                 <div>
                   <Label for="total_rp">Total (Rp)</Label>
                   <InputNumeric
                     v-model="form.total_rp"
                     placeholder="0"
-                    class="text-right"
+                    class="text-right w-full md:w-auto"
                     readonly
                   />
                 </div>
-                <div>
+                <div class="hidden md:inline-block">
                   <Label for="hijri_year">Periode Zakat</Label>
                   <Input
                     v-model="form.hijri_year"
-                    class="text-right"
+                    class="text-right w-full md:w-auto"
                     readonly
                   />
                 </div>
@@ -103,7 +103,7 @@
                       title="Hapus"
                       @click="removeZakatLine(zakat_line)"
                     >
-                      ✕
+                      <UserRemoveIcon class="h-5" />
                     </span>
                   </div>
                   <div class="flex flex-wrap py-2">
@@ -186,7 +186,9 @@
                     placeholder="Telepon"
                     class="w-24"
                   />
-                  <button class="text-green-600">Tambah Muzakki</button>
+                  <button class="text-green-700" title="Tambah muzakki">
+                    <UserAddIcon class="h-5" />
+                  </button>
                 </div>
                 <div v-else>
                   <span class="italic mr-4"
@@ -200,7 +202,7 @@
                 </div>
               </form>
               <div class="flex items-center mt-4">
-                <button class="px-6 py-2 text-white bg-gray-900 rounded">
+                <button class="px-6 py-2 text-green-100 bg-lime-700 rounded">
                   Simpan
                 </button>
               </div>
@@ -226,6 +228,9 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
+import { UserRemoveIcon } from "@heroicons/vue/solid";
+import { UserAddIcon } from "@heroicons/vue/solid";
+
 export default {
   components: {
     BreezeAuthenticatedLayout,
@@ -238,6 +243,8 @@ export default {
     Checkbox,
     Button,
     Head,
+    UserRemoveIcon,
+    UserAddIcon,
   },
   setup(props) {
     const form = useForm({
