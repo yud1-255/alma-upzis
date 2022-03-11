@@ -4,7 +4,7 @@
     <template #header>
       <h1>Daftarkan muzakki</h1>
     </template>
-    <div class="py-6">
+    <div class="py-2 md:py-6">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
@@ -14,18 +14,21 @@
               <div class="md:flex">
                 <div>
                   <Label for="head_of_family">Nama</Label>
-                  <Input v-model="familyForm.head_of_family" />
+                  <Input
+                    v-model="familyForm.head_of_family"
+                    class="w-full md:w-auto"
+                  />
                 </div>
                 <div>
                   <Label for="phone">Telepon</Label>
-                  <Input v-model="familyForm.phone" />
+                  <Input v-model="familyForm.phone" class="w-full md:w-auto" />
                 </div>
                 <div>
                   <Label for="kk_number"
                     >Nomor Kartu Keluarga (opsional, apabila pernah
                     didaftarkan)</Label
                   >
-                  <Input v-model="familyForm.kk_number" />
+                  <Input v-model="familyForm.kk_number" class="md:w-auto" />
                   <span
                     v-if="family?.id == null"
                     class="cursor-pointer text-green-700"
@@ -117,7 +120,7 @@
               <div>
                 <h2 class="mt-6">Muzakki dalam keluarga</h2>
                 <form @submit.prevent="addMuzakki">
-                  <table>
+                  <table class="w-full md:w-auto">
                     <thead class="font-bold border-b-2">
                       <td>Nama</td>
                       <td>Telepon</td>
@@ -135,10 +138,11 @@
                         </td>
                         <td>
                           <span
+                            title="Hapus"
                             class="cursor-pointer text-red-700"
                             @click="deleteMuzakki(muzakki)"
                           >
-                            Hapus
+                            <TrashIcon class="h-5" />
                           </span>
                         </td>
                       </tr>
@@ -169,7 +173,9 @@
                           </div>
                         </td>
                         <td class="py-2">
-                          <button class="text-green-700">Tambah Muzakki</button>
+                          <button title="Tambah Muzakki" class="text-green-700">
+                            <UserAddIcon class="h-5" />
+                          </button>
                         </td>
                       </tr>
                       <tr class="md:table-row hidden">
@@ -218,6 +224,9 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
+import { TrashIcon } from "@heroicons/vue/solid";
+import { UserAddIcon } from "@heroicons/vue/solid";
+
 export default {
   components: {
     BreezeAuthenticatedLayout,
@@ -228,6 +237,8 @@ export default {
     Checkbox,
     Head,
     Confirmation,
+    TrashIcon,
+    UserAddIcon,
   },
   setup(props) {
     const familyForm = useForm({
