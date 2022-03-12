@@ -21,7 +21,7 @@
                   <a
                     v-if="can.viewAny"
                     class="px-2 py-2 text-green-100 bg-lime-700 rounded print:hidden"
-                    :href="route('zakat.export', 'summary')"
+                    :href="route('zakat.export', ['summary', hijriYear])"
                     >Ekspor ke Excel</a
                   >
                 </td>

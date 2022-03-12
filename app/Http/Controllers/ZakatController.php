@@ -268,9 +268,12 @@ class ZakatController extends Controller
 
     public function export(Request $request)
     {
-        switch ($request->type) {
+        $type = $request->type;
+        $hijriYear = $request->hijriYear;
+
+        switch ($type) {
             case 'summary':
-                return Excel::download(new ZakatExport(Auth::user()), 'zakat.xlsx');
+                return Excel::download(new ZakatExport(Auth::user(), $hijriYear), 'zakat.xlsx');
             case 'muzakki_list':
                 return Excel::download(new MuzakkiListExport(Auth::user()), 'muzakki_list.xlsx');
             case 'muzakki_recap':
