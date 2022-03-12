@@ -155,7 +155,7 @@ class ZakatDomain
         return $zakats;
     }
 
-    public function zakatOnlinePayments(string $searchTerm): Builder
+    public function zakatOnlinePayments(string $searchTerm, string $hijriYear): Builder
     {
         $zakats = DB::table('zakats')
             ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
@@ -163,6 +163,7 @@ class ZakatDomain
             ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
             ->where('is_offline_submission', false)
             ->where('receive_from_name', 'like', "%{$searchTerm}%")
+            ->where('hijri_year', $hijriYear)
             ->orderBy('transaction_no', 'desc')
             ->select([
                 'zakats.*',

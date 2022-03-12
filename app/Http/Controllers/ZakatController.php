@@ -253,13 +253,16 @@ class ZakatController extends Controller
     {
         $user = Auth::user();
         $searchTerm = $request->searchTerm ?? "";
+        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
 
         $domain = new ZakatDomain(Auth::user());
-        $zakats = $domain->zakatOnlinePayments($searchTerm);
+        $zakats = $domain->zakatOnlinePayments($searchTerm, $hijriYear);
 
         return Inertia::render('Zakat/OnlinePayments', [
             'zakats' => $zakats->paginate(10),
-            'can' => ['confirmPayment' => $user->can('confirmPayment', new Zakat())]
+            'can' => ['confirmPayment' => $user->can('confirmPayment', new Zakat())],
+            'hijriYears' => $domain->getHijriYears(),
+            'hijriYear' => $hijriYear,
         ]);
     }
 

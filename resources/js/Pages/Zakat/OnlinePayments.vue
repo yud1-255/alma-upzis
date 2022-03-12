@@ -21,7 +21,13 @@
                 <Input
                   v-model="searchTerm"
                   placeholder="Cari berdasarkan nama"
+                  class="p-2"
                 />
+                <select v-model="hijriYear" @change="searchTransactions">
+                  <option v-for="hijriYear in hijriYears" :key="hijriYear">
+                    {{ hijriYear }}
+                  </option>
+                </select>
               </div>
             </div>
             <table class="w-full">
@@ -96,6 +102,8 @@ export default {
   props: {
     zakats: Object,
     can: Object,
+    hijriYear: String,
+    hijriYears: Array,
   },
   data() {
     return {
@@ -106,7 +114,7 @@ export default {
     searchTerm: debounce(function (newValue) {
       this.$inertia.get(
         this.route("zakat.onlinePayments"),
-        { searchTerm: newValue },
+        { searchTerm: newValue, hijriYear: this.hijriYear },
         {
           preserveState: true,
           preserveScroll: true,
@@ -115,6 +123,14 @@ export default {
     }, 300),
   },
   methods: {
+    searchTransactions() {
+      this.$inertia.replace(
+        this.route("zakat.onlinePayments", {
+          searchTerm: this.searchTerm,
+          hijriYear: this.hijriYear,
+        })
+      );
+    },
     async confirmPayment(zakat) {
       const isConfirmed = await this.$refs.confirmation.show({
         title: "Konfirmasi",
