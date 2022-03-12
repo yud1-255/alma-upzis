@@ -225,7 +225,8 @@ class ZakatController extends Controller
     public function dailyRecap(Request $request)
     {
         $domain = new ZakatDomain(Auth::user());
-        $hijriYear = AppConfig::getConfigValue('hijri_year');
+        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
+
 
         $zakats = $domain->zakatMuzakkiRecap("", $hijriYear)
             ->reorder()
@@ -234,7 +235,8 @@ class ZakatController extends Controller
 
         return Inertia::render('Zakat/DailyRecap', [
             'zakats' => $zakats,
-            'hijri_year' => AppConfig::getConfigValue('hijri_year')
+            'hijriYears' => $domain->getHijriYears(),
+            'hijriYear' => $hijriYear,
         ]);
     }
 

@@ -17,8 +17,10 @@
                 >
               </div>
               <div class="w-1/2 text-right">
-                <select v-model="hijri_year" disabled>
-                  <option>{{ hijri_year }}</option>
+                <select v-model="hijriYear">
+                  <option v-for="hijriYear in hijriYears" :key="hijriYear">
+                    {{ hijriYear }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -145,6 +147,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import Input from "@/Components/Input.vue";
 import _ from "lodash";
+import debounce from "lodash/debounce";
 
 export default {
   components: {
@@ -155,7 +158,17 @@ export default {
   },
   props: {
     zakats: Object,
-    hijri_year: String,
+    hijriYear: String,
+    hijriYears: Array,
+  },
+  watch: {
+    hijriYear: debounce(function (newValue) {
+      this.$inertia.replace(
+        this.route("zakat.dailyRecap", {
+          hijriYear: newValue,
+        })
+      );
+    }, 300),
   },
   methods: {
     groupedTable() {
