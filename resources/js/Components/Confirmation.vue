@@ -1,6 +1,6 @@
 <template>
   <popup-modal ref="popup">
-    <h2>{{ title }}</h2>
+    <h2 class="mt-1 mb-4">{{ title }}</h2>
     <p>{{ message }}</p>
 
     <div class="flex space-x-2 mb-2 mt-6">

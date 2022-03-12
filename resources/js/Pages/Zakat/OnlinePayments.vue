@@ -118,7 +118,11 @@ export default {
     async confirmPayment(zakat) {
       const isConfirmed = await this.$refs.confirmation.show({
         title: "Konfirmasi",
-        message: `Konfirmasi pembayaran dari ${zakat.receive_from_name} untuk keluarga ${zakat.family_head}?`,
+        message: `Konfirmasi pembayaran dari ${
+          zakat.receive_from_name
+        } sejumlah Rp. ${Number(zakat.total_transfer_rp).toLocaleString(
+          "id"
+        )}?`,
         okButton: "Lanjut",
         cancelButton: "Batal",
       });
