@@ -201,7 +201,9 @@
                 </div>
               </form>
               <div class="flex items-center mt-4">
-                <button class="px-6 py-2 text-green-100 bg-lime-700 rounded">
+                <button
+                  class="px-6 py-2 text-green-100 bg-lime-700 rounded w-full md:w-auto"
+                >
                   Simpan
                 </button>
               </div>

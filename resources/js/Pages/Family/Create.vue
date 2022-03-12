@@ -199,7 +199,7 @@
                 <div v-if="family != null" class="flex items-center mt-4">
                   <button
                     @click="updateFamily"
-                    class="px-6 py-2 text-green-100 bg-lime-700 rounded"
+                    class="px-6 py-2 text-green-100 bg-lime-700 rounded-md w-full md:w-auto"
                   >
                     Simpan
                   </button>

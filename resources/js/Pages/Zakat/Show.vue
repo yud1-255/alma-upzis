@@ -1,5 +1,5 @@
 <template>
-  <Head title="Lihat transaksi zakat"></Head>
+  <Head :title="zakat.transaction_no"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
       <h1
@@ -93,10 +93,11 @@
             </div>
             <div
               v-if="can.print || can.confirmPayment"
-              class="pt-6 space-x-2 print:hidden"
+              class="pt-6 space-y-1 md:space-x-2 print:hidden"
             >
               <Button
                 v-if="can.confirmPayment"
+                class="w-full md:w-auto"
                 @click="confirmPayment(zakat.id)"
               >
                 Konfirmasi Pembayaran
@@ -104,12 +105,14 @@
 
               <Button
                 v-if="can.print && zakat.zakat_pic != null"
+                class="w-full md:w-auto"
                 @click="print(false)"
               >
                 Cetak
               </Button>
               <Button
                 v-if="can.print && zakat.zakat_pic != null"
+                class="w-full md:w-auto"
                 @click="print(true)"
               >
                 Cetak Rangkap
