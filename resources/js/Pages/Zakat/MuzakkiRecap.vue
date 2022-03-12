@@ -12,7 +12,7 @@
               <div class="w-1/2">
                 <a
                   class="px-2 py-2 text-green-100 bg-lime-700 rounded print:hidden"
-                  :href="route('zakat.export', 'muzakki_recap')"
+                  :href="route('zakat.export', ['muzakki_recap', hijriYear])"
                   >Ekspor ke Excel</a
                 >
               </div>

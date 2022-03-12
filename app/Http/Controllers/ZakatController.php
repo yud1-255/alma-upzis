@@ -277,9 +277,9 @@ class ZakatController extends Controller
             case 'muzakki_list':
                 return Excel::download(new MuzakkiListExport(Auth::user()), 'muzakki_list.xlsx');
             case 'muzakki_recap':
-                return Excel::download(new MuzakkiRecapExport(Auth::user()), 'muzakki_recap.xlsx');
+                return Excel::download(new MuzakkiRecapExport(Auth::user(), $hijriYear), 'muzakki_recap.xlsx');
             case 'online_payments':
-                return Excel::download(new OnlinePaymentsExport(Auth::user()), 'online_payments.xlsx');
+                return Excel::download(new OnlinePaymentsExport(Auth::user(), $hijriYear), 'online_payments.xlsx');
             default:
                 abort(404);
         }

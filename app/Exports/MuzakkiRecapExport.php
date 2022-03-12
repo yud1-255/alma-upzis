@@ -28,10 +28,12 @@ class MuzakkiRecapExport implements
     ShouldAutoSize
 {
     private $user;
+    private $hijriYear;
 
-    public function __construct(User $user)
+    public function __construct(User $user, string $hijriYear)
     {
         $this->user = $user;
+        $this->hijriYear = $hijriYear;
     }
 
     public function headings(): array
@@ -53,9 +55,8 @@ class MuzakkiRecapExport implements
     public function query()
     {
         $domain = new ZakatDomain($this->user);
-        $hijriYear = AppConfig::getConfigValue('hijri_year');
 
-        return $domain->zakatMuzakkiRecap("", $hijriYear);
+        return $domain->zakatMuzakkiRecap("", $this->hijriYear);
     }
 
     public function map($zakat): array
