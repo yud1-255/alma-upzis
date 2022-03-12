@@ -76,10 +76,14 @@
                   <div class="text-center">
                     <h2>QRIS UPZIS Al-Muhajirin</h2>
                     <img
-                      src="/assets/qr-alma.png"
+                      src="/assets/qris-alma.jpeg"
                       class="mx-auto"
                       width="250"
                     />
+
+                    <p class="font-bold">Mandiri Syariah</p>
+                    <p class="font-bold">NMID: ID2020032834356A01</p>
+                    <p class="font-bold">Al Muhajirin BPI Zakat</p>
                     <Button class="mt-6" @click="this.$refs.popup.close()"
                       >Tutup</Button
                     >
