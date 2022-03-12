@@ -216,7 +216,7 @@ class ZakatController extends Controller
         $zakats = $domain->zakatMuzakkiRecap($searchTerm, $hijriYear);
 
         return Inertia::render('Zakat/MuzakkiRecap', [
-            'zakats' => $zakats->paginate(10),
+            'zakats' => $zakats->paginate(10)->withQueryString(),
             'hijriYears' => $domain->getHijriYears(),
             'hijriYear' => $hijriYear,
         ]);
@@ -259,7 +259,7 @@ class ZakatController extends Controller
         $zakats = $domain->zakatOnlinePayments($searchTerm, $hijriYear);
 
         return Inertia::render('Zakat/OnlinePayments', [
-            'zakats' => $zakats->paginate(10),
+            'zakats' => $zakats->paginate(10)->withQueryString(),
             'can' => ['confirmPayment' => $user->can('confirmPayment', new Zakat())],
             'hijriYears' => $domain->getHijriYears(),
             'hijriYear' => $hijriYear,

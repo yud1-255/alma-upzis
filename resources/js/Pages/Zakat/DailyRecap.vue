@@ -24,116 +24,121 @@
                 </select>
               </div>
             </div>
-            <table class="w-full">
-              <thead class="font-bold border-b-2">
-                <tr>
-                  <td rowspan="2" class="px-4 py-2">No. Zakat</td>
-                  <td rowspan="2" class="px-4 py-2">Muzakki</td>
-                  <td colspan="3" class="px-4 py-2">Fitrah</td>
-                  <td rowspan="2" class="px-4 py-2">Maal</td>
-                  <td rowspan="2" class="px-4 py-2">Profesi</td>
-                  <td rowspan="2" class="px-4 py-2">Infaq Shadaqah</td>
-                  <td colspan="2" class="px-4 py-2">Fidyah</td>
-                  <td rowspan="2" class="px-4 py-2">Wakaf</td>
-                  <td rowspan="2" class="px-4 py-2">Kafarat</td>
-                  <td rowspan="2" class="px-4 py-2">Tanggal</td>
-                  <td rowspan="2" class="px-4 py-2">Terima dari</td>
-                  <td rowspan="2" class="px-4 py-2">Petugas</td>
-                </tr>
-                <tr>
-                  <td>Rp</td>
-                  <td>Kg</td>
-                  <td>Lt</td>
-                  <td>Rp</td>
-                  <td>Kg</td>
-                </tr>
-              </thead>
-              <tbody
-                v-for="dailyAgg in groupedTable()"
-                :key="dailyAgg.transaction_date"
-              >
-                <tr v-for="zakat_line in dailyAgg.zakats" :key="zakat_line.id">
-                  <td>
-                    {{ zakat_line.transaction_no }}
-                  </td>
-                  <td>{{ zakat_line.muzakki_name }}</td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.fitrah_rp).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.fitrah_kg).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.fitrah_lt).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.maal_rp).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.profesi_rp).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.infaq_rp).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.fidyah_rp).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.fidyah_kg).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.wakaf_rp).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right">
-                    {{ Number(zakat_line.kafarat_rp).toLocaleString("id") }}
-                  </td>
-                  <td class="text-right whitespace-nowrap">
-                    {{ zakat_line.transaction_date }}
-                  </td>
-                  <td>{{ zakat_line.receive_from_name }}</td>
-                  <td>{{ zakat_line.zakat_pic_name }}</td>
-                </tr>
-                <tr class="bg-gray-200">
-                  <th>
-                    {{ dailyAgg.transaction_date }}
-                  </th>
-                  <th>{{ dailyAgg.sum_muzakki_name }}</th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_fitrah_rp).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_fitrah_kg).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_fitrah_lt).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_maal_rp).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_profesi_rp).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_infaq_rp).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_fidyah_rp).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_fidyah_kg).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_wakaf_rp).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right">
-                    {{ Number(dailyAgg.sum_kafarat_rp).toLocaleString("id") }}
-                  </th>
-                  <th class="text-right whitespace-nowrap"></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </tbody>
-            </table>
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead class="font-bold border-b-2">
+                  <tr>
+                    <td rowspan="2" class="px-4 py-2">No. Zakat</td>
+                    <td rowspan="2" class="px-4 py-2">Muzakki</td>
+                    <td colspan="3" class="px-4 py-2">Fitrah</td>
+                    <td rowspan="2" class="px-4 py-2">Maal</td>
+                    <td rowspan="2" class="px-4 py-2">Profesi</td>
+                    <td rowspan="2" class="px-4 py-2">Infaq Shadaqah</td>
+                    <td colspan="2" class="px-4 py-2">Fidyah</td>
+                    <td rowspan="2" class="px-4 py-2">Wakaf</td>
+                    <td rowspan="2" class="px-4 py-2">Kafarat</td>
+                    <td rowspan="2" class="px-4 py-2">Tanggal</td>
+                    <td rowspan="2" class="px-4 py-2">Terima dari</td>
+                    <td rowspan="2" class="px-4 py-2">Petugas</td>
+                  </tr>
+                  <tr>
+                    <td>Rp</td>
+                    <td>Kg</td>
+                    <td>Lt</td>
+                    <td>Rp</td>
+                    <td>Kg</td>
+                  </tr>
+                </thead>
+                <tbody
+                  v-for="dailyAgg in groupedTable()"
+                  :key="dailyAgg.transaction_date"
+                >
+                  <tr
+                    v-for="zakat_line in dailyAgg.zakats"
+                    :key="zakat_line.id"
+                  >
+                    <td>
+                      {{ zakat_line.transaction_no }}
+                    </td>
+                    <td>{{ zakat_line.muzakki_name }}</td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.fitrah_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.fitrah_kg).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.fitrah_lt).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.maal_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.profesi_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.infaq_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.fidyah_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.fidyah_kg).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.wakaf_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat_line.kafarat_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right whitespace-nowrap">
+                      {{ zakat_line.transaction_date }}
+                    </td>
+                    <td>{{ zakat_line.receive_from_name }}</td>
+                    <td>{{ zakat_line.zakat_pic_name }}</td>
+                  </tr>
+                  <tr class="bg-gray-200">
+                    <th>
+                      {{ dailyAgg.transaction_date }}
+                    </th>
+                    <th>{{ dailyAgg.sum_muzakki_name }}</th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_fitrah_rp).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_fitrah_kg).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_fitrah_lt).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_maal_rp).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_profesi_rp).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_infaq_rp).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_fidyah_rp).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_fidyah_kg).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_wakaf_rp).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_kafarat_rp).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right whitespace-nowrap"></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
