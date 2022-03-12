@@ -13,11 +13,12 @@
   table th {
     @apply px-2;
   }
-  table thead td {
-    @apply text-lime-700;
+  table thead td,
+  table thead th {
+    @apply text-lime-700 print:text-gray-800;
   }
   table tfoot th {
-    @apply text-lime-700;
+    @apply text-lime-700 print:text-gray-800;
   }
   select {
     @apply rounded border-gray-300 text-gray-600 shadow-sm focus:border-none focus:ring focus:ring-lime-700 focus:ring-opacity-25;
