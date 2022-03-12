@@ -210,14 +210,15 @@ class ZakatController extends Controller
     public function muzakkiRecap(Request $request)
     {
         $searchTerm = $request->searchTerm ?? "";
+        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
 
         $domain = new ZakatDomain(Auth::user());
-        $hijriYear = AppConfig::getConfigValue('hijri_year');
-
         $zakats = $domain->zakatMuzakkiRecap($searchTerm, $hijriYear);
 
         return Inertia::render('Zakat/MuzakkiRecap', [
-            'zakats' => $zakats->paginate(10)
+            'zakats' => $zakats->paginate(10),
+            'hijriYears' => $domain->getHijriYears(),
+            'hijriYear' => $hijriYear,
         ]);
     }
 

@@ -20,7 +20,13 @@
                 <Input
                   v-model="searchTerm"
                   placeholder="Cari berdasarkan nama"
+                  class="p-2"
                 />
+                <select v-model="hijriYear" @change="searchTransactions">
+                  <option v-for="hijriYear in hijriYears" :key="hijriYear">
+                    {{ hijriYear }}
+                  </option>
+                </select>
               </div>
             </div>
             <table class="w-full">
@@ -119,6 +125,8 @@ export default {
   },
   props: {
     zakats: Object,
+    hijriYear: String,
+    hijriYears: Array,
   },
   data() {
     return {
@@ -128,9 +136,22 @@ export default {
   watch: {
     searchTerm: debounce(function (newValue) {
       this.$inertia.replace(
-        this.route("zakat.muzakkiRecap", { searchTerm: newValue })
+        this.route("zakat.muzakkiRecap", {
+          searchTerm: newValue,
+          hijriYear: this.hijriYear,
+        })
       );
     }, 300),
+  },
+  methods: {
+    searchTransactions() {
+      this.$inertia.replace(
+        this.route("zakat.muzakkiRecap", {
+          searchTerm: this.searchTerm,
+          hijriYear: this.hijriYear,
+        })
+      );
+    },
   },
 };
 </script>
