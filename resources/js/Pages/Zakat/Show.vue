@@ -27,12 +27,12 @@
             </div>
 
             <div class="block md:hidden print:hidden">
-              <div class="py-4 font-semibold text-left">
+              <div class="pb-4 font-semibold text-left">
                 <h2>Transaksi no: {{ zakat.transaction_no }}</h2>
               </div>
               <table class="table-auto w-full">
                 <thead>
-                  <th>Muzakki</th>
+                  <th class="text-left">Muzakki</th>
                   <th>Kg</th>
                   <th>Lt</th>
                   <th>Rp</th>

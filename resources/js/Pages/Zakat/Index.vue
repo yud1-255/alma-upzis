@@ -10,7 +10,7 @@
       >
         <div class="overflow-x-auto">
           <table class="w-full">
-            <thead>
+            <thead class="hidden md:table-header-group">
               <tr>
                 <td colspan="4" class="py-4 space-x-2">
                   <Link
@@ -45,7 +45,14 @@
                 <td class="px-4 py-2"></td>
               </tr>
             </thead>
-            <tbody>
+            <thead class="table-row-group md:hidden">
+              <tr class="font-bold border-b-2">
+                <td class="py-4">Tanggal</td>
+                <td>Petugas</td>
+                <td>Jumlah (Rp)</td>
+              </tr>
+            </thead>
+            <tbody class="hidden md:table-row-group">
               <tr v-for="zakat in zakats.data" :key="zakat.id">
                 <td class="px-4 py-2">{{ zakat.transaction_no }}</td>
                 <td class="px-4 py-2">{{ zakat.transaction_date }}</td>
@@ -87,6 +94,27 @@
                   >
                     Hapus
                   </button>
+                </td>
+              </tr>
+            </tbody>
+            <tbody
+              v-for="zakat in zakats.data"
+              :key="zakat.id"
+              class="border-b table-row-group md:hidden"
+              @click="$inertia.get(route('zakat.show', zakat.id))"
+            >
+              <tr>
+                <td colspan="3" class="font-semibold py-1">
+                  {{ zakat.transaction_no }}
+                </td>
+              </tr>
+              <tr>
+                <td class="whitespace-nowrap py-1">
+                  {{ zakat.transaction_date }}
+                </td>
+                <td>{{ zakat.zakat_pic_name ?? "-" }}</td>
+                <td class="text-right py-1">
+                  {{ Number(zakat.total_transfer_rp).toLocaleString("id") }}
                 </td>
               </tr>
             </tbody>
