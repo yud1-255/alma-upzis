@@ -366,6 +366,7 @@ export default {
         (line) => line.muzakki_id != zakatLine.muzakki_id
       );
       this.removedMuzakkiCount++;
+      this.calculateTotalZakat();
     },
     resetMuzakkiForm() {
       this.defaultFitrahAmount = "";
