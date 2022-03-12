@@ -57,11 +57,7 @@
                 <td class="px-4 py-2">{{ zakat.transaction_no }}</td>
                 <td class="px-4 py-2">{{ zakat.transaction_date }}</td>
                 <td class="px-4 py-2">
-                  {{
-                    zakat.is_offline_submission
-                      ? zakat.receive_from_name
-                      : zakat.receive_from_user_name
-                  }}
+                  {{ zakat.receive_from_name }}
                 </td>
                 <td class="px-4 py-2">{{ zakat.zakat_pic_name }}</td>
                 <td class="px-4 py-2">{{ zakat.hijri_year }}</td>

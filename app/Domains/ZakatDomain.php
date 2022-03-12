@@ -92,14 +92,17 @@ class ZakatDomain
         $zakat->delete();
     }
 
-    public function transactionSummary(string $searchTerm): Builder
+    public function transactionSummary(string $searchTerm, string $hijri_year): Builder
     {
         $zakats = DB::table('zakats')
             ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
             ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
-            ->where('receive_from_name', 'like', "%{$searchTerm}%")
-            ->orWhere('user_zakat_pic.name', 'like', "%{$searchTerm}%")
-            ->orWhere('family_head', 'like', "%{$searchTerm}%")
+            ->where(function ($q) use ($searchTerm) {
+                $q->where('receive_from_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('user_zakat_pic.name', 'like', "%{$searchTerm}%")
+                    ->orWhere('family_head', 'like', "%{$searchTerm}%");
+            })
+            ->where('hijri_year', $hijri_year)
             ->orderBy('transaction_no', 'desc')
             ->select([
                 'zakats.*',

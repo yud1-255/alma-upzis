@@ -36,7 +36,8 @@ class ZakatController extends Controller
         $searchTerm = $request->searchTerm ?? "";
 
         if ($user->can('viewAny', new Zakat())) {
-            $zakats = $domain->transactionSummary($searchTerm);
+            $hijri_year = AppConfig::getConfigValue('hijri_year');
+            $zakats = $domain->transactionSummary($searchTerm, $hijri_year);
         } else {
             $zakats = $domain->ownTransactionSummary($user);
         }
