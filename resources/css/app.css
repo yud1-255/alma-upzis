@@ -21,6 +21,6 @@
     @apply text-lime-700 print:text-gray-800;
   }
   select {
-    @apply rounded border-gray-300 text-gray-600 shadow-sm focus:border-none focus:ring focus:ring-lime-700 focus:ring-opacity-25;
+    @apply rounded border-gray-200 text-gray-600 shadow-sm focus:border-none focus:ring focus:ring-lime-700 focus:ring-opacity-25;
   }
 }

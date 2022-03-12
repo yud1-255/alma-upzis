@@ -6,6 +6,7 @@ use DateTime;
 
 use App\Domains\ZakatDomain;
 use App\Models\User;
+use App\Models\AppConfig;
 
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
@@ -52,7 +53,9 @@ class MuzakkiRecapExport implements
     public function query()
     {
         $domain = new ZakatDomain($this->user);
-        return $domain->zakatMuzakkiRecap("");
+        $hijriYear = AppConfig::getConfigValue('hijri_year');
+
+        return $domain->zakatMuzakkiRecap("", $hijriYear);
     }
 
     public function map($zakat): array

@@ -34,16 +34,18 @@ class ZakatController extends Controller
         $zakats = array();
 
         $searchTerm = $request->searchTerm ?? "";
+        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
 
         if ($user->can('viewAny', new Zakat())) {
-            $hijri_year = AppConfig::getConfigValue('hijri_year');
-            $zakats = $domain->transactionSummary($searchTerm, $hijri_year);
+            $zakats = $domain->transactionSummary($searchTerm, $hijriYear);
         } else {
             $zakats = $domain->ownTransactionSummary($user);
         }
 
         return Inertia::render('Zakat/Index', [
             'zakats' => $zakats->paginate(10)->withQueryString(),
+            'hijriYears' => $domain->getHijriYears(),
+            'hijriYear' => $hijriYear,
             'can' => [
                 'delete' => $user->can('delete', new Zakat()),
                 'confirmPayment' => $user->can('confirmPayment', new Zakat()),
@@ -210,7 +212,9 @@ class ZakatController extends Controller
         $searchTerm = $request->searchTerm ?? "";
 
         $domain = new ZakatDomain(Auth::user());
-        $zakats = $domain->zakatMuzakkiRecap($searchTerm);
+        $hijriYear = AppConfig::getConfigValue('hijri_year');
+
+        $zakats = $domain->zakatMuzakkiRecap($searchTerm, $hijriYear);
 
         return Inertia::render('Zakat/MuzakkiRecap', [
             'zakats' => $zakats->paginate(10)
@@ -220,7 +224,9 @@ class ZakatController extends Controller
     public function dailyRecap(Request $request)
     {
         $domain = new ZakatDomain(Auth::user());
-        $zakats = $domain->zakatMuzakkiRecap("")
+        $hijriYear = AppConfig::getConfigValue('hijri_year');
+
+        $zakats = $domain->zakatMuzakkiRecap("", $hijriYear)
             ->reorder()
             ->orderBy('transaction_date', 'asc')
             ->orderBy('transaction_no', 'asc')->get();

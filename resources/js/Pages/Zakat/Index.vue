@@ -30,7 +30,13 @@
                     v-if="can.viewAny"
                     v-model="searchTerm"
                     placeholder="Cari berdasarkan nama"
+                    class="p-2"
                   />
+                  <select v-model="hijriYear" @change="searchTransactions">
+                    <option v-for="hijriYear in hijriYears" :key="hijriYear">
+                      {{ hijriYear }}
+                    </option>
+                  </select>
                 </td>
               </tr>
               <tr class="font-bold border-b-2">
@@ -149,6 +155,8 @@ export default {
   props: {
     zakats: Object,
     can: Object,
+    hijriYear: String,
+    hijriYears: Array,
   },
   data() {
     return {
@@ -158,11 +166,22 @@ export default {
   watch: {
     searchTerm: debounce(function (newValue) {
       this.$inertia.replace(
-        this.route("zakat.index", { searchTerm: newValue })
+        this.route("zakat.index", {
+          searchTerm: newValue,
+          hijriYear: this.hijriYear,
+        })
       );
     }, 300),
   },
   methods: {
+    searchTransactions() {
+      this.$inertia.replace(
+        this.route("zakat.index", {
+          searchTerm: this.searchTerm,
+          hijriYear: this.hijriYear,
+        })
+      );
+    },
     async destroy(zakat) {
       const isConfirmed = await this.$refs.confirmation.show({
         title: "Konfirmasi",
