@@ -88,6 +88,9 @@ class ZakatDomain
 
     public function deleteTransaction(Zakat $zakat)
     {
+        if (!$this->validateZakatForDeletion($this->user, $zakat)) {
+            throw ValidationException::withMessages($this->errors);
+        }
         $zakat->zakatLines()->delete();
         $zakat->delete();
     }
@@ -237,7 +240,24 @@ class ZakatDomain
     {
         if ($muzakki->family != $user->family) {
             array_push($this->errors, "Muzakki {$muzakki->name} hanya bisa diubah oleh anggota keluarga");
+            return false;
         }
+        return true;
+    }
+
+    private function validateZakatForDeletion(User $user, Zakat $zakat): bool
+    {
+        if ($zakat->hijri_year != AppConfig::getConfigValue('hijri_year')) {
+            array_push($this->errors, "Zakat {$zakat->transaction_no} hanya bisa dihapus pada periode zakat yang sama");
+        }
+        if ($zakat->zakat_pic != null) {
+            array_push($this->errors, "Zakat {$zakat->transaction_no} tidak bisa dihapus karena telah dikonfirmasi oleh petugas");
+        }
+
+        if (count($this->errors) > 0) {
+            return false;
+        }
+
         return true;
     }
 }

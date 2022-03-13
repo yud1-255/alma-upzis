@@ -129,30 +129,36 @@
       </div>
 
       <confirmation ref="confirmation">></confirmation>
+      <ErrorModal ref="errorModal">></ErrorModal>
     </div>
   </BreezeAuthenticatedLayout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import Input from "@/Components/Input.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination.vue";
 import Confirmation from "@/Components/Confirmation.vue";
+import ErrorModal from "@/Components/ErrorModal.vue";
 
 import debounce from "lodash/debounce";
 
 export default {
   components: {
     BreezeAuthenticatedLayout,
+    BreezeValidationErrors,
     Head,
     Link,
     Input,
     Pagination,
     Confirmation,
+    ErrorModal,
   },
   props: {
+    errors: null,
     zakats: Object,
     can: Object,
     hijriYear: String,
@@ -185,7 +191,7 @@ export default {
     async destroy(zakat) {
       const isConfirmed = await this.$refs.confirmation.show({
         title: "Konfirmasi",
-        message: `Hapus zakat dari ${zakat.receive_from_name} untuk keluarga ${zakat.family_head}?`,
+        message: `Hapus transaksi zakat ${zakat.transaction_no} diterima dari ${zakat.receive_from_name}?`,
         okButton: "Lanjut",
         cancelButton: "Batal",
       });
@@ -193,6 +199,12 @@ export default {
       if (isConfirmed) {
         this.$inertia.delete(route("zakat.destroy", zakat.id), {
           preserveScroll: true,
+          onError: () => {
+            // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+            this.$refs.errorModal.show({
+              errors: this.errors,
+            });
+          },
         });
       }
     },
