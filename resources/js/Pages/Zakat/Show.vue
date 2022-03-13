@@ -32,10 +32,10 @@
               </div>
               <table class="table-auto w-full">
                 <thead>
-                  <th class="text-left">Muzakki</th>
-                  <th>Kg</th>
-                  <th>Lt</th>
-                  <th>Rp</th>
+                  <th class="text-left px-0">Muzakki</th>
+                  <th class="px-0">Kg</th>
+                  <th class="px-0">Lt</th>
+                  <th class="px-0">Rp</th>
                 </thead>
 
                 <tbody>
@@ -43,8 +43,8 @@
                     v-for="zakat_line in zakat.zakat_lines"
                     :key="zakat_line.id"
                   >
-                    <td>{{ zakat_line.muzakki.name }}</td>
-                    <td class="text-right">
+                    <td class="px-0">{{ zakat_line.muzakki.name }}</td>
+                    <td class="px-0 text-right">
                       {{
                         (
                           Number(zakat_line.fitrah_kg) +
@@ -52,10 +52,10 @@
                         ).toLocaleString("id")
                       }}
                     </td>
-                    <td class="text-right">
+                    <td class="px-0 text-right">
                       {{ Number(zakat_line.fitrah_lt).toLocaleString("id") }}
                     </td>
-                    <td class="text-right">
+                    <td class="px-0 text-right">
                       {{
                         (
                           Number(zakat_line.fitrah_rp) +
@@ -72,24 +72,24 @@
                 </tbody>
                 <tfoot class="border-t border-gray-200">
                   <tr v-if="!zakat.is_offline_submission">
-                    <td class="font-semibold">Biaya Unik</td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-right">
+                    <td class="px-0 font-semibold">Biaya Unik</td>
+                    <td class="px-0"></td>
+                    <td class="px-0"></td>
+                    <td class="px-0 text-right">
                       {{ Number(zakat.unique_number).toLocaleString("id") }}
                     </td>
                   </tr>
                   <tr>
-                    <td class="font-semibold">Total (Rp)</td>
-                    <td class="text-right">-</td>
-                    <td class="text-right">-</td>
-                    <td class="text-right">
+                    <td class="px-0 font-semibold">Total (Rp)</td>
+                    <td class="px-0 text-right">-</td>
+                    <td class="px-0 text-right">-</td>
+                    <td class="px-0 text-right">
                       {{ Number(zakat.total_transfer_rp).toLocaleString("id") }}
                     </td>
                   </tr>
                 </tfoot>
               </table>
-              <div class="mt-6 p-2 text-left grid grid-rows-4 grid-cols-2">
+              <div class="mt-6 px-0 text-left grid grid-rows-4 grid-cols-2">
                 <div>Tanggal:</div>
                 <div class="text-right">{{ zakat.transaction_date }}</div>
 
@@ -104,7 +104,7 @@
             <div v-if="zakat.zakat_pic == null" class="print:hidden">
               <div class="my-4">
                 <p class="text-sm font-semibold my-2">Catatan untuk muzakki:</p>
-                <ol class="list-decimal list-inside text-sm">
+                <ol class="list-decimal list-outside ml-4 text-sm">
                   <li>
                     Silakan transfer senilai
                     <span class="font-semibold"
@@ -114,7 +114,7 @@
                       }}</span
                     >
                     melalui salah satu opsi:
-                    <ul class="list-disc list-inside ml-4">
+                    <ul class="list-disc list-outside ml-4">
                       <li v-if="displayBankAccount">
                         Transfer bank melalui rekening
                         <span class="font-semibold">{{ bankAccount }}</span>
