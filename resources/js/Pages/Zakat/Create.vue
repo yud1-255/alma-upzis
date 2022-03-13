@@ -11,50 +11,85 @@
           <div class="p-6 bg-white border-b border-gray-200">
             <BreezeValidationErrors class="mb-4" />
             <div v-if="can.submitForOthers">
-              <h2>Penerimaan oleh Panitia</h2>
-              <div class="md:flex">
-                <div class="py-1">
-                  <Label>Kepala Keluarga</Label>
-                  <autocomplete
-                    placeholder="Cari berdasarkan nama"
-                    :items="families"
-                    key="id"
-                    value="head_of_family"
-                    isAsync="true"
-                    @input="searchFamily"
-                    @selected="setFamily"
-                  />
-                </div>
-                <div class="py-1">
-                  <Label for="transaction_no">Terima dari</Label>
-                  <Input
-                    v-model="form.receive_from_name"
-                    class="w-full md:w-auto"
-                  />
-                </div>
-                <div class="py-1">
-                  <Label for="total_rp">Total (Rp)</Label>
-                  <InputNumeric
-                    v-model="form.total_rp"
-                    placeholder="0"
-                    class="text-right w-full md:w-auto"
-                    readonly
-                  />
-                </div>
-                <div class="py-1">
-                  <Label for="hijri_year">Periode Zakat</Label>
-                  <Input
-                    v-model="form.hijri_year"
-                    class="text-right w-full md:w-auto"
-                    readonly
-                  />
+              <div
+                class="flex space-x-2"
+                :class="{ 'opacity-50': is_family_requested }"
+              >
+                <input
+                  type="radio"
+                  id="is_submit_for_other_true"
+                  class="text-lime-600 shadow-sm focus:border-lime-300 focus:ring focus:ring-lime-200 focus:ring-opacity-50"
+                  v-model="isSubmitAsUpzis"
+                  :value="true"
+                  :disabled="is_family_requested"
+                  @change="setAddress"
+                />
+                <Label for="is_submit_for_other_true" class="cursor-pointer"
+                  >Gerai</Label
+                >
+                <input
+                  type="radio"
+                  id="is_submit_for_other_false"
+                  class="text-lime-600 shadow-sm focus:border-lime-300 focus:ring focus:ring-lime-200 focus:ring-opacity-50"
+                  v-model="isSubmitAsUpzis"
+                  :value="false"
+                  :disabled="is_family_requested"
+                />
+                <Label for="is_submit_for_other_false" class="cursor-pointer"
+                  >Online</Label
+                >
+              </div>
+              <div v-if="isSubmitAsUpzis">
+                <h2>Penerimaan oleh Panitia</h2>
+                <div class="md:flex">
+                  <div class="py-1">
+                    <Label>Kepala Keluarga</Label>
+                    <autocomplete
+                      placeholder="Cari berdasarkan nama"
+                      :items="families"
+                      key="id"
+                      value="head_of_family"
+                      isAsync="true"
+                      @input="searchFamily"
+                      @selected="setFamily"
+                    />
+                  </div>
+                  <div class="py-1">
+                    <Label for="transaction_no">Terima dari</Label>
+                    <Input
+                      v-model="form.receive_from_name"
+                      class="w-full md:w-auto"
+                    />
+                  </div>
+                  <div class="py-1">
+                    <Label for="total_rp">Total (Rp)</Label>
+                    <InputNumeric
+                      v-model="form.total_rp"
+                      placeholder="0"
+                      class="text-right w-full md:w-auto"
+                      readonly
+                    />
+                  </div>
+                  <div class="py-1">
+                    <Label for="hijri_year">Periode Zakat</Label>
+                    <Input
+                      v-model="form.hijri_year"
+                      class="text-right w-full md:w-auto"
+                      readonly
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
             <form @submit.prevent="submit">
-              <h2 v-if="!can.submitForOthers">Penerimaan zakat</h2>
-              <div v-if="!can.submitForOthers" class="md:flex md:flex-wrap">
+              <h2 v-if="!can.submitForOthers || !isSubmitAsUpzis">
+                Penerimaan zakat
+              </h2>
+              <div
+                v-if="!can.submitForOthers || !isSubmitAsUpzis"
+                class="md:flex md:flex-wrap"
+              >
                 <div class="py-1">
                   <Label for="family_head">Kepala Keluarga</Label>
                   <Input v-model="form.family_head" class="w-full md:w-auto" />
@@ -256,6 +291,7 @@ export default {
       receive_from_name: props.family.head_of_family,
       total_rp: 0,
       zakat_lines: [],
+      is_submit_as_upzis: props.can.submitForOthers,
     });
 
     const refreshMuzakki = () => {
@@ -298,7 +334,13 @@ export default {
       families: [],
       defaultFitrahAmount: "",
       removedMuzakkiCount: 0,
+      isSubmitAsUpzis: this.can.submitForOthers,
     };
+  },
+  watch: {
+    isSubmitAsUpzis(value) {
+      this.form.is_submit_as_upzis = this.can.submitForOthers && value;
+    },
   },
   props: {
     errors: null,
@@ -308,6 +350,7 @@ export default {
     muzakkis: Object,
     hijri_year: String,
     fitrah_amount: Array,
+    is_family_requested: Boolean,
     can: Object,
   },
   methods: {

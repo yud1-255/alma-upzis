@@ -89,6 +89,7 @@ class ZakatController extends Controller
             'transaction_no' => $transactionNo,
             'hijri_year' => AppConfig::getConfigValue('hijri_year'),
             'fitrah_amount' => AppConfig::getConfigValues('fitrah_amount'),
+            'is_family_requested' => $isFamilyRequested,
             'can' => ['submitForOthers' => $user->can('submitForOthers', new Zakat())]
         ]);
     }
@@ -105,6 +106,10 @@ class ZakatController extends Controller
             'total_rp' => ['required', 'numeric', 'gt:0'],
             'family_head' => ['required']
         ]);
+
+        $user = Auth::user();
+        $isSubmitAsUpzis = $request->is_submit_as_upzis;
+
         $zakat = new Zakat();
         $formData = $request->only($zakat->getFillable());
         $zakat->fill($formData);
@@ -112,7 +117,7 @@ class ZakatController extends Controller
 
         $domain = new ZakatDomain(Auth::user());
 
-        if (Auth::user()->can('submitForOthers', $zakat)) {
+        if ($user->can('submitForOthers', $zakat) && $isSubmitAsUpzis) {
             $domain->submitAsUpzis($zakat, $zakatLines);
         } else {
             $domain->submitAsMuzakki($zakat, $zakatLines);
