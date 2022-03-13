@@ -380,6 +380,7 @@ export default {
           this.$inertia.visit(route("dashboard"));
         },
         onError: () => {
+          this.setAddress();
           window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         },
       });
