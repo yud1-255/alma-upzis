@@ -10,20 +10,23 @@
     <Link
       v-if="$page.props.auth.user"
       :href="route('dashboard')"
-      class="text-sm text-gray-700 underline"
+      class="text-sm text-gray-100 bg-lime-700 px-1 py-1 rounded"
     >
       Beranda
     </Link>
 
     <template v-else>
-      <Link :href="route('login')" class="text-sm text-gray-700 underline">
+      <Link
+        :href="route('login')"
+        class="text-sm text-gray-100 bg-lime-700 px-2 py-1 rounded"
+      >
         Log in
       </Link>
 
       <Link
         v-if="canRegister"
         :href="route('register')"
-        class="ml-4 text-sm text-gray-700 underline"
+        class="ml-4 text-sm text-gray-100 bg-lime-700 px-2 py-1 rounded"
       >
         Daftar
       </Link>
@@ -40,10 +43,10 @@
           <p>
             Selamat datang di aplikasi zakat UPZIS Al Munawwarah/Masjid Al
             Muhajirin. Daftar pengguna baru
-            <a :href="route('register')" class="text-gray-700 underline"
+            <a :href="route('register')" class="text-lime-700 underline"
               >di sini</a
             >. Sudah punya akun? Login
-            <a :href="route('login')" class="text-gray-700 underline">di sini</a
+            <a :href="route('login')" class="text-lime-700 underline">di sini</a
             >.
           </p>
         </div>
@@ -195,9 +198,9 @@
             <div class="ml-12">
               <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                 <p class="py-2">
-                  Simpan dan telaah transaksi zakat anda sejak tahun-tahun
-                  sebelumnya. Baik untuk pembayaran online maupun datang ke
-                  gerai zakat, transaksi zakat anda dalam genggaman anda.
+                  Simpan dan telaah transaksi zakat anda dan muzakki dalam
+                  keluarga. Baik untuk pembayaran online maupun datang ke gerai
+                  zakat, transaksi zakat anda dalam genggaman anda.
                 </p>
               </div>
             </div>

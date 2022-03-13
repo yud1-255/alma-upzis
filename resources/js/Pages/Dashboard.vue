@@ -26,8 +26,8 @@
                   Lengkapi data keluarga
                   <Link
                     :href="route('family.create')"
-                    class="text-green-600 ml-2"
-                    >[link]</Link
+                    class="text-lime-700 ml-2"
+                    >[klik di sini]</Link
                   >
                 </div>
               </li>
@@ -39,10 +39,8 @@
                 </div>
                 <div class="ml-2 p-1">
                   Mulai pengisian zakat
-                  <Link
-                    :href="route('zakat.create')"
-                    class="text-green-600 ml-2"
-                    >[link]</Link
+                  <Link :href="route('zakat.create')" class="text-lime-700 ml-2"
+                    >[klik di sini]</Link
                   >
                 </div>
               </li>
@@ -58,8 +56,8 @@
                   <a
                     href="http://bit.ly/sayazakat"
                     target="_blank"
-                    class="cursor-pointer text-green-600 ml-2"
-                    >[link:wa]</a
+                    class="cursor-pointer text-lime-700 ml-2"
+                    >[klik di sini]</a
                   >
                 </div>
               </li>
@@ -72,8 +70,8 @@
 
                 <div class="ml-2 p-1">
                   Lihat transaksi zakat anda
-                  <Link :href="route('zakat.index')" class="text-green-600 ml-2"
-                    >[link]</Link
+                  <Link :href="route('zakat.index')" class="text-lime-700 ml-2"
+                    >[klik di sini]</Link
                   >
                 </div>
               </li>
@@ -90,11 +88,11 @@
                   &check;
                 </div>
                 <div class="ml-2 p-1">
-                  melalui WhatsApp:
+                  melalui WhatsApp
                   <a
                     href="http://bit.ly/sayazakat"
                     target="_blank"
-                    class="cursor-pointer text-green-600 ml-2"
+                    class="cursor-pointer text-lime-700 ml-2"
                     >[klik di sini]</a
                   >
                 </div>
