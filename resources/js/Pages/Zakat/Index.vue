@@ -60,8 +60,17 @@
             </thead>
             <tbody class="hidden md:table-row-group">
               <tr v-for="zakat in zakats.data" :key="zakat.id">
-                <td class="px-4 py-2">{{ zakat.transaction_no }}</td>
-                <td class="px-4 py-2">{{ zakat.transaction_date }}</td>
+                <td class="px-4 py-2">
+                  <Link
+                    :href="route('zakat.show', zakat.id)"
+                    class="text-green-700"
+                  >
+                    {{ zakat.transaction_no }}
+                  </Link>
+                </td>
+                <td class="px-4 py-2 whitespace-nowrap">
+                  {{ zakat.transaction_date }}
+                </td>
                 <td class="px-4 py-2">
                   {{ zakat.receive_from_name }}
                 </td>
@@ -74,17 +83,11 @@
                 <td class="px-4 py-2 text-right">
                   {{ Number(zakat.total_transfer_rp).toLocaleString("id") }}
                 </td>
-                <td class="px-4 py-2 print:hidden">
-                  <Link
-                    :href="route('zakat.show', zakat.id)"
-                    class="text-green-700"
-                  >
-                    Lihat
-                  </Link>
+                <td class="py-2 whitespace-nowrap print:hidden">
                   <button
                     v-if="can.confirmPayment"
                     @click="confirmPayment(zakat)"
-                    class="text-orange-700"
+                    class="text-orange-700 px-2"
                     :class="{ invisible: zakat.zakat_pic != null }"
                   >
                     Konfirmasi
@@ -92,7 +95,7 @@
                   <button
                     v-if="can.delete"
                     @click="destroy(zakat)"
-                    class="text-red-700"
+                    class="text-red-700 px-2"
                   >
                     Hapus
                   </button>
