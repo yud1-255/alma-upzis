@@ -9,7 +9,8 @@
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <BreezeValidationErrors class="mb-4" />
+            <!-- <BreezeValidationErrors class="mb-4" /> -->
+            <ErrorModal ref="errorModal"></ErrorModal>
             <div v-if="can.submitForOthers">
               <div
                 class="flex space-x-2"
@@ -260,6 +261,8 @@ import InputNumeric from "@/Components/InputNumeric.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
 import Button from "@/Components/Button.vue";
+import ErrorModal from "@/Components/ErrorModal.vue";
+
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -279,6 +282,7 @@ export default {
     Checkbox,
     Button,
     Head,
+    ErrorModal,
     UserRemoveIcon,
     UserAddIcon,
   },
@@ -432,7 +436,14 @@ export default {
         item.fidyah_rp = item.fidyah_rp ?? 0;
         item.kafarat_rp = item.kafarat_rp ?? 0;
       });
-      this.form.post(route("zakat.store"));
+      this.form.post(route("zakat.store"), {
+        onError: () => {
+          this.removedMuzakkiCount = 0;
+          this.$refs.errorModal.show({
+            errors: this.errors,
+          });
+        },
+      });
     },
   },
 };
