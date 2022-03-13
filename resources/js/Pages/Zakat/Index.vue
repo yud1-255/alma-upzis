@@ -32,7 +32,11 @@
                     placeholder="Cari berdasarkan nama"
                     class="p-2"
                   />
-                  <select v-model="hijriYear" @change="searchTransactions">
+                  <select
+                    v-if="can.viewAny"
+                    v-model="hijriYear"
+                    @change="searchTransactions"
+                  >
                     <option v-for="hijriYear in hijriYears" :key="hijriYear">
                       {{ hijriYear }}
                     </option>
@@ -124,6 +128,23 @@
               </tr>
             </tbody>
           </table>
+          <div v-if="zakats.data.length == 0">
+            <div class="mx-4 mt-6 text-sm">
+              Anda belum memiliki transaksi zakat. Buat transaksi baru
+              <Link
+                :href="route('zakat.create')"
+                class="text-lime-700 underline"
+              >
+                di sini</Link
+              >. Untuk memperbarui data keluarga,
+              <Link
+                :href="route('family.create')"
+                class="text-lime-700 underline"
+              >
+                klik di sini</Link
+              >.
+            </div>
+          </div>
         </div>
 
         <div class="w-full flex">
