@@ -1,16 +1,16 @@
 <template>
   <Head title="Selamat datang" />
   <div
-    class="flex justify-left align-middle p-4 pt-8 sm:pt-0 bg-white border-b-2 border-yellow-200"
+    class="flex justify-left align-middle p-4 pt-8 sm:pt-2 bg-white border-b-2 border-yellow-200"
   >
     <img src="/assets/yam-logo.png" class="h-12 mr-8 mt-4" />
     <h1 class="mt-6">Assalamualaikum, Muzakki.</h1>
   </div>
-  <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+  <div v-if="canLogin" class="fixed top-0 right-0 px-6 py-4 h-8">
     <Link
       v-if="$page.props.auth.user"
       :href="route('dashboard')"
-      class="text-sm text-gray-100 bg-lime-700 px-1 py-1 rounded"
+      class="text-sm text-gray-100 bg-lime-700 px-2 py-1 rounded"
     >
       Beranda
     </Link>
@@ -22,11 +22,10 @@
       >
         Log in
       </Link>
-
       <Link
         v-if="canRegister"
         :href="route('register')"
-        class="ml-4 text-sm text-gray-100 bg-lime-700 px-2 py-1 rounded"
+        class="ml-2 text-sm text-gray-100 bg-lime-700 px-2 py-1 rounded"
       >
         Daftar
       </Link>
