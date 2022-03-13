@@ -44,7 +44,7 @@ class MailResetPasswordToken extends Notification
         return (new MailMessage)
             ->subject('Permintaan untuk reset password anda')
             ->line('Assalamualaikum,')
-            ->line('Anda menerima email ini sehubungan dengan permintaan untuk reset password untuk akun anda.')
+            ->line('Anda menerima email ini sehubungan dengan permintaan reset password untuk akun anda pada aplikasi UPZIS Al Munawwarah/Masjid Al Muhajirin.')
             ->action('Reset Password', route('password.reset', [$this->token, 'email' => $this->email]))
             ->line('Silakan menghubungi administrator UPZIS apabila anda memiliki pertanyaan lebih lanjut.')
             ->line('Wassalamualaikum warahmatullahi wabarakatuh');
