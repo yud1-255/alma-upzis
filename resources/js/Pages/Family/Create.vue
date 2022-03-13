@@ -12,18 +12,18 @@
             <form @submit.prevent="createFamily()">
               <h2>Kepala Keluarga</h2>
               <div class="md:flex">
-                <div>
+                <div class="py-1">
                   <Label for="head_of_family">Nama</Label>
                   <Input
                     v-model="familyForm.head_of_family"
                     class="w-full md:w-auto"
                   />
                 </div>
-                <div>
+                <div class="py-1">
                   <Label for="phone">Telepon</Label>
                   <Input v-model="familyForm.phone" class="w-full md:w-auto" />
                 </div>
-                <div>
+                <div class="py-1">
                   <Label for="kk_number"
                     >Nomor Kartu Keluarga (opsional, apabila pernah
                     didaftarkan)</Label

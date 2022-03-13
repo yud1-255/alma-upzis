@@ -129,7 +129,7 @@
             </tbody>
           </table>
           <div v-if="zakats.data.length == 0">
-            <div class="mx-4 mt-6 text-sm">
+            <div class="mx-2 md:mx-4 mt-8 md:mt-6 text-sm">
               Anda belum memiliki transaksi zakat. Buat transaksi baru
               <Link
                 :href="route('zakat.create')"
