@@ -56,9 +56,11 @@
               <tbody>
                 <tr v-for="zakat_line in zakats.data" :key="zakat_line.id">
                   <td>
-                    <Link :href="route('zakat.show', zakat_line.zakat_id)">{{
-                      zakat_line.transaction_no
-                    }}</Link>
+                    <Link
+                      :href="route('zakat.show', zakat_line.zakat_id)"
+                      class="text-green-700"
+                      >{{ zakat_line.transaction_no }}</Link
+                    >
                   </td>
                   <td>{{ zakat_line.muzakki_name }}</td>
                   <td class="text-right">

@@ -182,7 +182,7 @@
               <Button
                 v-if="can.confirmPayment && zakat.zakat_pic == null"
                 class="w-full md:w-auto"
-                @click="confirmPayment(zakat.id)"
+                @click="confirmPayment(zakat)"
               >
                 Konfirmasi Pembayaran
               </Button>
@@ -201,6 +201,7 @@
               >
                 Cetak Rangkap
               </Button>
+              <Confirmation ref="confirmation"></Confirmation>
             </div>
           </div>
         </div>
@@ -215,6 +216,7 @@ import Button from "@/Components/Button.vue";
 import PopupModal from "@/Components/PopupModal.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
+import Confirmation from "@/Components/Confirmation.vue";
 
 import ZakatReceipt from "@/Components/Domain/ZakatReceipt.vue";
 
@@ -225,6 +227,7 @@ export default {
     Link,
     Button,
     PopupModal,
+    Confirmation,
     ZakatReceipt,
   },
   setup() {},
@@ -241,17 +244,30 @@ export default {
     };
   },
   methods: {
-    confirmPayment(id) {
-      this.$inertia.post(
-        route(`zakat.confirm`, id),
-        {
-          pageUrl: this.$page.url,
-        },
-        {
-          preserveState: true,
-          preserveScroll: true,
-        }
-      );
+    async confirmPayment(zakat) {
+      const isConfirmed = await this.$refs.confirmation.show({
+        title: "Konfirmasi",
+        message: `Konfirmasi pembayaran dari ${
+          zakat.receive_from_name
+        } sejumlah Rp. ${Number(zakat.total_transfer_rp).toLocaleString(
+          "id"
+        )}?`,
+        okButton: "Lanjut",
+        cancelButton: "Batal",
+      });
+
+      if (isConfirmed) {
+        this.$inertia.post(
+          route(`zakat.confirm`, zakat.id),
+          {
+            pageUrl: this.$page.url,
+          },
+          {
+            preserveState: true,
+            preserveScroll: true,
+          }
+        );
+      }
     },
     print(printWithCopy) {
       this.printWithCopy = printWithCopy;

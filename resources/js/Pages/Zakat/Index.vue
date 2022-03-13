@@ -131,8 +131,8 @@
         </div>
       </div>
 
-      <confirmation ref="confirmation">></confirmation>
-      <ErrorModal ref="errorModal">></ErrorModal>
+      <Confirmation ref="confirmation"></Confirmation>
+      <ErrorModal ref="errorModal"></ErrorModal>
     </div>
   </BreezeAuthenticatedLayout>
 </template>
