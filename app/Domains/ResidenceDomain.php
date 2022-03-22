@@ -43,7 +43,7 @@ class ResidenceDomain
 
     public function getHouseNumbers(): array
     {
-        return range(1, $this->houseNumbers);
+        return range(0, $this->houseNumbers);
     }
 
     public function getFamily(string $kkNumber): Family
