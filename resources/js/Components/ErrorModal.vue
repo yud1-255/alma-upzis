@@ -1,6 +1,6 @@
 <template>
   <popup-modal ref="popup">
-    <h2 class="mt-1 mb-4 text-red-600">{{ title }}</h2>
+    <h2 class="mt-1 mb-4 text-red-700">{{ title }}</h2>
     <ul class="mt-3 list-none md:list-disc list-inside">
       <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
     </ul>

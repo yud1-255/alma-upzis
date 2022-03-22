@@ -135,11 +135,12 @@
                   <div class="flex">
                     <div>muzakki: {{ zakat_line.muzakki_name }}</div>
                     <span
-                      class="cursor-pointer ml-4 text-red-600"
+                      class="cursor-pointer ml-4 text-red-600 flex text-xs"
                       title="Hapus"
                       @click="removeZakatLine(zakat_line)"
                     >
-                      <UserRemoveIcon class="h-5" />
+                      Hapus
+                      <UserRemoveIcon class="h-5 mx-1" />
                     </span>
                   </div>
                   <div class="flex flex-wrap py-2">
@@ -221,8 +222,12 @@
                     placeholder="Telepon"
                     class="w-24"
                   />
-                  <button class="text-green-700" title="Tambah muzakki">
-                    <UserAddIcon class="h-5" />
+                  <button
+                    class="text-green-700 text-xs flex"
+                    title="Tambah muzakki"
+                  >
+                    Tambah
+                    <UserAddIcon class="h-5 mx-1" />
                   </button>
                 </div>
                 <div v-else>
@@ -406,7 +411,9 @@ export default {
           this.muzakkiForm.reset("name", "phone");
         },
         onError: () => {
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          this.$refs.errorModal.show({
+            errors: this.errors,
+          });
         },
       });
     },
