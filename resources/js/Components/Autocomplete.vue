@@ -8,15 +8,18 @@
     ></Input>
   </div>
   <ul v-show="isOpen" class="shadow-lg">
-    <li v-if="isLoading" class="loading">loading ...</li>
+    <li v-if="isLoading" class="loading text-sm">loading ...</li>
     <li
       v-else
       v-for="result in results"
       :key="result[key]"
       @click="setResult(result)"
-      class="hover:text-gray-700 hover:border-gray-300 hover:bg-gray-100"
+      class="cursor-pointer hover:text-gray-700 hover:border-gray-300 hover:bg-gray-100 text-sm"
     >
       {{ result[value] }}
+    </li>
+    <li v-if="results.length == 0">
+      <slot name="empty" />
     </li>
   </ul>
 </template>

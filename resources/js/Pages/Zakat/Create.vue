@@ -53,7 +53,16 @@
                       isAsync="true"
                       @input="searchFamily"
                       @selected="setFamily"
-                    />
+                    >
+                      <template #empty>
+                        <Link class="flex text-sm"
+                          ><PlusSmIcon class="h-4 my-1" />
+                          <span class="py-1"
+                            >Daftarkan keluarga baru</span
+                          ></Link
+                        >
+                      </template>
+                    </autocomplete>
                   </div>
                   <div class="py-1">
                     <Label for="transaction_no">Terima dari</Label>
@@ -274,6 +283,7 @@ import { useForm } from "@inertiajs/inertia-vue3";
 
 import { UserRemoveIcon } from "@heroicons/vue/solid";
 import { UserAddIcon } from "@heroicons/vue/solid";
+import { PlusSmIcon } from "@heroicons/vue/solid";
 
 export default {
   components: {
@@ -290,6 +300,7 @@ export default {
     ErrorModal,
     UserRemoveIcon,
     UserAddIcon,
+    PlusSmIcon,
   },
   setup(props) {
     const form = useForm({
