@@ -189,12 +189,30 @@ class ZakatDomain
         return $zakat;
     }
 
-    public function registerFamily(User $user, Family $family)
+    public function registerUserFamily(User $user, Family $family)
     {
         $family->save();
 
         $user->family()->associate($family);
         $user->save();
+
+        $muzakki = new Muzakki();
+        $muzakki->name = $family->head_of_family;
+        $muzakki->phone = $family->phone;
+        $muzakki->address = $family->address;
+        $muzakki->is_bpi = $family->is_bpi;
+        $muzakki->bpi_block_no = $family->bpi_block_no;
+        $muzakki->bpi_house_no = $family->bpi_house_no;
+        $muzakki->is_active = true;
+
+
+        $muzakki->family()->associate($family);
+        $muzakki->save();
+    }
+
+    public function registerFamily(Family $family)
+    {
+        $family->save();
 
         $muzakki = new Muzakki();
         $muzakki->name = $family->head_of_family;

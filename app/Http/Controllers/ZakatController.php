@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domains\ZakatDomain;
+use App\Domains\ResidenceDomain;
 use App\Exports\ZakatExport;
 use App\Exports\MuzakkiListExport;
 use App\Exports\MuzakkiRecapExport;
@@ -82,6 +83,10 @@ class ZakatController extends Controller
         $domain = new ZakatDomain($user);
         $transactionNo = $domain->generateZakatNumber(false);
 
+        $residenceDomain = new ResidenceDomain();
+        $blockNumbers = $residenceDomain->getBlockNumberOptions();
+        $houseNumbers = $residenceDomain->getHouseNumbers();
+
         return Inertia::render('Zakat/Create', [
             'family' => $family,
             'family_placeholder' => $familyPlaceholder,
@@ -90,6 +95,8 @@ class ZakatController extends Controller
             'hijri_year' => AppConfig::getConfigValue('hijri_year'),
             'fitrah_amount' => AppConfig::getConfigValues('fitrah_amount'),
             'is_family_requested' => $isFamilyRequested,
+            'blockNumbers' => $blockNumbers,
+            'houseNumbers' => $houseNumbers,
             'can' => ['submitForOthers' => $user->can('submitForOthers', new Zakat())]
         ]);
     }

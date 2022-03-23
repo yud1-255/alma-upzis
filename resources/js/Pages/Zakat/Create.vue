@@ -9,7 +9,6 @@
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <!-- <BreezeValidationErrors class="mb-4" /> -->
             <ErrorModal ref="errorModal"></ErrorModal>
             <div v-if="can.submitForOthers">
               <div
@@ -45,7 +44,8 @@
                 <div class="md:flex">
                   <div class="py-1">
                     <Label>Kepala Keluarga</Label>
-                    <autocomplete
+                    <Autocomplete
+                      ref="autocomplete"
                       placeholder="Cari berdasarkan nama"
                       :items="families"
                       key="id"
@@ -55,14 +55,15 @@
                       @selected="setFamily"
                     >
                       <template #empty>
-                        <Link class="flex text-sm"
-                          ><PlusSmIcon class="h-4 my-1" />
-                          <span class="py-1"
-                            >Daftarkan keluarga baru</span
-                          ></Link
+                        <span
+                          class="cursor-pointer flex text-sm"
+                          @click="showFamilyForm"
                         >
+                          <PlusSmIcon class="h-4 my-1" />
+                          <span class="py-1">Daftarkan keluarga baru</span>
+                        </span>
                       </template>
-                    </autocomplete>
+                    </Autocomplete>
                   </div>
                   <div class="py-1">
                     <Label for="transaction_no">Terima dari</Label>
@@ -258,6 +259,13 @@
                 </button>
               </div>
             </form>
+            <PopupModal ref="popup">
+              <FamilyForm
+                :blockNumbers="blockNumbers"
+                :houseNumbers="houseNumbers"
+                @submit="createFamily"
+              ></FamilyForm>
+            </PopupModal>
           </div>
         </div>
       </div>
@@ -275,6 +283,7 @@ import InputNumeric from "@/Components/InputNumeric.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
 import Button from "@/Components/Button.vue";
+import PopupModal from "@/Components/PopupModal.vue";
 import ErrorModal from "@/Components/ErrorModal.vue";
 
 import { Head } from "@inertiajs/inertia-vue3";
@@ -284,6 +293,8 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import { UserRemoveIcon } from "@heroicons/vue/solid";
 import { UserAddIcon } from "@heroicons/vue/solid";
 import { PlusSmIcon } from "@heroicons/vue/solid";
+
+import FamilyForm from "@/Components/Domain/FamilyForm.vue";
 
 export default {
   components: {
@@ -298,6 +309,8 @@ export default {
     Button,
     Head,
     ErrorModal,
+    PopupModal,
+    FamilyForm,
     UserRemoveIcon,
     UserAddIcon,
     PlusSmIcon,
@@ -371,6 +384,8 @@ export default {
     hijri_year: String,
     fitrah_amount: Array,
     is_family_requested: Boolean,
+    blockNumbers: Object,
+    houseNumbers: Array,
     can: Object,
   },
   methods: {
@@ -422,9 +437,7 @@ export default {
           this.muzakkiForm.reset("name", "phone");
         },
         onError: () => {
-          this.$refs.errorModal.show({
-            errors: this.errors,
-          });
+          this.showErrorModal();
         },
       });
     },
@@ -440,6 +453,20 @@ export default {
       this.removedMuzakkiCount = 0;
       this.refreshMuzakki();
       this.calculateTotalZakat();
+    },
+    showFamilyForm() {
+      this.$refs.autocomplete.reset();
+      this.$refs.popup.open();
+    },
+    createFamily(familyForm) {
+      familyForm.post(route("family.register"), {
+        onSuccess: () => {
+          this.setFamily(this.family);
+        },
+        onError: () => {
+          this.showErrorModal();
+        },
+      });
     },
     submit() {
       this.form.zakat_lines.forEach((item) => {
@@ -461,6 +488,11 @@ export default {
             errors: this.errors,
           });
         },
+      });
+    },
+    showErrorModal() {
+      this.$refs.errorModal.show({
+        errors: this.errors,
       });
     },
   },

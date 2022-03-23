@@ -74,7 +74,7 @@ class FamilyController extends Controller
         $family->fill($formData);
 
         $domain = new ZakatDomain(Auth::user());
-        $domain->registerFamily(Auth::user(), $family);
+        $domain->registerUserFamily(Auth::user(), $family);
 
         return Redirect::route('family.create')->with(['family' => $family]);
     }
@@ -132,10 +132,32 @@ class FamilyController extends Controller
 
         if ($family != null) {
             $domain = new ZakatDomain(Auth::user());
-            $domain->registerFamily(Auth::user(), $family);
+            $domain->registerUserFamily(Auth::user(), $family);
         }
 
         return Redirect::route('family.create');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'head_of_family' => ['required'],
+            'phone' => ['required'],
+            'bpi_block_no' => ['required_if:is_bpi,1'],
+            'bpi_house_no' => ['required_if:is_bpi,1'],
+            'is_bpi' => ['required'],
+            'address' => ['required']
+        ]);
+
+        $family = new Family();
+
+        $formData = $request->only($family->getFillable());
+        $family->fill($formData);
+
+        $domain = new ZakatDomain(Auth::user());
+        $domain->registerFamily($family);
+
+        return Redirect::route('zakat.create', ["familyId" => $family->id]);
     }
 
     public function search(Request $request)

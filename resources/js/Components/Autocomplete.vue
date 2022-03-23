@@ -79,6 +79,9 @@ export default {
           item[this.value].toLowerCase().indexOf(this.search.toLowerCase()) > -1
       );
     },
+    reset() {
+      this.search = "";
+    },
     onChange() {
       this.$emit("input", this.search);
       if (this.isAsync) {

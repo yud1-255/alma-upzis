@@ -54,6 +54,7 @@ Route::middleware(['auth', 'role:administrator,upzis'])->group(function () {
     Route::get('zakat/export/{type}/{hijriYear?}', [ZakatController::class, 'export'])->name('zakat.export');
 
     Route::get('/family/search', [FamilyController::class, 'search'])->name('family.search');
+    Route::post('/family/register', [FamilyController::class, 'register'])->name('family.register');
 });
 
 Route::middleware(['auth'])->group(function () {
