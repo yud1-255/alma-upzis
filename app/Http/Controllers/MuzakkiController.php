@@ -86,7 +86,15 @@ class MuzakkiController extends Controller
      */
     public function update(Request $request, Muzakki $muzakki)
     {
-        //
+        $request->validate([
+            'name' => ['required']
+        ]);
+
+        $formData = $request->only($muzakki->getFillable());
+        $muzakki->fill($formData);
+
+        $muzakki->save();
+        return Redirect::back();
     }
 
     /**

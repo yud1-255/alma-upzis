@@ -130,7 +130,11 @@
                       <td></td>
                     </thead>
                     <tbody>
-                      <tr v-for="muzakki in muzakkis" :key="muzakki.id">
+                      <tr
+                        v-for="muzakki in muzakkis"
+                        :key="muzakki.id"
+                        :class="{ hidden: muzakki.id == muzakkiForm.id }"
+                      >
                         <td class="py-2">{{ muzakki.name }}</td>
                         <td class="py-2">
                           {{ muzakki.phone ? muzakki.phone : "-" }}
@@ -138,7 +142,14 @@
                         <td class="py-2 hidden md:table-cell">
                           {{ muzakki.address }}
                         </td>
-                        <td>
+                        <td class="flex space-x-2 py-2">
+                          <span
+                            title="Ubah"
+                            class="cursor-pointer text-yellow-500"
+                            @click="setEditForm(muzakki)"
+                          >
+                            <PencilIcon class="h-5" />
+                          </span>
                           <span
                             title="Hapus"
                             class="cursor-pointer text-red-700"
@@ -155,14 +166,14 @@
                           <Input
                             v-model="muzakkiForm.name"
                             placeholder="Nama"
-                            class="w-24"
+                            class="w-full"
                           />
                         </td>
                         <td class="py-2">
                           <Input
                             v-model="muzakkiForm.phone"
                             placeholder="Telepon"
-                            class="w-24"
+                            class="w-full"
                           />
                         </td>
                         <td class="py-2 hidden md:table-cell">
@@ -175,9 +186,26 @@
                           </div>
                         </td>
                         <td class="py-2">
-                          <button title="Tambah Muzakki" class="text-green-700">
-                            <UserAddIcon class="h-5" />
-                          </button>
+                          <div v-if="muzakkiForm.id != null" class="space-x-2">
+                            <button
+                              title="Batal"
+                              class="text-red-700"
+                              @click="unsetEditForm"
+                            >
+                              <XCircleIcon class="h-5" />
+                            </button>
+                            <button title="Simpan" class="text-green-700">
+                              <CheckCircleIcon class="h-5" />
+                            </button>
+                          </div>
+                          <div v-else>
+                            <button
+                              title="Tambah Muzakki"
+                              class="text-green-700"
+                            >
+                              <UserAddIcon class="h-5" />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                       <tr class="md:table-row hidden">
@@ -228,7 +256,10 @@ import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 import { TrashIcon } from "@heroicons/vue/solid";
+import { PencilIcon } from "@heroicons/vue/solid";
 import { UserAddIcon } from "@heroicons/vue/solid";
+import { CheckCircleIcon } from "@heroicons/vue/solid";
+import { XCircleIcon } from "@heroicons/vue/solid";
 
 export default {
   components: {
@@ -242,7 +273,10 @@ export default {
     Confirmation,
     ErrorModal,
     TrashIcon,
+    PencilIcon,
     UserAddIcon,
+    CheckCircleIcon,
+    XCircleIcon,
   },
   setup(props) {
     const familyForm = useForm({
@@ -416,16 +450,40 @@ export default {
       });
     },
     addMuzakki() {
-      this.muzakkiForm.post(route("muzakki.store"), {
-        preserveScroll: true,
-        onSuccess: () => {
-          this.muzakkiForm.reset("name", "phone", "address");
-          this.useFamilyAddress = true;
-        },
-        onError: () => {
-          this.showErrorModal();
-        },
-      });
+      if (this.muzakkiForm.id == null) {
+        this.muzakkiForm.post(route("muzakki.store"), {
+          preserveScroll: true,
+          onSuccess: () => {
+            this.muzakkiForm.reset("name", "phone", "address");
+            this.useFamilyAddress = true;
+          },
+          onError: () => {
+            this.showErrorModal();
+          },
+        });
+      } else {
+        this.muzakkiForm.put(`/muzakki/${this.muzakkiForm.id}`, {
+          preserveScroll: true,
+          onSuccess: () => {
+            this.muzakkiForm.id = null;
+            this.muzakkiForm.reset("name", "phone", "address");
+            this.useFamilyAddress = true;
+          },
+          onError: () => {
+            this.showErrorModal();
+          },
+        });
+      }
+    },
+    setEditForm(muzakki) {
+      this.muzakkiForm.id = muzakki.id;
+      this.muzakkiForm.name = muzakki.name;
+      this.muzakkiForm.phone = muzakki.phone;
+    },
+    unsetEditForm(muzakki) {
+      this.muzakkiForm.id = null;
+      this.muzakkiForm.name = "";
+      this.muzakkiForm.phone = "";
     },
     async deleteMuzakki(muzakki) {
       const isConfirmed = await this.$refs.confirmation.show({
@@ -446,7 +504,7 @@ export default {
     },
     showErrorModal(errors) {
       this.$refs.errorModal.show({
-        errors: errors ?? this.errors,
+        errors: errors ? errors : this.errors,
       });
     },
   },
