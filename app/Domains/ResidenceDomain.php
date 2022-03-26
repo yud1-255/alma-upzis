@@ -2,6 +2,7 @@
 
 namespace App\Domains;
 
+use App\Models\User;
 use App\Models\Family;
 use Illuminate\Validation\ValidationException;
 
@@ -46,8 +47,11 @@ class ResidenceDomain
         return range(0, $this->houseNumbers);
     }
 
-    public function getFamily(string $kkNumber): Family
+    public function getFamily(User $user, string $kkNumber): ?Family
     {
+        $user->kk_check_count++;
+        $user->save();
+
         return Family::where('kk_number', $kkNumber)->orderBy('id', 'desc')->first();
     }
 

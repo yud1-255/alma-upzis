@@ -275,6 +275,7 @@ export default {
     muzakkis: Array,
     blockNumbers: Object,
     houseNumbers: Array,
+    can: Object,
   },
   data() {
     return {
@@ -357,7 +358,6 @@ export default {
       });
 
       if (isConfirmed) {
-        console.log("here");
         this.familyForm.post(route("family.assign", family.id), {
           preserveScroll: true,
         });

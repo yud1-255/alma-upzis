@@ -32,8 +32,8 @@ class FamilyController extends Controller
      */
     public function create()
     {
-        // TODO move logic in create() to index()
-        $family = Auth::user()->family;
+        $user = Auth::user();
+        $family = $user->family;
         $muzakkis = [];
 
         if ($family == null) {
@@ -50,7 +50,10 @@ class FamilyController extends Controller
             'family' => $family,
             'muzakkis' => $muzakkis,
             'blockNumbers' => $blockNumbers,
-            'houseNumbers' => $houseNumbers
+            'houseNumbers' => $houseNumbers,
+            'can' => [
+                'checkKkNumber' =>  $user->can('checkKkNumber', new Family())
+            ]
         ]);
     }
 
@@ -171,10 +174,16 @@ class FamilyController extends Controller
 
     public function checkKkNumber(Request $request)
     {
+        $user = Auth::user();
+
+        if ($user->cannot('checkKkNumber', new Family())) {
+            abort(403);
+        }
+
         $kkNumber = $request->kkNumber;
         $domain = new ResidenceDomain();
 
         // json
-        return $domain->getFamily($kkNumber);
+        return $domain->getFamily($user, $kkNumber);
     }
 }

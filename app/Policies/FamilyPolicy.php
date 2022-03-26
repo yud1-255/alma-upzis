@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\AppConfig;
 use App\Models\Family;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -90,5 +91,11 @@ class FamilyPolicy
     public function forceDelete(User $user, Family $family)
     {
         //
+    }
+
+    public function checkKkNumber(User $user, Family $family)
+    {
+        $kk_limit_check = AppConfig::getConfigValue('check_kk_limit');
+        return $user->kk_check_count <= $kk_limit_check;
     }
 }

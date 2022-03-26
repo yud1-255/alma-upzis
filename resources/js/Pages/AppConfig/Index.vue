@@ -84,6 +84,7 @@ export default {
         remove_qr_end_date: "Akhir nonaktifkan display QR",
         remove_transfer_start_date: "Mulai nonaktifkan transfer rekening",
         remove_transfer_end_date: "Akhir nonaktifkan transfer rekening",
+        check_kk_limit: "Jumlah maksimal cek Kartu Keluarga",
       },
     };
   },
