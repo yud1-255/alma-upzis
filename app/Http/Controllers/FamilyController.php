@@ -174,6 +174,10 @@ class FamilyController extends Controller
 
     public function checkKkNumber(Request $request)
     {
+        $request->validate([
+            'kkNumber' => ['required'],
+        ]);
+
         $user = Auth::user();
 
         if ($user->cannot('checkKkNumber', new Family())) {

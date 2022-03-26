@@ -96,6 +96,6 @@ class FamilyPolicy
     public function checkKkNumber(User $user, Family $family)
     {
         $kk_limit_check = AppConfig::getConfigValue('check_kk_limit');
-        return $user->kk_check_count <= $kk_limit_check;
+        return $user->kk_check_count < $kk_limit_check;
     }
 }

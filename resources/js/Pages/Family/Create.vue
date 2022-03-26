@@ -8,7 +8,7 @@
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <BreezeValidationErrors class="mb-4" />
+            <ErrorModal ref="errorModal"></ErrorModal>
             <form @submit.prevent="createFamily()">
               <h2>Kepala Keluarga</h2>
               <div class="md:flex">
@@ -23,7 +23,7 @@
                   <Label for="phone">Telepon</Label>
                   <Input v-model="familyForm.phone" class="w-full md:w-auto" />
                 </div>
-                <div class="py-1">
+                <div v-if="can.checkKkNumber" class="py-1">
                   <Label for="kk_number"
                     >Nomor Kartu Keluarga (opsional, apabila pernah
                     didaftarkan)</Label
@@ -109,12 +109,14 @@
                 </div>
               </div>
               <div v-if="family == null" class="flex items-center mt-4">
-                <button class="px-6 py-2 text-white bg-gray-900 rounded">
+                <button
+                  class="px-6 py-2 text-green-100 bg-lime-700 rounded w-full md:w-auto"
+                >
                   Lanjut
                 </button>
               </div>
             </form>
-            <confirmation ref="confirmation">></confirmation>
+            <Confirmation ref="confirmation"></Confirmation>
 
             <div v-if="family != null">
               <div>
@@ -220,6 +222,7 @@ import Input from "@/Components/Input.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
 import Confirmation from "@/Components/Confirmation.vue";
+import ErrorModal from "@/Components/ErrorModal.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -237,6 +240,7 @@ export default {
     Checkbox,
     Head,
     Confirmation,
+    ErrorModal,
     TrashIcon,
     UserAddIcon,
   },
@@ -301,6 +305,10 @@ export default {
       this.muzakkiForm.is_bpi = value.is_bpi;
       this.muzakkiForm.bpi_block_no = value.bpi_block_no;
       this.muzakkiForm.bpi_house_no = value.bpi_house_no;
+
+      this.selectedBlock = value.bpi_block_no.charAt(0);
+      this.selectedBlockNumber = value.bpi_block_no.substring(1);
+      this.selectedHouseNumber = value.bpi_house_no;
     },
     useFamilyAddress: function (value, oldValue) {
       if (value) {
@@ -346,6 +354,18 @@ export default {
         .then((res) => {
           if (res?.data?.id) {
             this.promptFamilyLoad(res.data);
+          } else {
+            this.showErrorModal({
+              kk_number_1: "Nomor Kartu Keluarga tidak ditemukan.",
+              kk_number_2:
+                "Catatan: Isian Kartu Keluarga bersifat opsional, anda dapat melanjutkan pengisian secara mandiri.",
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.response.status == 403) {
+            // trigger reload to reinitialize authorization attributes
+            this.$inertia.reload();
           }
         });
     },
@@ -365,11 +385,21 @@ export default {
     },
     createFamily() {
       if (this.familyForm.id == null) {
-        this.familyForm.post(route("family.store"), { preserveScroll: true });
+        this.familyForm.post(route("family.store"), {
+          preserveScroll: true,
+          onError: () => {
+            this.showErrorModal();
+          },
+        });
       } else {
         this.familyForm.put(
           route("family.update", { family: this.familyForm }),
-          { preserveScroll: true }
+          {
+            preserveScroll: true,
+            onError: () => {
+              this.showErrorModal();
+            },
+          }
         );
       }
     },
@@ -381,7 +411,7 @@ export default {
         },
         onError: () => {
           this.setAddress();
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          this.showErrorModal();
         },
       });
     },
@@ -393,7 +423,7 @@ export default {
           this.useFamilyAddress = true;
         },
         onError: () => {
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          this.showErrorModal();
         },
       });
     },
@@ -409,10 +439,15 @@ export default {
         this.$inertia.delete(route("muzakki.destroy", muzakki.id), {
           preserveScroll: true,
           onError: () => {
-            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+            this.showErrorModal();
           },
         });
       }
+    },
+    showErrorModal(errors) {
+      this.$refs.errorModal.show({
+        errors: errors ?? this.errors,
+      });
     },
   },
 };
