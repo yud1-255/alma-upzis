@@ -149,7 +149,7 @@
                       title="Hapus"
                       @click="removeZakatLine(zakat_line)"
                     >
-                      Hapus
+                      <span class="hidden md:inline">Hapus</span>
                       <UserRemoveIcon class="h-5 mx-1" />
                     </span>
                   </div>
@@ -236,7 +236,7 @@
                     class="text-green-700 text-xs flex"
                     title="Tambah muzakki"
                   >
-                    Tambah
+                    <span class="hidden md:inline">Tambah</span>
                     <UserAddIcon class="h-5 mx-1" />
                   </button>
                 </div>
