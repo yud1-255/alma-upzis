@@ -53,7 +53,10 @@ class ResidenceDomain
 
     public function searchFamily(string $search): Collection
     {
-        $families = Family::where('head_of_family', 'like', "%{$search}%");
+        $families = Family::select(['families.*', 'muzakkis.name as muzakki_name'])
+            ->join('muzakkis', 'families.id', '=', 'muzakkis.family_id')
+            ->where('head_of_family', 'like', "%{$search}%")
+            ->orWhere('muzakkis.name', 'like', "%{$search}%");
         return $families->take(10)->get();
     }
 }

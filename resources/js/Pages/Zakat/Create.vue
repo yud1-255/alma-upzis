@@ -43,13 +43,13 @@
                 <h2>Penerimaan oleh Panitia</h2>
                 <div class="md:flex">
                   <div class="py-1">
-                    <Label>Kepala Keluarga</Label>
+                    <Label>Keluarga</Label>
                     <Autocomplete
                       ref="autocomplete"
                       placeholder="Cari berdasarkan nama"
                       :items="families"
                       key="id"
-                      value="head_of_family"
+                      value="family_display"
                       isAsync="true"
                       @input="searchFamily"
                       @selected="setFamily"
@@ -411,7 +411,12 @@ export default {
           search: searchTerm,
         })
         .then((res) => {
-          this.families = res.data;
+          this.families = res.data.map((family) => {
+            return {
+              ...family,
+              family_display: `${family.muzakki_name} (KK: ${family.head_of_family})`,
+            };
+          });
         });
     },
     setFamily(result) {
