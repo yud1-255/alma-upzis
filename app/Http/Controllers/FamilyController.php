@@ -125,7 +125,9 @@ class FamilyController extends Controller
         $formData = $request->only($family->getFillable());
         $family->fill($formData);
 
-        $family->save();
+        $domain = new ResidenceDomain();
+        $domain->updateFamilyRegistration($family);
+
         return Redirect::back();
     }
 

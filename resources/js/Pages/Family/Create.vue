@@ -298,6 +298,7 @@ export default {
       is_bpi: props.family?.is_bpi,
       bpi_block_no: props.family?.bpi_block_no,
       bpi_house_no: props.family?.bpi_house_no,
+      use_family_address: true,
     });
 
     return { familyForm, muzakkiForm };
@@ -356,6 +357,8 @@ export default {
         this.muzakkiForm.bpi_block_no = "";
         this.muzakkiForm.bpi_house_no = "";
       }
+
+      this.muzakkiForm.use_family_address = value;
     },
   },
   methods: {

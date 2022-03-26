@@ -16,6 +16,10 @@ class AddKkChecksumToUsers extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->integer('kk_check_count')->after('family_id')->default(0);
         });
+
+        Schema::table('muzakkis', function (Blueprint $table) {
+            $table->boolean('use_family_address')->after('bpi_house_no')->default(true);
+        });
     }
 
     /**
@@ -27,6 +31,10 @@ class AddKkChecksumToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('kk_check_count');
+        });
+
+        Schema::table('muzakkis', function (Blueprint $table) {
+            $table->dropColumn('use_family_address');
         });
     }
 }

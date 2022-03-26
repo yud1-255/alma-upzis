@@ -63,4 +63,21 @@ class ResidenceDomain
             ->orWhere('muzakkis.name', 'like', "%{$search}%");
         return $families->take(10)->get();
     }
+
+    public function updateFamilyRegistration(Family $family)
+    {
+        foreach ($family->muzakkis as $muzakki) {
+
+            if ($muzakki->use_family_address) {
+                $muzakki->is_bpi = $family->is_bpi;
+                $muzakki->bpi_block_no = $family->bpi_block_no;
+                $muzakki->bpi_house_no = $family->bpi_house_no;
+                $muzakki->address = $family->address;
+
+                $muzakki->save();
+            }
+        }
+
+        $family->save();
+    }
 }
