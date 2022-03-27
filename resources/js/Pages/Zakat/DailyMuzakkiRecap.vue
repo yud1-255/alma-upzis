@@ -169,7 +169,7 @@ export default {
   watch: {
     hijriYear: debounce(function (newValue) {
       this.$inertia.replace(
-        this.route("zakat.dailyRecap", {
+        this.route("zakat.dailyMuzakkiRecap", {
           hijriYear: newValue,
         })
       );

@@ -72,12 +72,14 @@
                       </button>
                     </template>
                     <template #content>
-                      <BreezeDropdownLink :href="route('zakat.muzakkiRecap')"
-                        >Rekap berdasarkan muzakki</BreezeDropdownLink
-                      ><BreezeDropdownLink :href="route('zakat.dailyRecap')"
-                        >Rekap penerimaan harian</BreezeDropdownLink
-                      ><BreezeDropdownLink :href="route('zakat.onlinePayments')"
+                      <BreezeDropdownLink :href="route('zakat.onlinePayments')"
                         >Pembayaran online</BreezeDropdownLink
+                      ><BreezeDropdownLink :href="route('zakat.muzakkiRecap')"
+                        >Penerimaan dari muzakki</BreezeDropdownLink
+                      ><BreezeDropdownLink
+                        :href="route('zakat.dailyMuzakkiRecap')"
+                        >Penerimaan harian berdasarkan
+                        muzakki</BreezeDropdownLink
                       ><BreezeDropdownLink :href="route('zakat.muzakkiList')"
                         >Daftar muzakki</BreezeDropdownLink
                       >
