@@ -9,6 +9,7 @@
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
+            <Confirmation ref="confirmation"></Confirmation>
             <ErrorModal ref="errorModal"></ErrorModal>
             <div v-if="can.submitForOthers">
               <div
@@ -93,7 +94,7 @@
               </div>
             </div>
 
-            <form @submit.prevent="submit">
+            <form @submit.prevent="submit" @keypress.enter.prevent>
               <h2 v-if="!can.submitForOthers || !isSubmitAsUpzis">
                 Penerimaan zakat
               </h2>
@@ -284,6 +285,7 @@ import Checkbox from "@/Components/Checkbox.vue";
 import Label from "@/Components/Label.vue";
 import Button from "@/Components/Button.vue";
 import PopupModal from "@/Components/PopupModal.vue";
+import Confirmation from "@/Components/Confirmation.vue";
 import ErrorModal from "@/Components/ErrorModal.vue";
 
 import { Head } from "@inertiajs/inertia-vue3";
@@ -308,6 +310,7 @@ export default {
     Checkbox,
     Button,
     Head,
+    Confirmation,
     ErrorModal,
     PopupModal,
     FamilyForm,
@@ -473,27 +476,42 @@ export default {
         },
       });
     },
-    submit() {
-      this.form.zakat_lines.forEach((item) => {
-        item.fitrah_rp = item.fitrah_rp ?? 0;
-        item.fitrah_kg = item.fitrah_kg ?? 0;
-        item.fitrah_lt = item.fitrah_lt ?? 0;
-        item.maal_rp = item.maal_rp ?? 0;
-        item.profesi_rp = item.profesi_rp ?? 0;
-        item.infaq_rp = item.infaq_rp ?? 0;
-        item.wakaf_rp = item.wakaf_rp ?? 0;
-        item.fidyah_kg = item.fidyah_kg ?? 0;
-        item.fidyah_rp = item.fidyah_rp ?? 0;
-        item.kafarat_rp = item.kafarat_rp ?? 0;
+    async submit() {
+      const isConfirmed = await this.$refs.confirmation.show({
+        title: "Konfirmasi",
+        message: `Anda akan mengirimkan zakat sejumlah Rp. ${Number(
+          this.form.total_rp
+        ).toLocaleString("id")} atas nama ${
+          this.isSubmitAsUpzis
+            ? this.form.receive_from_name
+            : this.$page.props.auth.user.name
+        }. Apakah anda yakin?`,
+        okButton: "Lanjut",
+        cancelButton: "Batal",
       });
-      this.form.post(route("zakat.store"), {
-        onError: () => {
-          this.removedMuzakkiCount = 0;
-          this.$refs.errorModal.show({
-            errors: this.errors,
-          });
-        },
-      });
+
+      if (isConfirmed) {
+        this.form.zakat_lines.forEach((item) => {
+          item.fitrah_rp = item.fitrah_rp ?? 0;
+          item.fitrah_kg = item.fitrah_kg ?? 0;
+          item.fitrah_lt = item.fitrah_lt ?? 0;
+          item.maal_rp = item.maal_rp ?? 0;
+          item.profesi_rp = item.profesi_rp ?? 0;
+          item.infaq_rp = item.infaq_rp ?? 0;
+          item.wakaf_rp = item.wakaf_rp ?? 0;
+          item.fidyah_kg = item.fidyah_kg ?? 0;
+          item.fidyah_rp = item.fidyah_rp ?? 0;
+          item.kafarat_rp = item.kafarat_rp ?? 0;
+        });
+        this.form.post(route("zakat.store"), {
+          onError: () => {
+            this.removedMuzakkiCount = 0;
+            this.$refs.errorModal.show({
+              errors: this.errors,
+            });
+          },
+        });
+      }
     },
     showErrorModal() {
       this.$refs.errorModal.show({
