@@ -46,6 +46,10 @@
                         v-if="!isAdministrator && !isUpzis"
                         :href="route('zakat.index')"
                         >Transaksi zakat saya</BreezeDropdownLink
+                      ><BreezeDropdownLink
+                        v-if="isAdministrator || isUpzis"
+                        :href="route('zakat.onlinePayments')"
+                        >Pembayaran online</BreezeDropdownLink
                       >
                       <BreezeDropdownLink
                         v-if="isAdministrator || isUpzis"
@@ -72,9 +76,7 @@
                       </button>
                     </template>
                     <template #content>
-                      <BreezeDropdownLink :href="route('zakat.onlinePayments')"
-                        >Pembayaran online</BreezeDropdownLink
-                      ><BreezeDropdownLink :href="route('zakat.muzakkiRecap')"
+                      <BreezeDropdownLink :href="route('zakat.muzakkiRecap')"
                         >Penerimaan dari muzakki</BreezeDropdownLink
                       ><BreezeDropdownLink
                         :href="route('zakat.dailyMuzakkiRecap')"

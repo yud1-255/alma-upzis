@@ -49,7 +49,7 @@ class ZakatExport implements
     {
         $domain = new ZakatDomain($this->user);
 
-        return $domain->transactionSummary("", $this->hijriYear);
+        return $domain->transactionSummary("", $this->hijriYear, true);
     }
 
     public function map($zakat): array

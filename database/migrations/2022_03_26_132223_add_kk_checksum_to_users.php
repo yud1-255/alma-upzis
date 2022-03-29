@@ -20,6 +20,10 @@ class AddKkChecksumToUsers extends Migration
         Schema::table('muzakkis', function (Blueprint $table) {
             $table->boolean('use_family_address')->after('bpi_house_no')->default(true);
         });
+
+        Schema::table('zakats', function (Blueprint $table) {
+            $table->boolean('is_active')->after('total_transfer_rp')->default(true);
+        });
     }
 
     /**
@@ -35,6 +39,10 @@ class AddKkChecksumToUsers extends Migration
 
         Schema::table('muzakkis', function (Blueprint $table) {
             $table->dropColumn('use_family_address');
+        });
+
+        Schema::table('zakats', function (Blueprint $table) {
+            $table->dropColumn('is_active');
         });
     }
 }

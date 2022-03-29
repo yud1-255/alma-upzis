@@ -86,6 +86,12 @@ class ZakatDomain
         return $zakat;
     }
 
+    public function voidTransaction(Zakat $zakat)
+    {
+        $zakat->is_active = false;
+        $zakat->save();
+    }
+
     public function deleteTransaction(Zakat $zakat)
     {
         if (!$this->validateZakatForDeletion($this->user, $zakat)) {
@@ -95,7 +101,7 @@ class ZakatDomain
         $zakat->delete();
     }
 
-    public function transactionSummary(string $searchTerm, string $hijriYear): Builder
+    public function transactionSummary(string $searchTerm, string $hijriYear, bool $isActiveOnly): Builder
     {
         $zakats = DB::table('zakats')
             ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
@@ -113,6 +119,10 @@ class ZakatDomain
                 'user_zakat_pic.name as zakat_pic_name'
             ]);
 
+        if ($isActiveOnly) {
+            $zakats = $zakats->where('is_active', true);
+        }
+
         return $zakats;
     }
 
@@ -122,6 +132,7 @@ class ZakatDomain
             ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
             ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
             ->where('receive_from', $this->user->id)
+            ->where('is_active', true)
             ->orderBy('transaction_no', 'desc')
             ->select([
                 'zakats.*',
@@ -138,13 +149,14 @@ class ZakatDomain
             ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
             ->join('zakat_lines as zakat_lines', 'zakat_lines.zakat_id', '=', 'zakats.id')
             ->join('muzakkis as muzakkis', 'zakat_lines.muzakki_id', '=', 'muzakkis.id')
-            ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
+            ->join('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
             ->where(function ($q) use ($searchTerm) {
                 $q->where('receive_from_name', 'like', "%{$searchTerm}%")
                     ->orWhere('muzakkis.name', 'like', "%{$searchTerm}%")
                     ->orWhere('user_zakat_pic.name', 'like', "%{$searchTerm}%");
             })
             ->where('hijri_year', $hijriYear)
+            ->where('zakats.is_active', true)
             ->orderBy('transaction_no', 'desc')
             ->select([
                 'zakats.transaction_no',
@@ -167,6 +179,7 @@ class ZakatDomain
             ->where('is_offline_submission', false)
             ->where('receive_from_name', 'like', "%{$searchTerm}%")
             ->where('hijri_year', $hijriYear)
+            ->where('is_active', true)
             ->orderBy('transaction_no', 'desc')
             ->select([
                 'zakats.*',

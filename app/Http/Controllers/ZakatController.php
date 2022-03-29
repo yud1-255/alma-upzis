@@ -38,7 +38,7 @@ class ZakatController extends Controller
         $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
 
         if ($user->can('viewAny', new Zakat())) {
-            $zakats = $domain->transactionSummary($searchTerm, $hijriYear);
+            $zakats = $domain->transactionSummary($searchTerm, $hijriYear, false);
         } else {
             $zakats = $domain->ownTransactionSummary($user);
         }
@@ -198,7 +198,7 @@ class ZakatController extends Controller
         }
 
         $domain = new ZakatDomain(Auth::user());
-        $domain->deleteTransaction($zakat);
+        $domain->voidTransaction($zakat);
         return Redirect::route('zakat.index');
     }
 

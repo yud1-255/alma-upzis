@@ -63,7 +63,11 @@
               </tr>
             </thead>
             <tbody class="hidden md:table-row-group">
-              <tr v-for="zakat in zakats.data" :key="zakat.id">
+              <tr
+                v-for="zakat in zakats.data"
+                :key="zakat.id"
+                :class="{ 'opacity-25': !zakat.is_active }"
+              >
                 <td class="px-4 py-2">
                   <Link
                     :href="route('zakat.show', zakat.id)"
@@ -88,21 +92,26 @@
                   {{ Number(zakat.total_transfer_rp).toLocaleString("id") }}
                 </td>
                 <td class="py-2 whitespace-nowrap print:hidden">
-                  <button
-                    v-if="can.confirmPayment"
-                    @click="confirmPayment(zakat)"
-                    class="text-orange-700 px-2"
-                    :class="{ invisible: zakat.zakat_pic != null }"
-                  >
-                    Konfirmasi
-                  </button>
-                  <button
-                    v-if="can.delete"
-                    @click="destroy(zakat)"
-                    class="text-red-700 px-2"
-                  >
-                    Hapus
-                  </button>
+                  <div v-if="zakat.is_active">
+                    <button
+                      v-if="can.confirmPayment"
+                      @click="confirmPayment(zakat)"
+                      class="text-orange-700 px-2"
+                      :class="{ invisible: zakat.zakat_pic != null }"
+                    >
+                      Konfirmasi
+                    </button>
+                    <button
+                      v-if="can.delete"
+                      @click="destroy(zakat)"
+                      class="text-red-700 px-2"
+                    >
+                      Batalkan
+                    </button>
+                  </div>
+                  <div v-else>
+                    <span class="px-2">Transaksi dibatalkan</span>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -215,7 +224,7 @@ export default {
     async destroy(zakat) {
       const isConfirmed = await this.$refs.confirmation.show({
         title: "Konfirmasi",
-        message: `Hapus transaksi zakat ${zakat.transaction_no} diterima dari ${zakat.receive_from_name}?`,
+        message: `Batalkan transaksi zakat ${zakat.transaction_no} diterima dari ${zakat.receive_from_name}?`,
         okButton: "Lanjut",
         cancelButton: "Batal",
       });

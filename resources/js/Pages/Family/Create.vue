@@ -341,8 +341,8 @@ export default {
       this.muzakkiForm.bpi_block_no = value.bpi_block_no;
       this.muzakkiForm.bpi_house_no = value.bpi_house_no;
 
-      this.selectedBlock = value.bpi_block_no.charAt(0);
-      this.selectedBlockNumber = value.bpi_block_no.substring(1);
+      this.selectedBlock = value.bpi_block_no?.charAt(0);
+      this.selectedBlockNumber = value.bpi_block_no?.substring(1);
       this.selectedHouseNumber = value.bpi_house_no;
     },
     useFamilyAddress: function (value, oldValue) {
