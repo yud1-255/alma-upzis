@@ -19,7 +19,7 @@ use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 
-class MuzakkiRecapExport implements
+class TransactionRecapExport implements
     FromQuery,
     WithMapping,
     WithColumnFormatting,
@@ -40,12 +40,12 @@ class MuzakkiRecapExport implements
     {
         return [
             [
-                'No. Zakat', 'Muzakki',  'Petugas', 'Fitrah', '', '', 'Maal',
+                'No. Zakat', 'Fitrah', '', '', 'Maal',
                 'Profesi', 'Infaq/Shadaqah', 'Fidyah', '', 'Wakaf', 'Kafarat',
-                'Tanggal', 'Terima dari'
+                'Biaya Unik', 'Total (Rp)', 'Tanggal', 'Terima dari'
             ],
             [
-                '', '',  '', 'Rp', 'Kg', 'Lt', '',
+                '', 'Rp', 'Kg', 'Lt', '',
                 '', '', 'Rp', 'Kg', '', '',
                 '', ''
             ],
@@ -56,15 +56,13 @@ class MuzakkiRecapExport implements
     {
         $domain = new ZakatDomain($this->user);
 
-        return $domain->zakatMuzakkiRecap("", $this->hijriYear);
+        return $domain->zakatTransactionRecap("", $this->hijriYear)->orderBy('transaction_no', 'asc');
     }
 
     public function map($zakat): array
     {
         return [
             $zakat->transaction_no,
-            $zakat->muzakki_name,
-            $zakat->zakat_pic_name,
             $zakat->fitrah_rp,
             $zakat->fitrah_kg,
             $zakat->fitrah_lt,
@@ -75,6 +73,8 @@ class MuzakkiRecapExport implements
             $zakat->fidyah_kg,
             $zakat->wakaf_rp,
             $zakat->kafarat_rp,
+            $zakat->unique_number,
+            $zakat->total_transfer_rp,
             Date::dateTimeToExcel(new DateTime($zakat->transaction_date)),
             $zakat->receive_from_name,
         ];
@@ -89,15 +89,15 @@ class MuzakkiRecapExport implements
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->mergeCells('D1:F1');
-        $sheet->mergeCells('J1:K1');
+        $sheet->mergeCells('B1:D1');
+        $sheet->mergeCells('H1:I1');
 
         $sheet->mergeCells('A1:A2');
-        $sheet->mergeCells('B1:B2');
-        $sheet->mergeCells('C1:C2');
+        $sheet->mergeCells('E1:E2');
+        $sheet->mergeCells('F1:F2');
         $sheet->mergeCells('G1:G2');
-        $sheet->mergeCells('H1:H2');
-        $sheet->mergeCells('I1:I2');
+        $sheet->mergeCells('J1:J2');
+        $sheet->mergeCells('K1:K2');
         $sheet->mergeCells('L1:L2');
         $sheet->mergeCells('M1:M2');
         $sheet->mergeCells('N1:N2');

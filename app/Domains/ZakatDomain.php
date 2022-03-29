@@ -143,6 +143,27 @@ class ZakatDomain
         return $zakats;
     }
 
+    public function zakatTransactionRecap(string $searchTerm, string $hijriYear)
+    {
+        $zakats = DB::table('zakats')
+            ->join('users as user_receive_from', 'user_receive_from.id', '=', 'zakats.receive_from')
+            ->join('zakat_lines as zakat_lines', 'zakat_lines.zakat_id', '=', 'zakats.id')
+            ->where(function ($q) use ($searchTerm) {
+                $q->where('receive_from_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('family_head', 'like', "%{$searchTerm}%");
+            })
+            ->where('hijri_year', $hijriYear)
+            ->where('zakats.is_active', true)
+            ->whereNotNull('zakat_pic')
+            ->groupBy('zakats.id', 'transaction_date', 'transaction_no', 'receive_from_name', 'unique_number', 'total_transfer_rp')
+            ->selectRaw('zakats.id, transaction_date, transaction_no, receive_from_name, unique_number, total_transfer_rp, ' .
+                'sum(fitrah_rp) as fitrah_rp, sum(fitrah_kg) as fitrah_kg, sum(fitrah_lt) as fitrah_lt, ' .
+                'sum(maal_rp) as maal_rp, sum(profesi_rp) as profesi_rp, sum(infaq_rp) as infaq_rp, sum(wakaf_rp) as wakaf_rp,' .
+                'sum(fidyah_kg) as fidyah_kg, sum(fidyah_rp) as fidyah_rp, sum(kafarat_rp) as kafarat_rp');
+
+        return $zakats;
+    }
+
     public function zakatMuzakkiRecap(string $searchTerm, string $hijriYear): Builder
     {
         $zakats = DB::table('zakats')

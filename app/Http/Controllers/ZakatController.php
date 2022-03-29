@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domains\ZakatDomain;
 use App\Domains\ResidenceDomain;
 use App\Exports\ZakatExport;
+use App\Exports\TransactionRecapExport;
 use App\Exports\MuzakkiListExport;
 use App\Exports\MuzakkiRecapExport;
 use App\Exports\OnlinePaymentsExport;
@@ -219,6 +220,21 @@ class ZakatController extends Controller
         return Redirect::to($request->pageUrl);
     }
 
+    public function transactionRecap(Request $request)
+    {
+        $searchTerm = $request->searchTerm ?? "";
+        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
+
+        $domain = new ZakatDomain(Auth::user());
+        $zakats = $domain->zakatTransactionRecap($searchTerm, $hijriYear);
+
+        return Inertia::render('Zakat/TransactionRecap', [
+            'zakats' => $zakats->orderBy('transaction_no')->paginate(10)->withQueryString(),
+            'hijriYears' => $domain->getHijriYears(),
+            'hijriYear' => $hijriYear,
+        ]);
+    }
+
     public function muzakkiRecap(Request $request)
     {
         $searchTerm = $request->searchTerm ?? "";
@@ -286,6 +302,8 @@ class ZakatController extends Controller
         switch ($type) {
             case 'summary':
                 return Excel::download(new ZakatExport(Auth::user(), $hijriYear), 'zakat.xlsx');
+            case 'transaction_recap':
+                return Excel::download(new TransactionRecapExport(Auth::user(), $hijriYear), 'transaction_recap.xlsx');
             case 'muzakki_list':
                 return Excel::download(new MuzakkiListExport(Auth::user()), 'muzakki_list.xlsx');
             case 'muzakki_recap':

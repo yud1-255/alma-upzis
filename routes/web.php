@@ -45,6 +45,7 @@ Route::middleware(['auth', 'role:administrator'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:administrator,upzis'])->group(function () {
+    Route::get('/zakat/transaction_recap', [ZakatController::class, 'transactionRecap'])->name('zakat.transactionRecap');
     Route::get('/zakat/muzakki_list', [ZakatController::class, 'muzakkiList'])->name('zakat.muzakkiList');
     Route::get('/zakat/muzakki_recap', [ZakatController::class, 'muzakkiRecap'])->name('zakat.muzakkiRecap');
     Route::get('/zakat/daily_muzakki_recap', [ZakatController::class, 'dailyMuzakkiRecap'])->name('zakat.dailyMuzakkiRecap');
