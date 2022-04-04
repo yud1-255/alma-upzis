@@ -50,6 +50,10 @@ class ZakatDomain
 
     public function submitAsMuzakki(Zakat $zakat, array $zakatLines): Zakat
     {
+        if (!$this->validateZakatForSubmission($zakat, $zakatLines)) {
+            throw ValidationException::withMessages($this->errors);
+        }
+
         $zakat->zakatPIC()->associate(null);
         $zakat->receiveFrom()->associate($this->user);
         $zakat->receive_from_name = $this->user->name;
@@ -69,6 +73,10 @@ class ZakatDomain
 
     public function submitAsUpzis(Zakat $zakat, array $zakatLines): Zakat
     {
+        if (!$this->validateZakatForSubmission($zakat, $zakatLines)) {
+            throw ValidationException::withMessages($this->errors);
+        }
+
         $zakat->zakatPIC()->associate($this->user);
         $zakat->receiveFrom()->associate($this->user);
 
@@ -312,8 +320,36 @@ class ZakatDomain
         return true;
     }
 
+    private function validateZakatForSubmission(Zakat $zakat, array $zakatLines): bool
+    {
+
+        $totalRp = $zakat->total_rp;
+
+        $totalKg = array_reduce($zakatLines, function ($totalKg, $item) {
+            return $totalKg + $item['fitrah_kg'] + $item['fidyah_kg'];
+        });
+
+        $totalLt = array_reduce($zakatLines, function ($totalLt, $item) {
+            return $totalLt + $item['fitrah_lt'];
+        });
+
+        if ($totalRp == 0 && $totalKg == 0 && $totalLt == 0) {
+            array_push($this->errors, "Zakat harus memiliki jumlah dalam rupiah atau kilogram/liter beras");
+        }
+
+        if (count($this->errors) > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     private function validateZakatForDeletion(User $user, Zakat $zakat): bool
     {
+        if ($user->can('delete', $zakat)) {
+            array_push($this->errors, "Pengguna {$user->name} tidak memiliki otorisasi hapus zakat");
+        }
+
         if ($zakat->hijri_year != AppConfig::getConfigValue('hijri_year')) {
             array_push($this->errors, "Zakat {$zakat->transaction_no} hanya bisa dihapus pada periode zakat yang sama");
         }
