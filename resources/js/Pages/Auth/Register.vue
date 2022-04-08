@@ -31,7 +31,7 @@
 
     <div class="mt-4">
       <BreezeLabel for="password" value="Password" />
-      <BreezeInput
+      <InputPassword
         id="password"
         type="password"
         class="mt-1 block w-full"
@@ -43,7 +43,7 @@
 
     <div class="mt-4">
       <BreezeLabel for="password_confirmation" value="Konfirmasi Passsword" />
-      <BreezeInput
+      <InputPassword
         id="password_confirmation"
         type="password"
         class="mt-1 block w-full"
@@ -78,6 +78,8 @@ import BreezeGuestLayout from "@/Layouts/Guest.vue";
 import BreezeInput from "@/Components/Input.vue";
 import BreezeLabel from "@/Components/Label.vue";
 import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
+import InputPassword from "@/Components/InputPassword.vue";
+
 import { Head, Link } from "@inertiajs/inertia-vue3";
 
 export default {
@@ -88,6 +90,7 @@ export default {
     BreezeInput,
     BreezeLabel,
     BreezeValidationErrors,
+    InputPassword,
     Head,
     Link,
   },

@@ -32,12 +32,10 @@
     </template>
   </div>
   <div
-    class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:pt-0"
+    class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:pt-0"
   >
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-      <div
-        class="mt-4 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg"
-      >
+      <div class="mt-4 bg-white overflow-hidden shadow sm:rounded-lg">
         <div class="p-6">
           <p>
             Selamat datang di aplikasi zakat UPZIS Al Munawwarah/Masjid Al
@@ -50,9 +48,7 @@
           </p>
         </div>
         <div class="ml-6 text-lg leading-7 font-semibold">
-          <span class="text-gray-900 dark:text-white"
-            >Zakat dalam 4 langkah mudah:</span
-          >
+          <span class="text-gray-900">Zakat dalam 4 langkah mudah:</span>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2">
           <div class="p-6">
@@ -71,14 +67,12 @@
                 ></path>
               </svg>
               <div class="ml-4 text-lg leading-7 font-semibold">
-                <span class="text-lime-700 dark:text-white"
-                  >Registrasi data muzakki</span
-                >
+                <span class="text-lime-700">Registrasi data muzakki</span>
               </div>
             </div>
 
             <div class="ml-12">
-              <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+              <div class="mt-2 text-gray-600 text-sm">
                 <p class="py-2">
                   Daftarkan data pengguna anda di aplikasi. Gunakan email untuk
                   login, tambahkan dan update data muzakki dalam keluarga secara
@@ -93,9 +87,7 @@
             </div>
           </div>
 
-          <div
-            class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l"
-          >
+          <div class="p-6 border-t border-gray-200 md:border-t-0 md:border-l">
             <div class="flex items-center">
               <svg
                 fill="none"
@@ -112,14 +104,12 @@
                 <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
               </svg>
               <div class="ml-4 text-lg leading-7 font-semibold">
-                <span class="text-lime-700 dark:text-white"
-                  >Buat Transaksi Zakat</span
-                >
+                <span class="text-lime-700">Buat Transaksi Zakat</span>
               </div>
             </div>
 
             <div class="ml-12">
-              <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+              <div class="mt-2 text-gray-600 text-sm">
                 <p class="py-2">
                   Isikan data zakat fitrah, maal, profesi, sampai dengan wakaf
                   dan kafarat dalam satu isian singkat. Pilih besaran zakat
@@ -135,7 +125,7 @@
             </div>
           </div>
 
-          <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+          <div class="p-6 border-t border-gray-200">
             <div class="flex items-center">
               <svg
                 fill="none"
@@ -151,14 +141,12 @@
                 ></path>
               </svg>
               <div class="ml-4 text-lg leading-7 font-semibold">
-                <span class="text-lime-700 dark:text-white"
-                  >Konfirmasi Panitia</span
-                >
+                <span class="text-lime-700">Konfirmasi Panitia</span>
               </div>
             </div>
 
             <div class="ml-12">
-              <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+              <div class="mt-2 text-gray-600 text-sm">
                 <p class="py-2">
                   Kirimkan bukti pembayaran anda kepada panitia UPZIS, terima
                   bukti penerimaan zakat anda secara online. Transaksi secara
@@ -170,9 +158,7 @@
             </div>
           </div>
 
-          <div
-            class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l"
-          >
+          <div class="p-6 border-t border-gray-200 md:border-l">
             <div class="flex items-center">
               <svg
                 fill="none"
@@ -187,15 +173,13 @@
                   d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 ></path>
               </svg>
-              <div
-                class="ml-4 text-lg leading-7 font-semibold text-lime-700 dark:text-white"
-              >
+              <div class="ml-4 text-lg leading-7 font-semibold text-lime-700">
                 Review zakat anda
               </div>
             </div>
 
             <div class="ml-12">
-              <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+              <div class="mt-2 text-gray-600 text-sm">
                 <p class="py-2">
                   Simpan dan telaah transaksi zakat anda dan muzakki dalam
                   keluarga. Baik untuk pembayaran online maupun datang ke gerai

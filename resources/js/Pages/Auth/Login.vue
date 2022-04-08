@@ -23,7 +23,18 @@
 
     <div class="mt-4">
       <BreezeLabel for="password" value="Password" />
-      <BreezeInput
+      <!-- <BreezeInput
+        id="password"
+        type="password"
+        class="mt-1 block w-full"
+        v-model="form.password"
+        required
+        autocomplete="current-password"
+        ref="passwordInput"
+      />
+      <span @click="showPassword">Show Password</span> -->
+
+      <InputPassword
         id="password"
         type="password"
         class="mt-1 block w-full"
@@ -65,6 +76,7 @@ import BreezeButton from "@/Components/Button.vue";
 import BreezeCheckbox from "@/Components/Checkbox.vue";
 import BreezeGuestLayout from "@/Layouts/Guest.vue";
 import BreezeInput from "@/Components/Input.vue";
+import InputPassword from "@/Components/InputPassword.vue";
 import BreezeLabel from "@/Components/Label.vue";
 import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
@@ -77,6 +89,7 @@ export default {
     BreezeCheckbox,
     BreezeInput,
     BreezeLabel,
+    InputPassword,
     BreezeValidationErrors,
     Head,
     Link,
@@ -102,6 +115,15 @@ export default {
       this.form.post(this.route("login"), {
         onFinish: () => this.form.reset("password"),
       });
+    },
+    showPassword() {
+      const input = this.$refs.passwordInput.$refs.input;
+      console.log(input);
+      if (input.type == "password") {
+        input.type = "text";
+      } else if (input.type == "text") {
+        input.type = "password";
+      }
     },
   },
 };
