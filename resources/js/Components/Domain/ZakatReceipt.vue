@@ -13,7 +13,7 @@
               </div>
               <img
                 src="/assets/upzis-logo-bw.png"
-                class="object-contain h-12 mt-2"
+                class="object-contain h-12"
               />
             </div>
             <div class="py-4 font-semibold text-left">
