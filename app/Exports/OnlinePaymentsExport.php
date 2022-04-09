@@ -39,7 +39,7 @@ class OnlinePaymentsExport implements
     public function headings(): array
     {
         return [
-            'No. Zakat', 'Tanggal', 'Terima dari', 'Telepon', 'Email',
+            'No. Zakat', 'Tanggal Transaksi', 'Tanggal Terima', 'Terima dari', 'Telepon', 'Email',
             'Konfirmasi Petugas', 'Jumlah Bayar (Rp)'
 
         ];
@@ -57,6 +57,7 @@ class OnlinePaymentsExport implements
         return [
             $zakat->transaction_no,
             Date::dateTimeToExcel(new DateTime($zakat->transaction_date)),
+            $zakat->payment_date != null ? Date::dateTimeToExcel(new DateTime($zakat->payment_date)) : '-',
             $zakat->receive_from_name,
             $zakat->receive_from_phone,
             $zakat->receive_from_email,
@@ -68,7 +69,8 @@ class OnlinePaymentsExport implements
     public function columnFormats(): array
     {
         return [
-            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY
+            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY
         ];
     }
 

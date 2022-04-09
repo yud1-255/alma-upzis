@@ -42,12 +42,12 @@ class TransactionRecapExport implements
             [
                 'No. Zakat', 'Fitrah', '', '', 'Maal',
                 'Profesi', 'Infaq/Shadaqah', 'Fidyah', '', 'Wakaf', 'Kafarat',
-                'Biaya Unik', 'Total (Rp)', 'Tanggal', 'Terima dari'
+                'Biaya Unik', 'Total (Rp)', 'Tanggal Transaksi', 'Tanggal Terima', 'Terima dari'
             ],
             [
                 '', 'Rp', 'Kg', 'Lt', '',
                 '', '', 'Rp', 'Kg', '', '',
-                '', ''
+                '', '', ''
             ],
         ];
     }
@@ -76,6 +76,7 @@ class TransactionRecapExport implements
             $zakat->unique_number,
             $zakat->total_transfer_rp,
             Date::dateTimeToExcel(new DateTime($zakat->transaction_date)),
+            $zakat->payment_date != null ? Date::dateTimeToExcel(new DateTime($zakat->payment_date)) : Date::dateTimeToExcel(new DateTime($zakat->transaction_date)),
             $zakat->receive_from_name,
         ];
     }
@@ -83,7 +84,8 @@ class TransactionRecapExport implements
     public function columnFormats(): array
     {
         return [
-            'N' => NumberFormat::FORMAT_DATE_DDMMYYYY
+            'N' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'O' => NumberFormat::FORMAT_DATE_DDMMYYYY
         ];
     }
 
@@ -102,6 +104,7 @@ class TransactionRecapExport implements
         $sheet->mergeCells('M1:M2');
         $sheet->mergeCells('N1:N2');
         $sheet->mergeCells('O1:O2');
+        $sheet->mergeCells('P1:P2');
 
         return [
             1 => ['font' => ['bold' => true]],
