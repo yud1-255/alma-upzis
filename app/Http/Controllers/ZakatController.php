@@ -212,8 +212,10 @@ class ZakatController extends Controller
             abort(403);
         }
 
+        $paymentDate =  Date::createFromFormat('Y-m-d', $request->paymentDate);
+
         $domain = new ZakatDomain(Auth::user());
-        $domain->confirmZakatPayment(Auth::user(), $zakat);
+        $domain->confirmZakatPayment(Auth::user(), $zakat, $paymentDate);
 
 
         return Redirect::to($request->pageUrl);

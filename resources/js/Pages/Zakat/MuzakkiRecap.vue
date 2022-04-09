@@ -94,7 +94,7 @@
                     {{ Number(zakat_line.kafarat_rp).toLocaleString("id") }}
                   </td>
                   <td class="text-right whitespace-nowrap">
-                    {{ zakat_line.transaction_date }}
+                    {{ zakat_line.payment_date ?? zakat_line.transaction_date }}
                   </td>
                   <td>{{ zakat_line.receive_from_name }}</td>
                   <td>{{ zakat_line.zakat_pic_name }}</td>

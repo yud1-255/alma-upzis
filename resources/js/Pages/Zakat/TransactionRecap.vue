@@ -103,7 +103,7 @@
                       {{ Number(zakat.total_transfer_rp).toLocaleString("id") }}
                     </td>
                     <td class="text-right whitespace-nowrap">
-                      {{ zakat.transaction_date }}
+                      {{ zakat.payment_date ?? zakat.transaction_date }}
                     </td>
                   </tr>
                 </tbody>

@@ -83,6 +83,7 @@ class ZakatDomain
         $zakat->receive_from_name = $zakat->receive_from_name;
         $zakat->is_offline_submission = true;
         $zakat->transaction_no = $this->generateZakatNumber(true);
+        $zakat->payment_date = Date::now();
 
         $zakat->unique_number = 0;
         $zakat->total_transfer_rp = $zakat->total_rp;
@@ -163,8 +164,8 @@ class ZakatDomain
             ->where('hijri_year', $hijriYear)
             ->where('zakats.is_active', true)
             ->whereNotNull('zakat_pic')
-            ->groupBy('zakats.id', 'transaction_date', 'transaction_no', 'receive_from_name', 'unique_number', 'total_transfer_rp')
-            ->selectRaw('zakats.id, transaction_date, transaction_no, receive_from_name, unique_number, total_transfer_rp, ' .
+            ->groupBy('zakats.id', 'transaction_date', 'payment_date', 'transaction_no', 'receive_from_name', 'unique_number', 'total_transfer_rp')
+            ->selectRaw('zakats.id, transaction_date, payment_date, transaction_no, receive_from_name, unique_number, total_transfer_rp, ' .
                 'sum(fitrah_rp) as fitrah_rp, sum(fitrah_kg) as fitrah_kg, sum(fitrah_lt) as fitrah_lt, ' .
                 'sum(maal_rp) as maal_rp, sum(profesi_rp) as profesi_rp, sum(infaq_rp) as infaq_rp, sum(wakaf_rp) as wakaf_rp,' .
                 'sum(fidyah_kg) as fidyah_kg, sum(fidyah_rp) as fidyah_rp, sum(kafarat_rp) as kafarat_rp');
@@ -190,6 +191,7 @@ class ZakatDomain
             ->select([
                 'zakats.transaction_no',
                 'zakats.transaction_date',
+                'zakats.payment_date',
                 'zakats.receive_from_name as receive_from_name',
                 'zakat_lines.*',
                 'muzakkis.name as muzakki_name',
@@ -222,10 +224,11 @@ class ZakatDomain
         return $zakats;
     }
 
-    public function confirmZakatPayment(User $user, Zakat $zakat): Zakat
+    public function confirmZakatPayment(User $user, Zakat $zakat, Carbon $paymentDate): Zakat
     {
         if ($user->can('confirmPayment', $zakat)) {
             $zakat->zakatPIC()->associate($user);
+            $zakat->payment_date = $paymentDate;
             $zakat->save();
         }
         return $zakat;

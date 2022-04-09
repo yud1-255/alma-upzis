@@ -51,7 +51,7 @@
                       {{ zakat.transaction_no }}
                     </Link>
                   </td>
-                  <td>{{ zakat.transaction_date }}</td>
+                  <td>{{ zakat.payment_date ?? zakat.transaction_date }}</td>
                   <td>{{ zakat.receive_from_name }}</td>
                   <td>{{ zakat.receive_from_phone }}</td>
                   <td>{{ zakat.receive_from_email }}</td>
@@ -79,7 +79,11 @@
             </table>
             <pagination :links="zakats.links" />
 
-            <confirmation ref="confirmation">></confirmation>
+            <PaymentConfirmation
+              :zakat="zakatToConfirm"
+              ref="paymentConfirmation"
+            />
+            <Confirmation ref="confirmation">></Confirmation>
           </div>
         </div>
       </div>
@@ -94,6 +98,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Input from "@/Components/Input.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Confirmation from "@/Components/Confirmation.vue";
+import PaymentConfirmation from "@/Components/Domain/PaymentConfirmation.vue";
 
 import debounce from "lodash/debounce";
 
@@ -105,6 +110,7 @@ export default {
     Input,
     Pagination,
     Confirmation,
+    PaymentConfirmation,
   },
   props: {
     zakats: Object,
@@ -115,6 +121,7 @@ export default {
   data() {
     return {
       searchTerm: "",
+      zakatToConfirm: null,
     };
   },
   watch: {
@@ -139,29 +146,8 @@ export default {
       );
     },
     async confirmPayment(zakat) {
-      const isConfirmed = await this.$refs.confirmation.show({
-        title: "Konfirmasi",
-        message: `Konfirmasi pembayaran dari ${
-          zakat.receive_from_name
-        } sejumlah Rp. ${Number(zakat.total_transfer_rp).toLocaleString(
-          "id"
-        )}?`,
-        okButton: "Lanjut",
-        cancelButton: "Batal",
-      });
-
-      if (isConfirmed) {
-        this.$inertia.post(
-          route(`zakat.confirm`, zakat.id),
-          {
-            pageUrl: this.$page.url,
-          },
-          {
-            preserveState: true,
-            preserveScroll: true,
-          }
-        );
-      }
+      this.zakatToConfirm = zakat;
+      this.$refs.paymentConfirmation.open();
     },
   },
 };
