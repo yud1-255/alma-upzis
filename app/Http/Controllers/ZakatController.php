@@ -129,7 +129,8 @@ class ZakatController extends Controller
         } else {
             $domain->submitAsMuzakki($zakat, $zakatLines);
         }
-        return Redirect::route('zakat.index');
+
+        return Redirect::route('zakat.show', ['zakat' => $zakat]);
     }
 
     /**
