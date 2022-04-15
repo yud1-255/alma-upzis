@@ -113,19 +113,41 @@
                         Number(zakat.total_transfer_rp, 0).toLocaleString("id")
                       }}</span
                     >
+                    <button
+                      class="text-lime-700 text-xs inline mx-1 focus:opacity-75"
+                      title="Salin"
+                      @click="
+                        copyNumberToClipboard(
+                          Number(zakat.total_transfer_rp).toString()
+                        )
+                      "
+                    >
+                      <span class="inline">Salin</span>
+                      <DocumentDuplicateIcon class="h-5 ml-1 inline" />
+                    </button>
                     melalui salah satu opsi:
                     <ul class="list-disc list-outside ml-4">
                       <li v-if="displayBankAccount">
                         Transfer bank melalui rekening
-                        <span class="font-semibold">{{ bankAccount }}</span>
+                        <span class="font-semibold">{{ bankAccount }} </span>
+                        <button
+                          class="text-lime-700 text-xs inline mx-2 focus:opacity-75"
+                          title="Salin"
+                          @click="copyNumberToClipboard(bankAccount)"
+                        >
+                          <span class="inline">Salin</span>
+                          <DocumentDuplicateIcon class="h-5 md:ml-1 inline" />
+                        </button>
                       </li>
                       <li v-if="displayQRIS">
                         Kirim lewat QRIS
-                        <span
+                        <div
                           @click="this.$refs.popup.open()"
-                          class="cursor-pointer text-green-600 ml-2"
-                          >Tampilkan</span
+                          class="text-lime-700 text-xs inline mx-2 cursor-pointer"
                         >
+                          <span class="inline mr-1">Tampilkan</span
+                          ><CursorClickIcon class="h-5 md:ml-1 inline" />
+                        </div>
                       </li>
                       <li v-if="!displayQRIS && !displayBankAccount">
                         Periode transfer saat ini telah ditutup. Untuk
@@ -139,9 +161,13 @@
                     <a
                       href="http://bit.ly/sayazakat"
                       target="_blank"
-                      class="cursor-pointer text-green-600 ml-2"
-                      >WhatsApp</a
-                    >
+                      class="text-lime-700 text-xs inline mx-1 cursor-pointer whitespace-nowrap"
+                      >WhatsApp<ExternalLinkIcon class="h-5 ml-1 inline"
+                    /></a>
+                  </li>
+                  <li>
+                    Biaya Unik dipergunakan untuk keperluan identifikasi,
+                    diperhitungkan dan dikelola sebagai sedekah dari muzakki
                   </li>
                   <li>
                     Dana yang dikirimkan tanpa konfirmasi akan kami terima
@@ -214,9 +240,13 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import Button from "@/Components/Button.vue";
 import PopupModal from "@/Components/PopupModal.vue";
+import Confirmation from "@/Components/Confirmation.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
-import Confirmation from "@/Components/Confirmation.vue";
+
+import { DocumentDuplicateIcon } from "@heroicons/vue/solid";
+import { CursorClickIcon } from "@heroicons/vue/solid";
+import { ExternalLinkIcon } from "@heroicons/vue/solid";
 
 import ZakatReceipt from "@/Components/Domain/ZakatReceipt.vue";
 
@@ -228,6 +258,9 @@ export default {
     Button,
     PopupModal,
     Confirmation,
+    DocumentDuplicateIcon,
+    CursorClickIcon,
+    ExternalLinkIcon,
     ZakatReceipt,
   },
   setup() {},
@@ -274,6 +307,10 @@ export default {
       this.$nextTick(function () {
         window.print();
       });
+    },
+    copyNumberToClipboard(textWithNumbers) {
+      const extractedNumbers = textWithNumbers.match(/\d/g).join("");
+      navigator.clipboard.writeText(extractedNumbers);
     },
   },
 };
