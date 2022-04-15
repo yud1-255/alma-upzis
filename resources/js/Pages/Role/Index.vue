@@ -10,11 +10,22 @@
           <div class="p-6 bg-white border-b border-gray-200">
             <table class="w-4/5">
               <thead class="font-bold border-b-2">
-                <td class="px-4 py-2">ID</td>
-                <td class="px-4 py-2">Nama</td>
-                <td class="px-4 py-2">Email</td>
-                <td class="px-4 py-2">Role</td>
-                <td class="px-4 py-2"></td>
+                <tr>
+                  <td colspan="5" class="text-right">
+                    <Input
+                      v-model="searchTerm"
+                      placeholder="Cari berdasarkan nama"
+                      class="p-2"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2">ID</td>
+                  <td class="px-4 py-2">Nama</td>
+                  <td class="px-4 py-2">Email</td>
+                  <td class="px-4 py-2">Role</td>
+                  <td class="px-4 py-2"></td>
+                </tr>
               </thead>
               <tr v-for="user in users.data" :key="user.id">
                 <td class="px-4 py-2">{{ user.id }}</td>
@@ -61,6 +72,8 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
+import debounce from "lodash/debounce";
+
 export default {
   components: {
     BreezeAuthenticatedLayout,
@@ -84,6 +97,22 @@ export default {
     errors: null,
     users: Object,
     roles: Array,
+    showAll: false,
+  },
+  data() {
+    return {
+      searchTerm: "",
+    };
+  },
+  watch: {
+    searchTerm: debounce(function (newValue) {
+      this.$inertia.replace(
+        this.route("roles.index", {
+          searchTerm: newValue,
+          all: this.showAll,
+        })
+      );
+    }),
   },
   methods: {
     setSelectedRole(event, user) {

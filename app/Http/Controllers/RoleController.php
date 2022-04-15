@@ -14,10 +14,14 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         // TODO refactor into UserDomain
-        if ($request->has('all')) {
-            $users = User::paginate(5)->withQueryString();
+
+        $searchTerm = $request->searchTerm ?? '';
+        $showAll = $request->all ?? false;
+
+        if ($request->all) {
+            $users = User::where('name', 'like', "%${searchTerm}%")->paginate(10)->withQueryString();
         } else {
-            $users = User::has('roles')->paginate(5)->withQueryString();
+            $users = User::has('roles')->where('name', 'like', "%${searchTerm}%")->paginate(10)->withQueryString();
         }
 
         $roles = Role::all();
@@ -27,7 +31,8 @@ class RoleController extends Controller
 
         return Inertia::render('Role/Index', [
             'users' => $users,
-            'roles' => $roles
+            'roles' => $roles,
+            'showAll' => $showAll
         ]);
     }
 

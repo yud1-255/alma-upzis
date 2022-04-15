@@ -110,7 +110,7 @@
                     </template>
                     <template #content>
                       <BreezeDropdownLink
-                        :href="route('roles.index', { all: 1 })"
+                        :href="route('roles.index', { all: true })"
                         >Pengguna</BreezeDropdownLink
                       ><BreezeDropdownLink :href="route('app_config.index')"
                         >Konfigurasi Aplikasi</BreezeDropdownLink
