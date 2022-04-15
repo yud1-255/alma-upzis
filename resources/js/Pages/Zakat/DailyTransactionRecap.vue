@@ -1,8 +1,8 @@
 <template>
-  <Head title="Rekap Harian"></Head>
+  <Head title="Rekap Transaksi Harian"></Head>
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h1>Rekap Pendapatan Zakat Harian</h1>
+      <h1>Rekap Transaksi Zakat Harian</h1>
     </template>
     <div class="py-6">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -12,12 +12,14 @@
               <div class="w-1/2">
                 <a
                   class="px-2 py-2 text-green-100 bg-lime-700 rounded print:hidden"
-                  :href="route('zakat.export', ['muzakki_recap', hijriYear])"
+                  :href="
+                    route('zakat.export', ['transaction_recap', hijriYear])
+                  "
                   >Ekspor ke Excel</a
                 >
               </div>
               <div class="w-1/2 text-right">
-                <select v-model="hijriYear">
+                <select v-model="hijriYear" @change="searchTransactions">
                   <option v-for="hijriYear in hijriYears" :key="hijriYear">
                     {{ hijriYear }}
                   </option>
@@ -29,7 +31,7 @@
                 <thead class="font-bold border-b-2">
                   <tr>
                     <td rowspan="2" class="px-4 py-2">No. Zakat</td>
-                    <td rowspan="2" class="px-4 py-2">Muzakki</td>
+                    <td rowspan="2" class="px-4 py-2">Terima dari</td>
                     <td colspan="3" class="px-4 py-2">Fitrah</td>
                     <td rowspan="2" class="px-4 py-2">Maal</td>
                     <td rowspan="2" class="px-4 py-2">Profesi</td>
@@ -37,9 +39,9 @@
                     <td colspan="2" class="px-4 py-2">Fidyah</td>
                     <td rowspan="2" class="px-4 py-2">Wakaf</td>
                     <td rowspan="2" class="px-4 py-2">Kafarat</td>
+                    <td rowspan="2" class="px-4 py-2">Biaya Unik</td>
+                    <td rowspan="2" class="px-4 py-2">Total (Rp)</td>
                     <td rowspan="2" class="px-4 py-2">Tanggal</td>
-                    <td rowspan="2" class="px-4 py-2">Terima dari</td>
-                    <td rowspan="2" class="px-4 py-2">Petugas</td>
                   </tr>
                   <tr>
                     <td>Rp</td>
@@ -53,55 +55,58 @@
                   v-for="dailyAgg in groupedTable()"
                   :key="dailyAgg.transaction_date"
                 >
-                  <tr
-                    v-for="zakat_line in dailyAgg.zakats"
-                    :key="zakat_line.id"
-                  >
+                  <tr v-for="zakat in dailyAgg.zakats" :key="zakat.id">
                     <td>
-                      {{ zakat_line.transaction_no }}
+                      <Link
+                        :href="route('zakat.show', zakat.id)"
+                        class="text-green-700"
+                        >{{ zakat.transaction_no }}</Link
+                      >
                     </td>
-                    <td>{{ zakat_line.muzakki_name }}</td>
+                    <td>{{ zakat.receive_from_name }}</td>
                     <td class="text-right">
-                      {{ Number(zakat_line.fitrah_rp).toLocaleString("id") }}
-                    </td>
-                    <td class="text-right">
-                      {{ Number(zakat_line.fitrah_kg).toLocaleString("id") }}
-                    </td>
-                    <td class="text-right">
-                      {{ Number(zakat_line.fitrah_lt).toLocaleString("id") }}
+                      {{ Number(zakat.fitrah_rp).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
-                      {{ Number(zakat_line.maal_rp).toLocaleString("id") }}
+                      {{ Number(zakat.fitrah_kg).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
-                      {{ Number(zakat_line.profesi_rp).toLocaleString("id") }}
+                      {{ Number(zakat.fitrah_lt).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
-                      {{ Number(zakat_line.infaq_rp).toLocaleString("id") }}
+                      {{ Number(zakat.maal_rp).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
-                      {{ Number(zakat_line.fidyah_rp).toLocaleString("id") }}
+                      {{ Number(zakat.profesi_rp).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
-                      {{ Number(zakat_line.fidyah_kg).toLocaleString("id") }}
+                      {{ Number(zakat.infaq_rp).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
-                      {{ Number(zakat_line.wakaf_rp).toLocaleString("id") }}
+                      {{ Number(zakat.fidyah_rp).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
-                      {{ Number(zakat_line.kafarat_rp).toLocaleString("id") }}
+                      {{ Number(zakat.fidyah_kg).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat.wakaf_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat.kafarat_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat.unique_number).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat.total_transfer_rp).toLocaleString("id") }}
                     </td>
                     <td class="text-right whitespace-nowrap">
-                      {{
-                        zakat_line.payment_date ?? zakat_line.transaction_date
-                      }}
+                      {{ zakat.payment_date ?? zakat.transaction_date }}
                     </td>
-                    <td>{{ zakat_line.receive_from_name }}</td>
-                    <td>{{ zakat_line.zakat_pic_name }}</td>
                   </tr>
                   <tr class="bg-gray-200">
                     <th>
-                      {{ dailyAgg.transaction_date }}
+                      {{ dailyAgg.payment_date }}
                     </th>
                     <th>{{ dailyAgg.sum_muzakki_name }}</th>
                     <th class="text-right">
@@ -134,8 +139,18 @@
                     <th class="text-right">
                       {{ Number(dailyAgg.sum_kafarat_rp).toLocaleString("id") }}
                     </th>
-                    <th class="text-right whitespace-nowrap"></th>
-                    <th></th>
+                    <th class="text-right">
+                      {{
+                        Number(dailyAgg.sum_unique_number).toLocaleString("id")
+                      }}
+                    </th>
+                    <th class="text-right">
+                      {{
+                        Number(dailyAgg.sum_total_transfer_rp).toLocaleString(
+                          "id"
+                        )
+                      }}
+                    </th>
                     <th></th>
                   </tr>
                 </tbody>
@@ -152,7 +167,6 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
-import Input from "@/Components/Input.vue";
 import _ from "lodash";
 import debounce from "lodash/debounce";
 
@@ -161,7 +175,6 @@ export default {
     BreezeAuthenticatedLayout,
     Head,
     Link,
-    Input,
   },
   props: {
     zakats: Object,
@@ -171,7 +184,7 @@ export default {
   watch: {
     hijriYear: debounce(function (newValue) {
       this.$inertia.replace(
-        this.route("zakat.dailyMuzakkiRecap", {
+        this.route("zakat.dailyTransactionRecap", {
           hijriYear: newValue,
         })
       );
@@ -183,7 +196,7 @@ export default {
         .groupBy("payment_date")
         .map((zakats, date) => {
           return {
-            transaction_date: date,
+            payment_date: date,
             zakats: zakats,
             sum_fitrah_rp: _.sumBy(zakats, (line) => Number(line.fitrah_rp)),
             sum_fitrah_kg: _.sumBy(zakats, (line) => Number(line.fitrah_kg)),
@@ -195,6 +208,12 @@ export default {
             sum_fidyah_kg: _.sumBy(zakats, (line) => Number(line.fidyah_kg)),
             sum_wakaf_rp: _.sumBy(zakats, (line) => Number(line.wakaf_rp)),
             sum_kafarat_rp: _.sumBy(zakats, (line) => Number(line.kafarat_rp)),
+            sum_unique_number: _.sumBy(zakats, (line) =>
+              Number(line.unique_number)
+            ),
+            sum_total_transfer_rp: _.sumBy(zakats, (line) =>
+              Number(line.total_transfer_rp)
+            ),
           };
         })
         .value();

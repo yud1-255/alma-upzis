@@ -49,6 +49,7 @@ Route::middleware(['auth', 'role:administrator,upzis'])->group(function () {
     Route::get('/zakat/muzakki_list', [ZakatController::class, 'muzakkiList'])->name('zakat.muzakkiList');
     Route::get('/zakat/muzakki_recap', [ZakatController::class, 'muzakkiRecap'])->name('zakat.muzakkiRecap');
     Route::get('/zakat/daily_muzakki_recap', [ZakatController::class, 'dailyMuzakkiRecap'])->name('zakat.dailyMuzakkiRecap');
+    Route::get('/zakat/daily_recap', [ZakatController::class, 'dailyTransactionRecap'])->name('zakat.dailyTransactionRecap');
     Route::get('/zakat/online_payments', [ZakatController::class, 'onlinePayments'])->name('zakat.onlinePayments');
     Route::post('/zakat/{id}/confirm', [ZakatController::class, 'confirmPayment'])->name('zakat.confirm');
 

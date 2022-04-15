@@ -236,6 +236,23 @@ class ZakatController extends Controller
         ]);
     }
 
+    public function dailyTransactionRecap(Request $request)
+    {
+        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
+
+        $domain = new ZakatDomain(Auth::user());
+        $zakats = $domain->zakatTransactionRecap("", $hijriYear)
+            ->orderBy('payment_date', 'asc')
+            ->orderBy('transaction_no', 'asc')
+            ->get();
+
+        return Inertia::render('Zakat/DailyTransactionRecap', [
+            'zakats' => $zakats,
+            'hijriYears' => $domain->getHijriYears(),
+            'hijriYear' => $hijriYear,
+        ]);
+    }
+
     public function muzakkiRecap(Request $request)
     {
         $searchTerm = $request->searchTerm ?? "";
@@ -259,8 +276,9 @@ class ZakatController extends Controller
 
         $zakats = $domain->zakatMuzakkiRecap("", $hijriYear)
             ->reorder()
-            ->orderBy('transaction_date', 'asc')
-            ->orderBy('transaction_no', 'asc')->get();
+            ->orderBy('payment_date', 'asc')
+            ->orderBy('transaction_no', 'asc')
+            ->get();
 
         return Inertia::render('Zakat/DailyMuzakkiRecap', [
             'zakats' => $zakats,

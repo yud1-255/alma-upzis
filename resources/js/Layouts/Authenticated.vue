@@ -79,6 +79,11 @@
                         :href="route('zakat.transactionRecap')"
                         >Penerimaan zakat</BreezeDropdownLink
                       >
+                      <BreezeDropdownLink
+                        :href="route('zakat.dailyTransactionRecap')"
+                        >Penerimaan harian berdasarkan
+                        transaksi</BreezeDropdownLink
+                      >
                       <BreezeDropdownLink :href="route('zakat.muzakkiRecap')"
                         >Penerimaan dari muzakki</BreezeDropdownLink
                       ><BreezeDropdownLink
