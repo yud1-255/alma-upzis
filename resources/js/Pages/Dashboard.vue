@@ -26,9 +26,9 @@
                   Lengkapi data keluarga
                   <Link
                     :href="route('family.create')"
-                    class="text-lime-700 ml-2"
-                    >[klik di sini]</Link
-                  >
+                    class="text-lime-700 ml-2 text-xs"
+                    >klik di sini <LinkIcon class="h-5 inline"
+                  /></Link>
                 </div>
               </li>
               <li class="flex">
@@ -39,9 +39,11 @@
                 </div>
                 <div class="ml-2 p-1">
                   Mulai pengisian zakat
-                  <Link :href="route('zakat.create')" class="text-lime-700 ml-2"
-                    >[klik di sini]</Link
-                  >
+                  <Link
+                    :href="route('zakat.create')"
+                    class="text-lime-700 ml-2 text-xs"
+                    >klik di sini <LinkIcon class="h-5 inline"
+                  /></Link>
                 </div>
               </li>
               <li class="flex">
@@ -56,9 +58,9 @@
                   <a
                     href="http://bit.ly/sayazakat"
                     target="_blank"
-                    class="cursor-pointer text-lime-700 ml-2"
-                    >[klik di sini]</a
-                  >
+                    class="cursor-pointer text-lime-700 ml-2 text-xs"
+                    >klik di sini <ExternalLinkIcon class="h-5 inline"
+                  /></a>
                 </div>
               </li>
               <li class="flex">
@@ -70,9 +72,11 @@
 
                 <div class="ml-2 p-1">
                   Lihat transaksi zakat anda
-                  <Link :href="route('zakat.index')" class="text-lime-700 ml-2"
-                    >[klik di sini]</Link
-                  >
+                  <Link
+                    :href="route('zakat.index')"
+                    class="text-lime-700 ml-2 text-xs"
+                    >klik di sini <LinkIcon class="h-5 inline"
+                  /></Link>
                 </div>
               </li>
             </ol>
@@ -92,9 +96,9 @@
                   <a
                     href="http://bit.ly/sayazakat"
                     target="_blank"
-                    class="cursor-pointer text-lime-700 ml-2"
-                    >[klik di sini]</a
-                  >
+                    class="cursor-pointer text-lime-700 ml-2 text-xs"
+                    >klik di sini <ExternalLinkIcon class="h-5 inline"
+                  /></a>
                 </div>
               </li>
               <li class="flex">
@@ -119,12 +123,16 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
+import { LinkIcon } from "@heroicons/vue/solid";
+import { ExternalLinkIcon } from "@heroicons/vue/solid";
 
 export default {
   components: {
     BreezeAuthenticatedLayout,
     Head,
     Link,
+    LinkIcon,
+    ExternalLinkIcon,
   },
 };
 </script>
