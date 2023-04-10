@@ -83,7 +83,6 @@ class ZakatDomain
         $zakat->receive_from_name = $zakat->receive_from_name;
         $zakat->is_offline_submission = true;
         $zakat->transaction_no = $this->generateZakatNumber(true);
-        $zakat->payment_date = Date::now();
 
         $zakat->unique_number = 0;
         $zakat->total_transfer_rp = $zakat->total_rp;

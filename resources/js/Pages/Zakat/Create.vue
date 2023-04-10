@@ -91,6 +91,12 @@
                     />
                   </div>
                 </div>
+                <div class="md flex">
+                  <div class="py-1">
+                    <Label for="payment_date">Tanggal pembayaran</Label>
+                    <Input v-model="form.payment_date" type="date" />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -328,6 +334,7 @@ export default {
       total_rp: 0,
       zakat_lines: [],
       is_submit_as_upzis: props.can.submitForOthers,
+      payment_date: new Date().toISOString().split("T")[0],
     });
 
     const refreshMuzakki = () => {
