@@ -104,7 +104,10 @@
             <div v-if="zakat.zakat_pic == null" class="print:hidden">
               <div class="my-4">
                 <p class="text-sm font-semibold my-2">Catatan untuk muzakki:</p>
-                <ol class="list-decimal list-outside ml-4 text-sm">
+                <ol
+                  v-if="Number(zakat.total_transfer_rp) > 0"
+                  class="list-decimal list-outside ml-4 text-sm"
+                >
                   <li>
                     Silakan transfer senilai
                     <span class="font-semibold"
@@ -172,6 +175,16 @@
                   <li>
                     Dana yang dikirimkan tanpa konfirmasi akan kami terima
                     sebagai sedekah dan dimanfaatkan sesuai syariat
+                  </li>
+                </ol>
+                <ol v-else class="list-decimal list-outside ml-4 text-sm">
+                  <li>
+                    Silakan kirimkan zakat dalam bentuk beras sesuai isian ke
+                    gerai zakat di masjid Al Muhajirin BPI
+                  </li>
+                  <li>
+                    Tanda terima akan dicetak setelah kiriman diterima oleh
+                    petugas di gerai zakat
                   </li>
                 </ol>
                 <popup-modal ref="popup">

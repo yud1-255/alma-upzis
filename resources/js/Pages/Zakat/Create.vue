@@ -378,6 +378,9 @@ export default {
       defaultFitrahAmount: "",
       removedMuzakkiCount: 0,
       isSubmitAsUpzis: this.can.submitForOthers,
+      totalRp: 0,
+      totalKg: 0,
+      totalLt: 0,
     };
   },
   watch: {
@@ -412,6 +415,20 @@ export default {
           Number(line.kafarat_rp);
         return total;
       }, 0);
+
+      let totalKg = this.form.zakat_lines.reduce((total, line) => {
+        total = total + Number(line.fitrah_kg) + Number(line.fidyah_kg);
+        return total;
+      }, 0);
+
+      let totalLt = this.form.zakat_lines.reduce((total, line) => {
+        total = total + Number(line.fitrah_lt);
+        return total;
+      }, 0);
+
+      this.totalRp = totalRp;
+      this.totalKg = totalKg;
+      this.totalLt = totalLt;
 
       this.form.total_rp = totalRp;
     },
@@ -484,11 +501,16 @@ export default {
       });
     },
     async submit() {
+      let totalRpMsg = `Rp. ${Number(this.form.total_rp).toLocaleString("id")}`;
+      let totalLtMsg = `${Number(this.totalLt).toLocaleString("id")} lt`;
+      let totalKgMsg = `${Number(this.totalKg).toLocaleString("id")} kg`;
+
+      let displayLtKg = Number(this.totalLt) > 0 || Number(this.totalKg) > 0;
+      let totalLtKgMsg = displayLtKg ? `(${totalLtMsg}, ${totalKgMsg})` : "";
+
       const isConfirmed = await this.$refs.confirmation.show({
         title: "Konfirmasi",
-        message: `Anda akan mengirimkan zakat sejumlah Rp. ${Number(
-          this.form.total_rp
-        ).toLocaleString("id")} atas nama ${
+        message: `Anda akan mengirimkan zakat sejumlah ${totalRpMsg} ${totalLtKgMsg} atas nama ${
           this.isSubmitAsUpzis
             ? this.form.receive_from_name
             : this.$page.props.auth.user.name

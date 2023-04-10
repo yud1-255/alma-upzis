@@ -61,8 +61,14 @@ class ZakatDomain
         $zakat->transaction_no = $this->generateZakatNumber(true);
 
         $uniqueNumber = rand(0, 500);
-        $zakat->unique_number = $uniqueNumber;
-        $zakat->total_transfer_rp = $zakat->total_rp + $uniqueNumber;
+
+        if ($zakat->total_rp == 0) { // for fitrah kg/lt, set total transfer as 0
+            $zakat->unique_number = 0;
+            $zakat->total_transfer_rp = $zakat->total_rp;
+        } else {
+            $zakat->unique_number = $uniqueNumber;
+            $zakat->total_transfer_rp = $zakat->total_rp + $uniqueNumber;
+        }
 
         $zakat->save();
 
