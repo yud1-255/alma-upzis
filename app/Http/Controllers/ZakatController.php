@@ -153,6 +153,7 @@ class ZakatController extends Controller
 
         return Inertia::render('Zakat/Show', [
             'zakat' => $zakatTx,
+            'logs' => $domain->getActivityLogs($zakatTx),
             'displayBankAccount' => $domain->isInBankTransferPeriod(Date::now()),
             'displayQRIS' => $domain->isInQRISPaymentPeriod(Date::now()),
             'bankAccount' => AppConfig::getConfigValue('bank_account'),

@@ -8,10 +8,12 @@ use App\Models\Zakat;
 use App\Models\Family;
 use App\Models\Muzakki;
 use App\Models\User;
+use App\Models\ZakatLog;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Validation\ValidationException;
 
 use DB;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
 
@@ -74,6 +76,8 @@ class ZakatDomain
 
         $zakat->zakatLines()->createMany($zakatLines);
 
+        $this->addActivityLog($zakat, ZakatLog::ACTIONS['submit']);
+
         return $zakat;
     }
 
@@ -97,6 +101,8 @@ class ZakatDomain
 
         $zakat->zakatLines()->createMany($zakatLines);
 
+        $this->addActivityLog($zakat, ZakatLog::ACTIONS['submit']);
+
         return $zakat;
     }
 
@@ -104,6 +110,8 @@ class ZakatDomain
     {
         $zakat->is_active = false;
         $zakat->save();
+
+        $this->addActivityLog($zakat, ZakatLog::ACTIONS['void']);
     }
 
     public function deleteTransaction(Zakat $zakat)
@@ -236,6 +244,8 @@ class ZakatDomain
             $zakat->payment_date = $paymentDate;
             $zakat->save();
         }
+
+        $this->addActivityLog($zakat, ZakatLog::ACTIONS['confirm']);
         return $zakat;
     }
 
@@ -370,5 +380,32 @@ class ZakatDomain
         }
 
         return true;
+    }
+
+    private function addActivityLog(Zakat $zakat, int $action)
+    {
+        $zakatLog = new ZakatLog();
+        $zakatLog->zakat()->associate($zakat);
+        $zakatLog->user()->associate($this->user);
+        $zakatLog->action = $action;
+
+        $zakatLog->save();
+    }
+
+    public function getActivityLogs(Zakat $zakat): array
+    {
+        $logs = $zakat->zakatLogs()
+            ->orderBy('created_at', 'asc')
+            ->get()
+            ->map(function ($log) {
+                $log->message = ZakatLog::MESSAGES[$log->action];
+                $log->user_name = $log->user->name;
+
+                $arr = $log->toArray();
+                unset($arr['user']);
+                return $arr;
+            });
+
+        return $logs->toArray();
     }
 }

@@ -28,4 +28,9 @@ class Zakat extends Model
     {
         return $this->hasMany(ZakatLine::class);
     }
+
+    public function zakatLogs()
+    {
+        return $this->hasMany(ZakatLog::class);
+    }
 }
