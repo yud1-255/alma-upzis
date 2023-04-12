@@ -8,6 +8,7 @@
         Transaksi Zakat
       </h1>
     </template>
+
     <div class="py-2 md:py-6 print:text-xs">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
@@ -100,7 +101,35 @@
               </div>
             </div>
 
-            <!-- <div v-if="!(can.print && can.confirmPayment)"> -->
+            <div class="mt-2">
+              <p class="text-sm mt-2 mb-12 mx-2" v-if="logs.length > 0">
+                Terakhir diubah pada
+                {{
+                  new Date(logs[logs.length - 1].created_at).toLocaleString(
+                    "id",
+                    {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                    }
+                  )
+                }}
+                <button
+                  @click="$refs.transactionHistory.open()"
+                  class="text-lime-700 text-xs inline mx-2 cursor-pointer"
+                >
+                  <span class="inline mr-1">Histori</span
+                  ><ClockIcon class="h-5 ml-1 inline" />
+                </button>
+              </p>
+              <TransactionHistory
+                :zakat="zakat"
+                :logs="logs"
+                ref="transactionHistory"
+              />
+            </div>
             <div v-if="zakat.zakat_pic == null" class="print:hidden">
               <div class="my-4">
                 <p class="text-sm font-semibold my-2">Catatan untuk muzakki:</p>
@@ -260,8 +289,10 @@ import { Link } from "@inertiajs/inertia-vue3";
 import { DocumentDuplicateIcon } from "@heroicons/vue/solid";
 import { CursorClickIcon } from "@heroicons/vue/solid";
 import { ExternalLinkIcon } from "@heroicons/vue/solid";
+import { ClockIcon } from "@heroicons/vue/solid";
 
 import ZakatReceipt from "@/Components/Domain/ZakatReceipt.vue";
+import TransactionHistory from "@/Components/Domain/TransactionHistory.vue";
 
 export default {
   components: {
@@ -274,11 +305,14 @@ export default {
     DocumentDuplicateIcon,
     CursorClickIcon,
     ExternalLinkIcon,
+    ClockIcon,
     ZakatReceipt,
+    TransactionHistory,
   },
   setup() {},
   props: {
     zakat: Object,
+    logs: Array,
     bankAccount: String,
     displayBankAccount: Boolean,
     displayQRIS: Boolean,
@@ -287,6 +321,7 @@ export default {
   data() {
     return {
       printWithCopy: false,
+      paymentDate: new Date().toISOString().split("T")[0],
     };
   },
   methods: {
@@ -306,6 +341,7 @@ export default {
         this.$inertia.post(
           route(`zakat.confirm`, zakat.id),
           {
+            paymentDate: this.paymentDate,
             pageUrl: this.$page.url,
           },
           {
