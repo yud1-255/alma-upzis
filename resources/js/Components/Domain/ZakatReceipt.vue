@@ -19,6 +19,9 @@
             <div class="py-4 font-semibold text-left">
               <p>Transaksi no: {{ zakat.transaction_no }}</p>
               <p>Tanggal: {{ zakat.transaction_date }}</p>
+              <div v-if="!zakat.is_active" class="text-red-700 text-center">
+                &middot; transaksi ini telah dibatalkan &middot;
+              </div>
             </div>
           </th>
         </tr>
