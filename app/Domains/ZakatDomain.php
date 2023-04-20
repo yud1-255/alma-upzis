@@ -134,7 +134,7 @@ class ZakatDomain
                     ->orWhere('family_head', 'like', "%{$searchTerm}%");
             })
             ->where('hijri_year', $hijriYear)
-            ->orderBy('transaction_no', 'desc')
+            ->orderBy('created_at', 'desc')
             ->select([
                 'zakats.*',
                 'user_receive_from.name as receive_from_user_name',
@@ -155,7 +155,7 @@ class ZakatDomain
             ->leftJoin('users as user_zakat_pic', 'user_zakat_pic.id', '=', 'zakats.zakat_pic')
             ->where('receive_from', $this->user->id)
             ->where('is_active', true)
-            ->orderBy('transaction_no', 'desc')
+            ->orderBy('created_at', 'desc')
             ->select([
                 'zakats.*',
                 'user_receive_from.name as receive_from_user_name',
@@ -200,7 +200,7 @@ class ZakatDomain
             })
             ->where('hijri_year', $hijriYear)
             ->where('zakats.is_active', true)
-            ->orderBy('transaction_no', 'desc')
+            ->orderBy('created_at', 'desc')
             ->select([
                 'zakats.transaction_no',
                 'zakats.transaction_date',
@@ -224,7 +224,7 @@ class ZakatDomain
             ->where('receive_from_name', 'like', "%{$searchTerm}%")
             ->where('hijri_year', $hijriYear)
             ->where('is_active', true)
-            ->orderBy('transaction_no', 'desc')
+            ->orderBy('created_at', 'desc')
             ->select([
                 'zakats.*',
                 'families.phone as receive_from_phone',
