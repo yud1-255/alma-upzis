@@ -232,7 +232,7 @@ class ZakatController extends Controller
         $zakats = $domain->zakatTransactionRecap($searchTerm, $hijriYear);
 
         return Inertia::render('Zakat/TransactionRecap', [
-            'zakats' => $zakats->orderBy('transaction_no')->paginate(10)->withQueryString(),
+            'zakats' => $zakats->orderBy('zakats.created_at')->paginate(10)->withQueryString(),
             'hijriYears' => $domain->getHijriYears(),
             'hijriYear' => $hijriYear,
         ]);
@@ -245,7 +245,7 @@ class ZakatController extends Controller
         $domain = new ZakatDomain(Auth::user());
         $zakats = $domain->zakatTransactionRecap("", $hijriYear)
             ->orderBy('payment_date', 'asc')
-            ->orderBy('transaction_no', 'asc')
+            ->orderBy('zakats.created_at', 'asc')
             ->get();
 
         return Inertia::render('Zakat/DailyTransactionRecap', [
@@ -279,7 +279,7 @@ class ZakatController extends Controller
         $zakats = $domain->zakatMuzakkiRecap("", $hijriYear)
             ->reorder()
             ->orderBy('payment_date', 'asc')
-            ->orderBy('transaction_no', 'asc')
+            ->orderBy('zakats.created_at', 'asc')
             ->get();
 
         return Inertia::render('Zakat/DailyMuzakkiRecap', [
