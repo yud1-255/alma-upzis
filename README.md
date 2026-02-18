@@ -2,6 +2,11 @@
 
 Alma UPZIS is a web application built with the Laravel framework. It provides robust tools for managing Zakat, Infaq, and Sadaqah operations, including user management, transaction tracking, reporting, and more, serving the needs of Al Muhajirin mosque located in southern Jakarta, Indonesia. 
 
+## Application Preview
+
+![Alma UPZIS Home](public/assets/alma-upzis-prev.png)
+![Alma UPZIS Muzakki](public/assets/alma-upzis-muzakki.png)
+
 ## How Alma UPZIS Works
 
 Alma UPZIS is designed to streamline the management of Zakat, Infaq, and Sadaqah for UPZIS organizations. The application is built on Laravel and follows a modular structure, with clear separation between endpoints, services, and database models.
