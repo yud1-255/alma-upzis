@@ -77,8 +77,8 @@ Alma UPZIS is designed to streamline the management of Zakat, Infaq, and Sadaqah
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yud1-255/alma-app.git
-   cd alma-app
+   git clone https://github.com/yud1-255/alma-upzis.git
+   cd alma-upzis
    ```
 
 2. **Install PHP dependencies:**
