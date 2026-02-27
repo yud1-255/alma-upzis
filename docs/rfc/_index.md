@@ -4,13 +4,13 @@
 
 | RFC | Title | Status | Last Updated |
 |-----|-------|--------|--------------|
-| [001](./001-system-design.md) | System Design | Draft | |
+| | | | |
 
 ## Accepted
 
 | RFC | Title | Implemented |
 |-----|-------|-------------|
-| | | |
+| [001](./001-system-design.md) | V1 System Design — Alma UPZIS | Done |
 
 ## Superseded
 
