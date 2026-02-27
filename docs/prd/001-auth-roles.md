@@ -8,23 +8,23 @@
 
 ## Summary
 
-**Capability ID:** C1 (from [product vision](./_index.md))
+**Capability ID:** C1 (dari [product vision](./_index.md))
 
-**One-liner:** Provides user registration, session-based authentication, email verification, password reset, and role-based access control for three user tiers.
+**One-liner:** Menyediakan pendaftaran pengguna, autentikasi berbasis sesi, verifikasi email, reset kata sandi, dan kontrol akses berbasis peran untuk tiga tingkatan pengguna.
 
 **Dependencies:**
-- Requires: None — standalone foundation capability
+- Requires: Tidak ada — kapabilitas fondasi yang berdiri sendiri
 - Enables: C2 (Family & Muzakki Registration), C3 (Zakat Transactions), C4 (Reporting), C5 (App Configuration)
 
 ---
 
 ## Problem
 
-**What:** The system handles sensitive financial data (zakat payments) and must ensure only authorized users can submit, confirm, and void transactions. Different user types need different access levels.
+**What:** Sistem menangani data keuangan sensitif (pembayaran zakat) dan harus memastikan hanya pengguna yang berwenang yang dapat mengajukan, mengkonfirmasi, dan membatalkan transaksi. Jenis pengguna yang berbeda membutuhkan tingkat akses yang berbeda.
 
-**Who:** All users — muzakki, UPZIS officers, and administrators.
+**Who:** Semua pengguna — muzakki, petugas UPZIS, dan administrator.
 
-**Current State:** Paper-based collection has no access control. Anyone at the booth can write in the ledger. There's no way for muzakki to self-serve.
+**Current State:** Pengumpulan berbasis kertas tidak memiliki kontrol akses. Siapa pun di gerai dapat menulis di buku catatan. Tidak ada cara bagi muzakki untuk melayani diri sendiri.
 
 ---
 
@@ -32,16 +32,16 @@
 
 ### Key Features
 
-1. **User Registration & Email Verification** — Self-service registration with mandatory email verification before accessing the dashboard.
-2. **Session-Based Login with Password Reset** — Standard email/password authentication with a forgot-password flow via email token.
-3. **Three-Tier Role System** — Muzakki (default, no explicit role), UPZIS officer, and administrator roles with middleware-enforced access control.
-4. **Admin Role Assignment UI** — Administrators can search users and assign/change roles through a dedicated management page.
+1. **Registrasi & Verifikasi Email Pengguna** — Pendaftaran mandiri dengan verifikasi email wajib sebelum mengakses dashboard.
+2. **Session-Based Login with Password Reset** — Autentikasi email/kata sandi standar dengan alur lupa kata sandi melalui token email.
+3. **Three-Tier Role System** — Muzakki (bawaan, tanpa peran eksplisit), petugas UPZIS, dan administrator dengan kontrol akses yang diberlakukan oleh middleware.
+4. **Menu untuk Administrator** — Administrator dapat mencari pengguna dan menetapkan/mengubah peran melalui halaman pengelolaan khusus.
 
 ### User Workflows
 
-1. **Muzakki self-registration** — Register → verify email → log in → access dashboard, family registration, and zakat submission.
-2. **Admin role assignment** — Navigate to role management → search user → assign role (upzis or administrator) → user gains elevated access on next page load.
-3. **Password recovery** — Click forgot password → receive reset email (token valid 60 min, throttled to 1 per 60s) → set new password → log in.
+1. **Pendaftaran mandiri muzakki** — Daftar → verifikasi email → masuk → akses dashboard, pendaftaran keluarga, dan pengajuan zakat.
+2. **Penetapan peran oleh admin** — Buka halaman pengelolaan peran → cari pengguna → tetapkan peran (upzis atau administrator) → pengguna mendapatkan akses lebih tinggi pada pemuatan halaman berikutnya.
+3. **Pemulihan kata sandi** — Klik lupa kata sandi → terima email reset (token berlaku 60 menit, dibatasi 1 per 60 detik) → atur kata sandi baru → masuk.
 
 ---
 
@@ -49,8 +49,8 @@
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| Registration completion rate | > 90% of started registrations | Verified users / total registered users |
-| Role assignment errors | 0 | No user accidentally given wrong role |
+| Tingkat penyelesaian pendaftaran | > 90% dari pendaftaran yang dimulai | Pengguna terverifikasi / total pengguna terdaftar |
+| Kesalahan penetapan peran | 0 | Tidak ada pengguna yang salah mendapat peran |
 
 ---
 
@@ -58,31 +58,31 @@
 
 ### In Scope (v1.0)
 
-- [x] User registration (name, email, password)
-- [x] Email verification (must verify before dashboard access)
-- [x] Login / logout with session-based auth
-- [x] Password reset via email token
-- [x] Password confirmation for sensitive actions
-- [x] Three roles: administrator, upzis, muzakki (implicit — no role record)
-- [x] `EnsureUserHasRole` middleware for route protection
-- [x] Admin-only role management page with user search
-- [x] Single-role-per-user enforcement at assignment time (detach all, attach one)
-- [x] Roles eager-loaded and shared to all Inertia pages via `HandleInertiaRequests`
+- [x] Pendaftaran pengguna (nama, email, kata sandi)
+- [x] Verifikasi email (wajib verifikasi sebelum akses dashboard)
+- [x] Login / logout dengan autentikasi berbasis sesi
+- [x] Reset kata sandi melalui token email
+- [x] Konfirmasi kata sandi untuk tindakan sensitif
+- [x] Tiga peran: administrator, upzis, muzakki (implisit — tidak ada catatan peran)
+- [x] Middleware `EnsureUserHasRole` untuk perlindungan rute
+- [x] Halaman pengelolaan peran khusus admin dengan pencarian pengguna
+- [x] Penerapan satu peran per pengguna saat penetapan (lepas semua, lampirkan satu)
+- [x] Peran di-eager-load dan dibagikan ke semua halaman Inertia melalui `HandleInertiaRequests`
 
 ### Out of Scope
 
 | Item | Rationale | Future? |
 |------|-----------|---------|
-| OAuth / social login | Simplicity; community users prefer email | TBD |
-| Multi-factor authentication | Low-risk context (mosque donations) | TBD |
-| Permission granularity beyond roles | Three roles sufficient for current needs | TBD |
-| User profile editing | Not needed for v1 workflows | TBD |
-| Account deletion / self-service deactivation | Not required by regulation for this scale | TBD |
-| API token authentication | Sanctum is installed but not used for web routes | TBD |
+| OAuth / social login | Kesederhanaan; pengguna komunitas lebih memilih email | TBD |
+| Multi-factor authentication | Konteks berisiko rendah (donasi masjid) | TBD |
+| Granularitas izin di luar peran | Tiga peran sudah cukup untuk kebutuhan saat ini | TBD |
+| Pengeditan profil pengguna | Tidak diperlukan untuk alur kerja v1 | TBD |
+| Penghapusan akun / deaktivasi mandiri | Tidak diwajibkan regulasi untuk skala ini | TBD |
+| API token authentication | Sanctum terpasang tetapi tidak digunakan untuk rute web | TBD |
 
 ### Future (This Capability)
 
-- None planned — capability is stable.
+- Tidak ada yang direncanakan — kapabilitas sudah stabil.
 
 ---
 
@@ -92,17 +92,17 @@
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Muzakki registers and verifies email | P0 | — |
-| User logs in with email and password | P0 | — |
-| User resets forgotten password via email | P0 | — |
+| Muzakki mendaftar dan memverifikasi email | P0 | — |
+| Pengguna masuk dengan email dan kata sandi | P0 | — |
+| Pengguna mereset kata sandi yang terlupakan melalui email | P0 | — |
 
 ### Role Management
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Admin assigns upzis role to a user | P0 | — |
-| Admin searches users by name | P1 | — |
-| Admin views all users vs only users with roles | P1 | — |
+| Admin menetapkan peran upzis kepada pengguna | P0 | — |
+| Admin mencari pengguna berdasarkan nama | P1 | — |
+| Admin melihat semua pengguna vs hanya pengguna yang memiliki peran | P1 | — |
 
 ---
 
@@ -110,9 +110,9 @@
 
 | Category | Requirement | Rationale |
 |----------|-------------|-----------|
-| Password reset token expiry | 60 minutes | Balances security with usability |
-| Password reset throttle | 1 request per 60 seconds | Prevents email spam |
-| Password confirmation timeout | 3 hours (10,800s) | Reduces friction for admin sessions |
+| Kedaluwarsa token reset kata sandi | 60 menit | Menyeimbangkan keamanan dengan kemudahan penggunaan |
+| Throttle reset kata sandi | 1 permintaan per 60 detik | Mencegah spam email |
+| Batas waktu konfirmasi kata sandi | 3 jam (10.800 detik) | Mengurangi hambatan untuk sesi admin |
 
 ---
 
@@ -120,37 +120,37 @@
 
 | Term | Definition |
 |------|------------|
-| Role | Access tier: `administrator` (full access), `upzis` (officer operations), or implicit muzakki (default, no role record) |
-| Panitia | Synonym for UPZIS officer in the UI context |
+| Role | Tingkatan akses: `administrator` (akses penuh), `upzis` (operasi petugas), atau muzakki implisit (bawaan, tidak ada catatan peran) |
+| Panitia | Sinonim untuk petugas UPZIS dalam konteks antarmuka |
 
 ---
 
 ## Technical Considerations
 
-- Built on Laravel Breeze (session auth, Inertia/Vue stack)
-- Laravel Sanctum is installed (`HasApiTokens` on User model) but only session auth is used
-- Role check is application-level (not Laravel gates/guards) — `User::hasRole()` and `User::hasAnyRole()` methods
-- `role_user` pivot table with composite primary key and cascade deletes
-- Custom `MailResetPasswordToken` notification for password reset emails
+- Dibangun di atas Laravel Breeze (autentikasi sesi, tumpukan Inertia/Vue)
+- Laravel Sanctum terpasang (`HasApiTokens` pada model User) tetapi hanya autentikasi sesi yang digunakan
+- Pengecekan peran dilakukan di level aplikasi (bukan gates/guards Laravel) — metode `User::hasRole()` dan `User::hasAnyRole()`
+- Tabel pivot `role_user` dengan primary key komposit dan cascade delete
+- Notifikasi `MailResetPasswordToken` kustom untuk email reset kata sandi
 
 ---
 
 ## Open Questions
 
-None — capability is shipped and stable.
+Tidak ada — kapabilitas sudah dikirim dan stabil.
 
 ---
 
 ## RFCs
 
-None — implemented directly.
+Tidak ada — diimplementasikan langsung.
 
 ---
 
 ## Changelog
 
 ### Version 1.0 — 2026-02-27
-- Retroactive documentation of shipped capability
+- Dokumentasi retroaktif dari kapabilitas yang sudah dikirim
 
 ---
 

@@ -2,20 +2,20 @@
 
 ## Vision
 
-A digital Zakat, Infaq, and Sadaqah (ZIS) management platform for UPZIS Al Munawwarah at Masjid Al Muhajirin, Bukit Pamulang Indah (BPI). Alma UPZIS replaces manual, paper-based donation workflows with a web application that supports both self-service online submissions by muzakki and in-person booth (gerai) collection by UPZIS officers — delivering accurate records, transparent audit trails, and streamlined reporting for every Ramadhan collection period.
+Platform digital pengelolaan Zakat, Infaq, dan Shadaqah (ZIS) untuk UPZIS Al Munawwarah di Masjid Al Muhajirin, Bukit Pamulang Indah (BPI). Alma UPZIS menggantikan alur kerja donasi berbasis kertas dengan aplikasi web yang mendukung pengajuan mandiri secara daring oleh muzakki dan pengumpulan langsung di gerai oleh petugas UPZIS — menghasilkan catatan yang akurat, jejak audit yang transparan, dan pelaporan yang efisien untuk setiap periode pengumpulan zakat Ramadhan.
 
 ## Target User
 
 **Primary:**
-- **Muzakki (Donors)** — BPI residents and community members who pay zakat, infaq, and other donations. Low technical sophistication; need a simple, mobile-friendly flow.
-- **UPZIS Officers (Panitia)** — Mosque committee staff who receive payments at the gerai booth, confirm online transfers, and generate reports.
+- **Muzakki (Donatur)** — Warga BPI dan anggota masyarakat yang membayar zakat, infaq, dan donasi lainnya. Tingkat literasi teknologi rendah; membutuhkan alur yang sederhana dan ramah perangkat mobile.
+- **Petugas UPZIS (Panitia)** — Anggota panitia masjid yang menerima pembayaran di gerai, mengkonfirmasi transfer daring, dan membuat laporan.
 
 **Secondary:**
-- **Administrators** — Manage user roles, application settings, and have full operational oversight including transaction voiding.
+- **Administrator** — Mengelola peran pengguna, pengaturan aplikasi, dan memiliki pengawasan operasional penuh termasuk pembatalan transaksi.
 
 ## Problem Space
 
-Manual zakat collection at community mosques relies on paper forms, handwritten ledgers, and ad-hoc spreadsheets. This leads to transcription errors, lost records, difficulty reconciling bank transfers, and tedious end-of-period reporting. Muzakki lack visibility into their payment status, and officers spend excessive time on data entry rather than community service.
+Pengumpulan zakat secara manual di masjid mengandalkan formulir kertas, buku catatan tulisan tangan, dan spreadsheet seadanya. Hal ini menyebabkan kesalahan pencatatan, rekaman yang hilang, kesulitan rekonsiliasi transfer bank, dan pelaporan akhir periode yang melelahkan. Muzakki tidak memiliki visibilitas atas status pembayaran mereka, dan petugas menghabiskan terlalu banyak waktu untuk entri data alih-alih melayani jamaah.
 
 ---
 
@@ -41,11 +41,11 @@ C1 (Auth & Roles)
 
 ## Product Principles
 
-1. **Simplicity for donors** — Every screen has one obvious action. Muzakki should complete a zakat submission in under 5 minutes without training.
-2. **Accountability via audit trails** — Every transaction state change (submit, confirm, void) is logged with user and timestamp. No silent mutations.
-3. **Islamic calendar-native** — Hijri year is the primary time dimension for all transactions and reports, matching how zakat collection periods naturally operate.
-4. **Dual-channel collection** — Online self-service and physical booth (gerai) workflows are first-class citizens, not afterthoughts.
-5. **Mobile-friendly** — Responsive design ensures muzakki can submit from their phones without needing a desktop.
+1. **Kesederhanaan bagi donatur** — Setiap layar memiliki satu tindakan yang jelas. Muzakki seharusnya dapat menyelesaikan pengajuan zakat dalam waktu kurang dari 5 menit tanpa pelatihan.
+2. **Akuntabilitas melalui jejak audit** — Setiap perubahan status transaksi (submit, konfirmasi, batal) dicatat beserta pengguna dan waktunya. Tidak ada perubahan yang tersembunyi.
+3. **Berbasis kalender Islam** — Tahun Hijriah adalah dimensi waktu utama untuk semua transaksi dan laporan, sesuai dengan cara periode pengumpulan zakat beroperasi secara alami.
+4. **Pengumpulan dua saluran** — Alur mandiri daring dan alur gerai fisik adalah warga kelas satu, bukan fitur tambahan.
+5. **Ramah perangkat mobile** — Desain responsif memastikan muzakki dapat mengajukan dari ponsel tanpa memerlukan komputer.
 
 ---
 
@@ -53,20 +53,20 @@ C1 (Auth & Roles)
 
 | Category | Default | Rationale |
 |----------|---------|-----------|
-| Auth | Required for all write operations | ZIS data is sensitive financial information |
-| Email verification | Required before dashboard access | Prevents fake accounts from polluting data |
-| Session timeout | Laravel default (120 min) | Balance between security and convenience |
-| Pagination | 10 items per page | Keeps pages fast on mobile connections |
-| Data retention | Indefinite | Zakat records are permanent mosque records |
+| Auth | Wajib untuk semua operasi tulis | Data ZIS adalah informasi keuangan yang sensitif |
+| Email verification | Wajib sebelum akses dashboard | Mencegah akun palsu mengotori data |
+| Session timeout | Bawaan Laravel (120 menit) | Keseimbangan antara keamanan dan kenyamanan |
+| Pagination | 10 item per halaman | Menjaga halaman tetap cepat pada koneksi mobile |
+| Data retention | Tidak terbatas | Catatan zakat adalah arsip permanen masjid |
 
 ---
 
 ## Product Non-Goals
 
-- **Not multi-mosque / multi-tenant** — Built for a single UPZIS organization at one mosque. No tenant isolation, no cross-mosque reporting.
-- **Not a payment gateway** — Does not process payments directly. Bank transfers and cash are handled outside the system; the app records and confirms them.
-- **Not an accounting system** — Tracks donations and generates reports but does not handle fund distribution (mustahik), balance sheets, or general ledger.
-- **Not a mobile app** — Web-only, responsive design. No native iOS/Android application.
+- **Bukan multi-masjid / multi-tenant** — Dibangun untuk satu organisasi UPZIS di satu masjid. Tidak ada isolasi tenant, tidak ada pelaporan lintas masjid.
+- **Bukan payment gateway** — Tidak memproses pembayaran secara langsung. Transfer bank dan tunai ditangani di luar sistem; aplikasi hanya mencatat dan mengkonfirmasi.
+- **Bukan sistem akuntansi** — Melacak donasi dan menghasilkan laporan, tetapi tidak menangani distribusi dana (mustahik), neraca keuangan, atau buku besar.
+- **Bukan aplikasi mobile** — Berbasis web saja, desain responsif. Tidak ada aplikasi native iOS/Android.
 
 ---
 
@@ -74,16 +74,16 @@ C1 (Auth & Roles)
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| Zakat submissions digitized | 100% of mosque zakat transactions | All gerai and online transactions entered in the system |
-| Report generation time | < 1 minute per export | Time from clicking export to receiving Excel file |
-| Online submission adoption | > 30% of total transactions | Ratio of online vs gerai submissions per hijri year |
+| Transaksi zakat yang terdigitalisasi | 100% dari seluruh transaksi zakat masjid | Semua transaksi gerai dan daring tercatat dalam sistem |
+| Waktu pembuatan laporan | < 1 menit per ekspor | Waktu dari klik ekspor hingga menerima file Excel |
+| Adopsi pengajuan daring | > 30% dari total transaksi | Rasio transaksi daring vs gerai per tahun Hijriah |
 
 ---
 
 ## Roadmap Overview
 
-### V1 — Digital ZIS Collection (Shipped)
-**Goal:** Fully replace paper-based zakat collection with a web application supporting online and gerai workflows, family/muzakki registration, transaction management, and reporting.
+### V1 — Pengumpulan ZIS Digital (Shipped)
+**Goal:** Menggantikan sepenuhnya pengumpulan zakat berbasis kertas dengan aplikasi web yang mendukung alur daring dan gerai, pendaftaran keluarga/muzakki, pengelolaan transaksi, dan pelaporan.
 
 Capabilities: C1, C2, C3, C4, C5
 
@@ -99,26 +99,26 @@ Capabilities: C1, C2, C3, C4, C5
 
 | Term | Definition |
 |------|------------|
-| Zakat | Obligatory Islamic alms-giving, one of the five pillars of Islam |
-| Fitrah | Zakat al-Fitr — obligatory charity paid before Eid al-Fitr, can be in money (Rp), rice by weight (kg), or rice by volume (lt) |
-| Maal | Zakat on wealth/assets exceeding the nisab threshold |
-| Profesi | Zakat on professional income/salary |
-| Infaq | Voluntary charitable spending in the way of Allah |
-| Wakaf | Endowment — donation of assets for permanent charitable use |
-| Fidyah | Compensation for missed fasting, paid in money (Rp) or rice (kg) |
-| Kafarat | Expiation payment for breaking an oath or violating fasting rules |
-| Muzakki | A person who pays zakat |
-| Mustahik | A person eligible to receive zakat (not tracked in this system) |
-| UPZIS | Unit Pengumpul Zakat, Infaq, dan Shadaqah — the mosque's ZIS collection unit |
-| Hijri | Islamic lunar calendar; the primary time dimension for zakat periods |
-| KK | Kartu Keluarga — Indonesian family card number, used to look up existing family records |
-| BPI | Bukit Pamulang Indah — the residential complex where the mosque is located |
-| Gerai | Physical collection booth staffed by UPZIS officers during Ramadhan |
-| Panitia | Committee member / UPZIS officer |
+| Zakat | Kewajiban mengeluarkan sebagian harta dalam Islam, salah satu dari lima rukun Islam |
+| Fitrah | Zakat wajib yang dibayarkan sebelum Idul Fitri, dapat berupa uang (Rp), beras per berat (kg), atau beras per volume (lt) |
+| Maal | Zakat atas harta/aset yang melebihi batas nisab |
+| Profesi | Zakat atas penghasilan/gaji dari profesi |
+| Infaq | Pengeluaran sukarela di jalan Allah |
+| Wakaf | Wakaf — donasi aset untuk keperluan amal permanen |
+| Fidyah | Tebusan atas puasa yang ditinggalkan, dibayarkan dengan uang (Rp) atau beras (kg) |
+| Kafarat | Pembayaran kafarat atas pelanggaran sumpah atau aturan puasa |
+| Muzakki | Seseorang yang membayar zakat |
+| Mustahik | Seseorang yang berhak menerima zakat (tidak dilacak dalam sistem ini) |
+| UPZIS | Unit Pengumpul Zakat, Infaq, dan Shadaqah — unit pengumpul ZIS masjid |
+| Hijri | Kalender lunar Islam; dimensi waktu utama untuk periode zakat |
+| KK | Kartu Keluarga — nomor kartu keluarga Indonesia, digunakan untuk mencari data keluarga yang sudah ada |
+| BPI | Bukit Pamulang Indah — kompleks perumahan tempat masjid berada |
+| Gerai | Gerai pengumpulan fisik yang dijaga petugas UPZIS selama Ramadhan |
+| Panitia | Anggota panitia / petugas UPZIS |
 
 ---
 
 ## References
 
-- UPZIS Al Munawwarah collection procedures (internal)
-- Masjid Al Muhajirin, Bukit Pamulang Indah, South Jakarta
+- Prosedur pengumpulan UPZIS Al Munawwarah (internal)
+- Masjid Al Muhajirin, Bukit Pamulang Indah, Jakarta Selatan

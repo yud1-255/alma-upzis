@@ -8,23 +8,23 @@
 
 ## Summary
 
-**Capability ID:** C3 (from [product vision](./_index.md))
+**Capability ID:** C3 (dari [product vision](./_index.md))
 
-**One-liner:** Manages the full lifecycle of zakat transactions — from submission through confirmation to voiding — across both online (muzakki self-service) and gerai (UPZIS booth) channels.
+**One-liner:** Mengelola siklus penuh transaksi zakat — dari pengajuan hingga konfirmasi dan pembatalan — melalui dua saluran: daring (mandiri oleh muzakki) dan gerai (booth UPZIS).
 
 **Dependencies:**
-- Requires: C1 (Auth & Roles), C2 (Family & Muzakki), C5 (App Config — for hijri year, fitrah amounts, payment display periods)
+- Requires: C1 (Auth & Roles), C2 (Family & Muzakki), C5 (App Config — untuk tahun Hijriah, nominal fitrah, periode tampilan pembayaran)
 - Enables: C4 (Reporting & Data Export)
 
 ---
 
 ## Problem
 
-**What:** Zakat collection involves multiple donation types per person, two submission channels (online transfer and in-person booth), and a confirmation workflow for online payments. Manual tracking leads to errors, lost payments, and difficult reconciliation.
+**What:** Pengumpulan zakat melibatkan beberapa jenis donasi per orang, dua saluran pengajuan (transfer daring dan gerai langsung), serta alur konfirmasi untuk pembayaran daring. Pelacakan manual menyebabkan kesalahan, pembayaran yang terlewat, dan rekonsiliasi yang sulit.
 
-**Who:** Muzakki (submitting donations), UPZIS officers (receiving at booth and confirming online transfers), administrators (voiding erroneous transactions).
+**Who:** Muzakki (mengajukan donasi), petugas UPZIS (menerima di gerai dan mengkonfirmasi transfer daring), administrator (membatalkan transaksi yang salah).
 
-**Current State:** Paper ledgers at the booth, WhatsApp messages for online confirmations, and manual spreadsheet tallying at end of collection period.
+**Current State:** Buku catatan di gerai, pesan WhatsApp untuk konfirmasi daring, dan tabulasi spreadsheet manual di akhir periode pengumpulan.
 
 ---
 
@@ -32,22 +32,22 @@
 
 ### Key Features
 
-1. **Dual-Channel Submission** — Online mode (muzakki self-service with unique transfer amount for bank identification) and gerai mode (UPZIS submits on behalf, auto-confirmed).
-2. **8 Zakat Types Per Line** — Each muzakki line supports: fitrah (Rp, kg, lt), maal, profesi, infaq, wakaf, fidyah (Rp, kg), kafarat.
-3. **Auto-Generated Transaction Numbers** — Sequential numbering via `sequence_numbers` table with configurable format template (`%year%`, `%seq%` placeholders).
-4. **Payment Confirmation Workflow** — Online transactions start unconfirmed; UPZIS/admin confirms after verifying bank transfer, setting `zakat_pic` and `payment_date`.
-5. **Transaction Voiding** — Admin-only soft delete (`is_active=false`) with audit log entry.
-6. **Audit Trail** — `ZakatLog` records every state change: submit (1), confirm (2), void (3), with user and timestamp.
-7. **Unique Transfer Amount** — Online transactions get a random 0-500 Rp added to the total, making each transfer amount unique for bank statement matching.
-8. **Hijri Year Tracking** — Every transaction is tagged with the active hijri year from AppConfig.
+1. **Dual-Channel Submission** — Mode daring (muzakki mandiri dengan nominal transfer unik untuk identifikasi rekening bank) dan mode gerai (UPZIS mengajukan atas nama, terkonfirmasi otomatis).
+2. **8 Jenis Zakat Per Baris** — Setiap baris muzakki mendukung: fitrah (Rp, kg, lt), maal, profesi, infaq, wakaf, fidyah (Rp, kg), kafarat.
+3. **Nomor Transaksi Otomatis** — Penomoran berurutan melalui tabel `sequence_numbers` dengan template format yang dapat dikonfigurasi (placeholder `%year%`, `%seq%`).
+4. **Alur Konfirmasi Pembayaran** — Transaksi daring dimulai tanpa konfirmasi; UPZIS/admin mengkonfirmasi setelah memverifikasi transfer bank, mengisi `zakat_pic` dan `payment_date`.
+5. **Pembatalan Transaksi** — Hapus lunak khusus admin (`is_active=false`) dengan entri log audit.
+6. **Jejak Audit** — `ZakatLog` mencatat setiap perubahan status: submit (1), konfirmasi (2), batal (3), beserta pengguna dan waktunya.
+7. **Nominal Transfer Unik** — Transaksi daring mendapat tambahan acak 0-500 Rp pada total, membuat setiap nominal transfer unik untuk pencocokan rekening bank.
+8. **Pelacakan Tahun Hijriah** — Setiap transaksi diberi tag tahun Hijriah aktif dari AppConfig.
 
 ### User Workflows
 
-1. **Muzakki submits online** — Select family muzakkis → enter amounts per type per person → submit → receive transaction number and transfer amount (total + unique number) → wait for UPZIS confirmation.
-2. **UPZIS submits at gerai** — Search/select family → enter amounts → submit as UPZIS → transaction is auto-confirmed with officer as `zakat_pic`.
-3. **UPZIS confirms online payment** — View online payments list → verify bank transfer received → click confirm → `payment_date` and `zakat_pic` are set.
-4. **Admin voids transaction** — View transaction → click void → transaction marked `is_active=false` → void log entry created.
-5. **View transaction detail** — Shows receipt with all line items, bank account info, QRIS display (time-gated), activity log timeline.
+1. **Muzakki mengajukan secara daring** — Pilih muzakki keluarga → masukkan nominal per jenis per orang → ajukan → terima nomor transaksi dan nominal transfer (total + nominal unik) → tunggu konfirmasi UPZIS.
+2. **UPZIS mengajukan di gerai** — Cari/pilih keluarga → masukkan nominal → ajukan sebagai UPZIS → transaksi terkonfirmasi otomatis dengan petugas sebagai `zakat_pic`.
+3. **UPZIS mengkonfirmasi pembayaran daring** — Lihat daftar pembayaran daring → verifikasi transfer bank diterima → klik konfirmasi → `payment_date` dan `zakat_pic` ditetapkan.
+4. **Admin membatalkan transaksi** — Lihat transaksi → klik batalkan → transaksi ditandai `is_active=false` → entri log pembatalan dibuat.
+5. **Lihat detail transaksi** — Menampilkan kwitansi dengan semua baris, info rekening bank, tampilan QRIS (tergated waktu), linimasa log aktivitas.
 
 ---
 
@@ -55,9 +55,9 @@
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| Transaction accuracy | 100% — totals match line items | `total_rp` equals sum of all line amounts |
-| Online confirmation turnaround | < 24 hours | Time between submission and confirmation |
-| Voided transactions | < 2% of total | Indicates data entry quality |
+| Akurasi transaksi | 100% — total sesuai baris | `total_rp` sama dengan jumlah semua nominal baris |
+| Waktu konfirmasi daring | < 24 jam | Waktu antara pengajuan dan konfirmasi |
+| Transaksi yang dibatalkan | < 2% dari total | Menunjukkan kualitas entri data |
 
 ---
 
@@ -65,46 +65,46 @@
 
 ### In Scope (v1.0)
 
-- [x] Online submission mode (`is_offline_submission=false`)
-  - [x] `receive_from` = authenticated muzakki user
-  - [x] `zakat_pic` = null (pending confirmation)
-  - [x] `unique_number` = random 0-500 (0 if rice-only, no Rp amounts)
+- [x] Mode pengajuan daring (`is_offline_submission=false`)
+  - [x] `receive_from` = pengguna muzakki yang terautentikasi
+  - [x] `zakat_pic` = null (menunggu konfirmasi)
+  - [x] `unique_number` = acak 0-500 (0 jika hanya beras, tanpa nominal Rp)
   - [x] `total_transfer_rp` = `total_rp` + `unique_number`
-- [x] Gerai submission mode (`is_offline_submission=true`)
-  - [x] `receive_from` = authenticated UPZIS officer
-  - [x] `receive_from_name` = actual donor name (free text from form)
-  - [x] `zakat_pic` = authenticated officer (auto-confirmed)
+- [x] Mode pengajuan gerai (`is_offline_submission=true`)
+  - [x] `receive_from` = petugas UPZIS yang terautentikasi
+  - [x] `receive_from_name` = nama donatur sebenarnya (teks bebas dari formulir)
+  - [x] `zakat_pic` = petugas yang terautentikasi (terkonfirmasi otomatis)
   - [x] `unique_number` = 0
   - [x] `total_transfer_rp` = `total_rp`
-- [x] 8 zakat types per muzakki line: fitrah_rp, fitrah_kg, fitrah_lt, maal_rp, profesi_rp, infaq_rp, wakaf_rp, fidyah_rp, fidyah_kg, kafarat_rp
-- [x] Configurable fitrah Rp amounts from AppConfig
-- [x] Auto-generated sequential transaction numbers
-- [x] Hijri year tag from AppConfig on every transaction
-- [x] Validation: at least one of total_rp, total_kg, or total_lt must be non-zero
-- [x] Payment confirmation endpoint (sets `zakat_pic`, `payment_date`)
-- [x] Transaction voiding by administrator (`is_active=false`)
-- [x] Audit log: ZakatLog with actions submit(1), confirm(2), void(3)
-- [x] Transaction list — admins/upzis see all (searchable, year-filterable); muzakki sees own only
-- [x] Transaction detail view with receipt, bank account, QRIS (time-gated display), activity log
-- [x] Copy-to-clipboard for transfer amount on transaction detail
-- [x] Family search autocomplete for gerai mode
-- [x] Pagination (10 per page) on transaction list
+- [x] 8 jenis zakat per baris muzakki: fitrah_rp, fitrah_kg, fitrah_lt, maal_rp, profesi_rp, infaq_rp, wakaf_rp, fidyah_rp, fidyah_kg, kafarat_rp
+- [x] Nominal fitrah Rp yang dapat dikonfigurasi dari AppConfig
+- [x] Nomor transaksi berurutan otomatis
+- [x] Tag tahun Hijriah dari AppConfig pada setiap transaksi
+- [x] Validasi: setidaknya salah satu dari total_rp, total_kg, atau total_lt harus bukan nol
+- [x] Endpoint konfirmasi pembayaran (menetapkan `zakat_pic`, `payment_date`)
+- [x] Pembatalan transaksi oleh administrator (`is_active=false`)
+- [x] Log audit: ZakatLog dengan aksi submit(1), konfirmasi(2), batal(3)
+- [x] Daftar transaksi — admin/upzis melihat semua (dapat dicari, filter tahun); muzakki hanya melihat milik sendiri
+- [x] Tampilan detail transaksi dengan kwitansi, rekening bank, QRIS (tampilan tergated waktu), log aktivitas
+- [x] Salin-ke-clipboard untuk nominal transfer di detail transaksi
+- [x] Autocomplete pencarian keluarga untuk mode gerai
+- [x] Paginasi (10 per halaman) pada daftar transaksi
 
 ### Out of Scope
 
 | Item | Rationale | Future? |
 |------|-----------|---------|
-| Direct payment gateway integration | Mosque uses existing bank accounts; no API integration needed | TBD |
-| Recurring/scheduled payments | Zakat is typically annual; no recurring pattern | TBD |
-| Multi-currency support | All transactions in IDR | Never |
-| Partial confirmation / split payments | Transactions are atomic — confirm or don't | TBD |
-| Transaction editing after submission | Void and re-create is the intended flow | Never |
-| Mustahik (recipient) tracking | Out of product scope — see non-goals | Never |
-| SMS/WhatsApp notifications | Manual follow-up via online payments report | TBD |
+| Integrasi payment gateway langsung | Masjid menggunakan rekening bank yang sudah ada; tidak perlu integrasi API | TBD |
+| Pembayaran berulang/terjadwal | Zakat umumnya tahunan; tidak ada pola berulang | TBD |
+| Dukungan multi-mata uang | Semua transaksi dalam IDR | Never |
+| Konfirmasi sebagian / pembayaran terbagi | Transaksi bersifat atomik — konfirmasi atau tidak | TBD |
+| Pengeditan transaksi setelah pengajuan | Batalkan dan buat ulang adalah alur yang dimaksud | Never |
+| Pelacakan mustahik (penerima) | Di luar cakupan produk — lihat non-goals | Never |
+| Notifikasi SMS/WhatsApp | Tindak lanjut manual melalui laporan pembayaran daring | TBD |
 
 ### Future (This Capability)
 
-- None planned — capability is stable.
+- Tidak ada yang direncanakan — kapabilitas sudah stabil.
 
 ---
 
@@ -114,23 +114,23 @@
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Muzakki submits zakat for family members online | P0 | — |
-| Muzakki views their transaction and transfer amount | P0 | — |
+| Muzakki mengajukan zakat untuk anggota keluarga secara daring | P0 | — |
+| Muzakki melihat transaksinya dan nominal transfer | P0 | — |
 
 ### Gerai Submission
 
 | Story | Priority | Link |
 |-------|----------|------|
-| UPZIS officer submits zakat on behalf of a walk-in donor | P0 | — |
-| UPZIS officer searches and selects a family for gerai entry | P0 | — |
-| UPZIS officer registers a new family inline during gerai entry | P1 | — |
+| Petugas UPZIS mengajukan zakat atas nama donatur yang datang | P0 | — |
+| Petugas UPZIS mencari dan memilih keluarga untuk entri gerai | P0 | — |
+| Petugas UPZIS mendaftarkan keluarga baru langsung saat entri gerai | P1 | — |
 
 ### Confirmation & Voiding
 
 | Story | Priority | Link |
 |-------|----------|------|
-| UPZIS officer confirms an online payment | P0 | — |
-| Admin voids an erroneous transaction | P1 | — |
+| Petugas UPZIS mengkonfirmasi pembayaran daring | P0 | — |
+| Admin membatalkan transaksi yang salah | P1 | — |
 
 ---
 
@@ -138,9 +138,9 @@
 
 | Category | Requirement | Rationale |
 |----------|-------------|-----------|
-| Data integrity | Transactions are soft-deleted, never hard-deleted | Audit trail preservation |
-| Unique number range | 0-500 Rp | Small enough to not distort donation, large enough to differentiate transfers |
-| Concurrency | Sequential transaction number generation uses DB-level increment | Prevents duplicate numbers under concurrent submissions |
+| Integritas data | Transaksi dihapus secara lunak, tidak pernah dihapus permanen | Pelestarian jejak audit |
+| Rentang nominal unik | 0-500 Rp | Cukup kecil agar tidak mendistorsi donasi, cukup besar untuk membedakan transfer |
+| Konkurensi | Pembuatan nomor transaksi berurutan menggunakan increment level DB | Mencegah nomor duplikat saat pengajuan bersamaan |
 
 ---
 
@@ -148,42 +148,42 @@
 
 | Term | Definition |
 |------|------------|
-| Transaction | A zakat submission containing one or more line items (one per muzakki) |
-| Line Item (ZakatLine) | A single muzakki's contribution within a transaction, with amounts per zakat type |
-| Unique Number | Random 0-500 Rp added to online transactions for bank transfer identification |
-| Gerai Mode | UPZIS officer submits on behalf of donor; auto-confirmed |
-| Online Mode | Muzakki self-submits; requires UPZIS confirmation after bank transfer |
-| Void | Soft deletion of a transaction (`is_active=false`) by an administrator |
-| ZakatLog | Audit trail entry recording submit, confirm, or void actions with user and timestamp |
+| Transaction | Pengajuan zakat yang berisi satu atau lebih baris (satu per muzakki) |
+| Line Item (ZakatLine) | Kontribusi satu muzakki dalam sebuah transaksi, dengan nominal per jenis zakat |
+| Unique Number | Rp acak 0-500 yang ditambahkan pada transaksi daring untuk identifikasi transfer bank |
+| Gerai Mode | Petugas UPZIS mengajukan atas nama donatur; terkonfirmasi otomatis |
+| Online Mode | Muzakki mengajukan sendiri; memerlukan konfirmasi UPZIS setelah transfer bank |
+| Void | Penghapusan lunak transaksi (`is_active=false`) oleh administrator |
+| ZakatLog | Entri jejak audit yang mencatat aksi submit, konfirmasi, atau batal beserta pengguna dan waktunya |
 
 ---
 
 ## Technical Considerations
 
-- `SequenceNumber` model handles auto-increment with format template; `last_number` incremented atomically
-- `total_rp` is a calculated field (sum of all Rp amounts across lines); stored denormalized on the transaction
-- `family_head` and `receive_from_name` are denormalized strings — changes to family data don't retroactively update transactions
-- QRIS and bank transfer display controlled by date-range AppConfig settings (see C5)
-- ZakatPolicy governs all access: `create` is open to any auth user; `delete` is admin-only; `confirmPayment` requires upzis/admin; `submitForOthers` requires upzis/admin
+- Model `SequenceNumber` menangani auto-increment dengan template format; `last_number` di-increment secara atomik
+- `total_rp` adalah kolom kalkulasi (jumlah semua nominal Rp dari baris); disimpan secara denormalisasi pada transaksi
+- `family_head` dan `receive_from_name` adalah string denormalisasi — perubahan data keluarga tidak memperbarui transaksi secara retroaktif
+- Tampilan QRIS dan transfer bank dikendalikan oleh pengaturan rentang tanggal AppConfig (lihat C5)
+- ZakatPolicy mengatur semua akses: `create` terbuka untuk pengguna terautentikasi; `delete` khusus admin; `confirmPayment` memerlukan upzis/admin; `submitForOthers` memerlukan upzis/admin
 
 ---
 
 ## Open Questions
 
-None — capability is shipped and stable.
+Tidak ada — kapabilitas sudah dikirim dan stabil.
 
 ---
 
 ## RFCs
 
-None — implemented directly.
+Tidak ada — diimplementasikan langsung.
 
 ---
 
 ## Changelog
 
 ### Version 1.0 — 2026-02-27
-- Retroactive documentation of shipped capability
+- Dokumentasi retroaktif dari kapabilitas yang sudah dikirim
 
 ---
 

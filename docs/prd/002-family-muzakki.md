@@ -8,9 +8,9 @@
 
 ## Summary
 
-**Capability ID:** C2 (from [product vision](./_index.md))
+**Capability ID:** C2 (dari [product vision](./_index.md))
 
-**One-liner:** Enables registration and management of family units and their individual muzakki members, supporting both BPI residents and outside community members.
+**One-liner:** Memungkinkan pendaftaran dan pengelolaan unit keluarga beserta anggota muzakki individu mereka, mendukung warga BPI maupun anggota komunitas di luar BPI.
 
 **Dependencies:**
 - Requires: C1 (User Authentication & Role Management)
@@ -20,11 +20,11 @@
 
 ## Problem
 
-**What:** Zakat is collected per individual (muzakki) but organized by family. The system needs to know who is paying, which family they belong to, and where they live — particularly for BPI residents whose addresses follow a block/house numbering scheme.
+**What:** Zakat dikumpulkan per individu (muzakki) namun diorganisasi per keluarga. Sistem perlu mengetahui siapa yang membayar, keluarga mana yang mereka ikuti, dan di mana mereka tinggal — khususnya bagi warga BPI yang alamatnya mengikuti skema nomor blok/rumah.
 
-**Who:** Muzakki (self-registering their family) and UPZIS officers (registering families on behalf of walk-in donors at the gerai).
+**Who:** Muzakki (mendaftarkan keluarga mereka sendiri) dan petugas UPZIS (mendaftarkan keluarga atas nama donatur yang datang ke gerai).
 
-**Current State:** Paper forms capture family and muzakki info per transaction, leading to duplicate entries, inconsistent names, and no way to track a muzakki's history across years.
+**Current State:** Formulir kertas mencatat informasi keluarga dan muzakki per transaksi, menyebabkan entri duplikat, nama yang tidak konsisten, dan tidak ada cara untuk melacak riwayat muzakki lintas tahun.
 
 ---
 
@@ -32,21 +32,21 @@
 
 ### Key Features
 
-1. **Family CRUD** — Create and update family records with head of family, phone, KK number, and address (BPI block/house or free-text).
-2. **BPI Address System** — Structured address entry for BPI residents with block (A, B, C, E, F, G) and house number selectors, auto-generating formatted addresses.
-3. **Muzakki Management** — Add multiple muzakki per family, with individual names and optional address override. Soft deactivation (no hard delete) preserves transaction history.
-4. **KK Number Lookup** — Search for existing families by Kartu Keluarga number, rate-limited per user to prevent abuse.
-5. **Address Inheritance** — Muzakki can inherit family address (`use_family_address=true`). Address changes on the family cascade to all inheriting muzakkis.
-6. **Family-to-User Linking** — Associate a family record with a user account, enabling self-service zakat submission.
-7. **UPZIS Family Registration** — Officers can create new families inline during zakat entry, redirecting back to the transaction form.
+1. **Family CRUD** — Membuat dan memperbarui data keluarga dengan kepala keluarga, telepon, nomor KK, dan alamat (blok/rumah BPI atau teks bebas).
+2. **BPI Address System** — Entri alamat terstruktur untuk warga BPI dengan pemilih blok (A, B, C, E, F, G) dan nomor rumah yang menghasilkan format alamat otomatis.
+3. **Muzakki Management** — Menambahkan beberapa muzakki per keluarga, dengan nama individu dan opsi alamat berbeda. Deaktivasi lunak (bukan hapus permanen) menjaga riwayat transaksi.
+4. **KK Number Lookup** — Pencarian keluarga yang sudah ada berdasarkan nomor Kartu Keluarga, dibatasi per pengguna untuk mencegah penyalahgunaan.
+5. **Address Inheritance** — Muzakki dapat mewarisi alamat keluarga (`use_family_address=true`). Perubahan alamat keluarga berdampak pada semua muzakki yang mewarisinya.
+6. **Family-to-User Linking** — Menghubungkan data keluarga dengan akun pengguna, memungkinkan pengajuan zakat secara mandiri.
+7. **UPZIS Family Registration** — Petugas dapat membuat keluarga baru secara langsung saat entri zakat, lalu diarahkan kembali ke formulir transaksi.
 
 ### User Workflows
 
-1. **Muzakki registers family** — Log in → navigate to family registration → fill in head of family, phone, address (BPI selector or manual) → optionally enter KK number → add muzakki members → save.
-2. **Muzakki adds family member** — On family page → enter name → toggle "use family address" or enter custom address → save. Member appears in muzakki list for zakat submission.
-3. **KK lookup** — Enter KK number → system finds existing family → user links to that family (avoids duplicate registration).
-4. **UPZIS inline registration** — During zakat entry, search finds no match → click register → create family → redirect back to zakat form with new family pre-selected.
-5. **Deactivate muzakki** — On family page → remove a muzakki → sets `is_active=false` (preserves historical transactions).
+1. **Muzakki mendaftarkan keluarga** — Masuk → buka halaman pendaftaran keluarga → isi kepala keluarga, telepon, alamat (pemilih BPI atau manual) → opsional isi nomor KK → tambah anggota muzakki → simpan.
+2. **Muzakki menambah anggota keluarga** — Di halaman keluarga → masukkan nama → aktifkan "gunakan alamat keluarga" atau masukkan alamat kustom → simpan. Anggota muncul di daftar muzakki untuk pengajuan zakat.
+3. **Pencarian KK** — Masukkan nomor KK → sistem menemukan keluarga yang sudah ada → pengguna menghubungkan diri ke keluarga tersebut (menghindari pendaftaran duplikat).
+4. **Pendaftaran langsung oleh UPZIS** — Saat entri zakat, pencarian tidak menemukan kecocokan → klik daftar → buat keluarga → diarahkan kembali ke formulir zakat dengan keluarga baru yang sudah terpilih.
+5. **Menonaktifkan muzakki** — Di halaman keluarga → hapus muzakki → mengatur `is_active=false` (menjaga transaksi historis).
 
 ---
 
@@ -54,8 +54,8 @@
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| Duplicate families | < 5% | Families with same KK number or head_of_family name |
-| Family registration completion | > 95% | Families with at least one active muzakki |
+| Keluarga duplikat | < 5% | Keluarga dengan nomor KK atau nama kepala keluarga yang sama |
+| Penyelesaian pendaftaran keluarga | > 95% | Keluarga dengan setidaknya satu muzakki aktif |
 
 ---
 
@@ -63,37 +63,37 @@
 
 ### In Scope (v1.0)
 
-- [x] Family creation with head_of_family, phone, address, is_bpi flag
-- [x] BPI block selector: A(1-20), B(1-23), C(1-20), E(1-24), F(1-19), G(1-11)
-- [x] BPI house number selector: 0-20
-- [x] Auto-generated BPI address format: "Bukit Pamulang Indah {block} no {house}"
-- [x] Free-text address for non-BPI residents
-- [x] KK number field on family (optional)
-- [x] KK number lookup with per-user rate limiting (`kk_check_count` vs `check_kk_limit` config)
-- [x] Multiple muzakkis per family
-- [x] Muzakki fields: name, phone (optional), address, is_bpi, bpi_block_no, bpi_house_no
-- [x] `use_family_address` flag with cascade on family address update
-- [x] Muzakki soft deactivation (`is_active=false`)
-- [x] Family-to-user association (`users.family_id`)
-- [x] Family assign endpoint (link existing family to current user)
-- [x] UPZIS family search (autocomplete by head_of_family or muzakki name, max 10 results)
-- [x] UPZIS inline family registration during zakat entry
-- [x] Default muzakki auto-created from family head data on family registration
-- [x] Validation: head_of_family required, phone required, is_bpi required, address required, bpi_block_no/bpi_house_no required if BPI
+- [x] Pembuatan keluarga dengan head_of_family, phone, address, flag is_bpi
+- [x] Pemilih blok BPI: A(1-20), B(1-23), C(1-20), E(1-24), F(1-19), G(1-11)
+- [x] Pemilih nomor rumah BPI: 0-20
+- [x] Format alamat BPI otomatis: "Bukit Pamulang Indah {blok} no {rumah}"
+- [x] Alamat teks bebas untuk warga non-BPI
+- [x] Kolom nomor KK pada keluarga (opsional)
+- [x] Pencarian nomor KK dengan pembatasan per pengguna (`kk_check_count` vs konfigurasi `check_kk_limit`)
+- [x] Beberapa muzakki per keluarga
+- [x] Kolom muzakki: name, phone (opsional), address, is_bpi, bpi_block_no, bpi_house_no
+- [x] Flag `use_family_address` dengan dampak berjenjang saat alamat keluarga diperbarui
+- [x] Deaktivasi lunak muzakki (`is_active=false`)
+- [x] Asosiasi keluarga-ke-pengguna (`users.family_id`)
+- [x] Endpoint penugasan keluarga (menghubungkan keluarga yang ada ke pengguna saat ini)
+- [x] Pencarian keluarga UPZIS (autocomplete berdasarkan head_of_family atau nama muzakki, maks 10 hasil)
+- [x] Pendaftaran keluarga langsung oleh UPZIS saat entri zakat
+- [x] Muzakki bawaan otomatis dibuat dari data kepala keluarga saat pendaftaran
+- [x] Validasi: head_of_family wajib, phone wajib, is_bpi wajib, address wajib, bpi_block_no/bpi_house_no wajib jika BPI
 
 ### Out of Scope
 
 | Item | Rationale | Future? |
 |------|-----------|---------|
-| Family merge / deduplication tool | Low volume doesn't justify complexity | TBD |
-| Muzakki photo or ID upload | Not needed for current collection workflow | TBD |
-| Family tree / relationship modeling | Simple flat list of members is sufficient | TBD |
-| Bulk import from spreadsheet | One-time migration done manually | TBD |
-| Muzakki hard delete | Soft deactivation preserves audit trail | Never |
+| Alat penggabungan / deduplikasi keluarga | Volume rendah tidak membenarkan kompleksitas | TBD |
+| Unggah foto atau KTP muzakki | Tidak diperlukan untuk alur pengumpulan saat ini | TBD |
+| Pemodelan pohon keluarga / relasi | Daftar anggota datar yang sederhana sudah cukup | TBD |
+| Impor massal dari spreadsheet | Migrasi satu kali dilakukan secara manual | TBD |
+| Penghapusan permanen muzakki | Deaktivasi lunak menjaga jejak audit | Never |
 
 ### Future (This Capability)
 
-- None planned — capability is stable.
+- Tidak ada yang direncanakan — kapabilitas sudah stabil.
 
 ---
 
@@ -103,18 +103,18 @@
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Muzakki creates a new family | P0 | — |
-| Muzakki updates family address | P0 | — |
-| UPZIS officer registers family during gerai entry | P0 | — |
-| User links to existing family via KK lookup | P1 | — |
+| Muzakki membuat keluarga baru | P0 | — |
+| Muzakki memperbarui alamat keluarga | P0 | — |
+| Petugas UPZIS mendaftarkan keluarga saat entri gerai | P0 | — |
+| Pengguna menghubungkan diri ke keluarga yang ada melalui pencarian KK | P1 | — |
 
 ### Muzakki Management
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Muzakki adds a family member | P0 | — |
-| Muzakki deactivates a family member | P1 | — |
-| Muzakki toggles address inheritance | P1 | — |
+| Muzakki menambah anggota keluarga | P0 | — |
+| Muzakki menonaktifkan anggota keluarga | P1 | — |
+| Muzakki mengaktifkan/menonaktifkan pewarisan alamat | P1 | — |
 
 ---
 
@@ -122,9 +122,9 @@
 
 | Category | Requirement | Rationale |
 |----------|-------------|-----------|
-| Search response time | < 500ms for family autocomplete | Smooth gerai workflow during peak collection |
-| KK lookup rate limit | Configurable via AppConfig (`check_kk_limit`) | Prevents brute-force KK enumeration |
-| Search result limit | Max 10 results per query | Keeps autocomplete fast and focused |
+| Waktu respons pencarian | < 500ms untuk autocomplete keluarga | Alur gerai yang lancar saat puncak pengumpulan |
+| Batas pencarian KK | Dapat dikonfigurasi melalui AppConfig (`check_kk_limit`) | Mencegah enumerasi KK secara brute-force |
+| Batas hasil pencarian | Maks 10 hasil per kueri | Menjaga autocomplete tetap cepat dan terfokus |
 
 ---
 
@@ -132,40 +132,40 @@
 
 | Term | Definition |
 |------|------------|
-| Family | A household unit identified by head_of_family, containing one or more muzakki members |
-| Muzakki | An individual who pays zakat, always belonging to exactly one family |
-| KK (Kartu Keluarga) | Indonesian family registration card number, used as a lookup key |
-| BPI | Bukit Pamulang Indah residential complex with structured block/house addressing |
-| use_family_address | Flag indicating a muzakki inherits their family's address; changes cascade automatically |
+| Family | Unit rumah tangga yang diidentifikasi oleh head_of_family, berisi satu atau lebih anggota muzakki |
+| Muzakki | Individu yang membayar zakat, selalu tergabung dalam tepat satu keluarga |
+| KK (Kartu Keluarga) | Nomor kartu registrasi keluarga Indonesia, digunakan sebagai kunci pencarian |
+| BPI | Kompleks perumahan Bukit Pamulang Indah dengan sistem pengalamatan blok/rumah terstruktur |
+| use_family_address | Flag yang menunjukkan muzakki mewarisi alamat keluarganya; perubahan berdampak secara otomatis |
 
 ---
 
 ## Technical Considerations
 
-- `families` table has a `kk_number` field (nullable) but no unique constraint — duplicates possible
-- BPI block definitions are hard-coded in `ResidenceDomain` (A-G with specific house ranges)
-- Address cascade logic lives in `ResidenceDomain::updateFamilyRegistration()`
-- Family search queries both `families.head_of_family` and `muzakkis.name`
-- Rate limiting for KK lookup uses a counter on `users.kk_check_count`, not middleware-level throttling
+- Tabel `families` memiliki kolom `kk_number` (nullable) tetapi tidak ada unique constraint — duplikasi mungkin terjadi
+- Definisi blok BPI di-hardcode di `ResidenceDomain` (A-G dengan rentang rumah spesifik)
+- Logika dampak berjenjang alamat ada di `ResidenceDomain::updateFamilyRegistration()`
+- Pencarian keluarga mengkueri baik `families.head_of_family` maupun `muzakkis.name`
+- Pembatasan pencarian KK menggunakan counter pada `users.kk_check_count`, bukan throttling level middleware
 
 ---
 
 ## Open Questions
 
-None — capability is shipped and stable.
+Tidak ada — kapabilitas sudah dikirim dan stabil.
 
 ---
 
 ## RFCs
 
-None — implemented directly.
+Tidak ada — diimplementasikan langsung.
 
 ---
 
 ## Changelog
 
 ### Version 1.0 — 2026-02-27
-- Retroactive documentation of shipped capability
+- Dokumentasi retroaktif dari kapabilitas yang sudah dikirim
 
 ---
 

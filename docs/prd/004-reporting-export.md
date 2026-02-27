@@ -8,23 +8,23 @@
 
 ## Summary
 
-**Capability ID:** C4 (from [product vision](./_index.md))
+**Capability ID:** C4 (dari [product vision](./_index.md))
 
-**One-liner:** Provides six report views with search, hijri year filtering, and pagination, plus five Excel export types and a print-optimized receipt for UPZIS officers and administrators.
+**One-liner:** Menyediakan enam tampilan laporan dengan pencarian, filter tahun Hijriah, dan paginasi, ditambah lima jenis ekspor Excel dan kwitansi yang dioptimalkan untuk cetak, bagi petugas UPZIS dan administrator.
 
 **Dependencies:**
 - Requires: C3 (Zakat Transaction Management)
-- Enables: None — terminal capability in the dependency chain
+- Enables: Tidak ada — kapabilitas terminal dalam rantai ketergantungan
 
 ---
 
 ## Problem
 
-**What:** After collecting zakat, UPZIS officers need to generate summary reports for mosque management, reconcile daily collections, track individual muzakki contributions, and follow up on unconfirmed online payments. Paper-based reporting is tedious and error-prone.
+**What:** Setelah mengumpulkan zakat, petugas UPZIS perlu membuat laporan ringkasan untuk pengurus masjid, merekonsiliasi pengumpulan harian, melacak kontribusi muzakki individu, dan menindaklanjuti pembayaran daring yang belum dikonfirmasi. Pelaporan berbasis kertas melelahkan dan rawan kesalahan.
 
-**Who:** UPZIS officers and administrators.
+**Who:** Petugas UPZIS dan administrator.
 
-**Current State:** Manual spreadsheet compilation from paper ledgers, taking hours per reporting period.
+**Current State:** Kompilasi spreadsheet manual dari buku catatan kertas, yang memakan waktu berjam-jam per periode pelaporan.
 
 ---
 
@@ -32,36 +32,36 @@
 
 ### Key Features
 
-1. **6 Report Views** — Each accessible as a dedicated page with search, hijri year filtering, and pagination.
-2. **5 Excel Export Types** — One-click download of formatted spreadsheets with multi-row headers for complex breakdowns.
-3. **Print-Optimized Receipt** — Dual-copy receipt layout for transaction confirmation, printable from transaction detail.
+1. **6 Tampilan Laporan** — Masing-masing dapat diakses sebagai halaman khusus dengan pencarian, filter tahun Hijriah, dan paginasi.
+2. **5 Jenis Ekspor Excel** — Unduhan sekali klik dari spreadsheet berformat dengan header multi-baris untuk rincian yang kompleks.
+3. **Kwitansi Siap Cetak** — Tata letak kwitansi rangkap dua untuk konfirmasi transaksi, dapat dicetak dari detail transaksi.
 
 ### Report Views
 
 | # | Report | Route | Description |
 |---|--------|-------|-------------|
-| 1 | Transaction Recap | `/zakat/transaction_recap` | Aggregated per-transaction amounts across all zakat types |
-| 2 | Daily Transaction Recap | `/zakat/daily_recap` | Same data ordered by payment_date for daily reconciliation |
-| 3 | Muzakki Recap | `/zakat/muzakki_recap` | Per-muzakki line-level contribution detail |
-| 4 | Daily Muzakki Recap | `/zakat/daily_muzakki_recap` | Same data ordered by payment_date |
-| 5 | Muzakki List | `/zakat/muzakki_list` | All families with muzakkis and linked user accounts |
-| 6 | Online Payments | `/zakat/online_payments` | Online-only transactions with contact info for follow-up |
+| 1 | Transaction Recap | `/zakat/transaction_recap` | Rekapitulasi nominal per transaksi di semua jenis zakat |
+| 2 | Daily Transaction Recap | `/zakat/daily_recap` | Data yang sama diurutkan berdasarkan payment_date untuk rekonsiliasi harian |
+| 3 | Muzakki Recap | `/zakat/muzakki_recap` | Rincian kontribusi per baris muzakki |
+| 4 | Daily Muzakki Recap | `/zakat/daily_muzakki_recap` | Data yang sama diurutkan berdasarkan payment_date |
+| 5 | Muzakki List | `/zakat/muzakki_list` | Semua keluarga beserta muzakki dan akun pengguna yang terhubung |
+| 6 | Online Payments | `/zakat/online_payments` | Transaksi daring saja dengan info kontak untuk tindak lanjut |
 
 ### Excel Export Types
 
 | # | Export | Filename | Key Columns |
 |---|--------|----------|-------------|
-| 1 | Summary | `zakat.xlsx` | Transaction no, dates, receive_from, officer, period, family head, channel, total |
-| 2 | Transaction Recap | `transaction_recap.xlsx` | Transaction no, all 8 zakat type amounts, unique number, total, dates, receive_from |
-| 3 | Muzakki List | `muzakki_list.xlsx` | Family head, address, contact, muzakki names, linked user email/name |
-| 4 | Muzakki Recap | `muzakki_recap.xlsx` | Transaction no, muzakki name, officer, all zakat type amounts, date, channel |
-| 5 | Online Payments | `online_payments.xlsx` | Transaction no, dates, receive_from, phone, email, confirming officer, total |
+| 1 | Summary | `zakat.xlsx` | Nomor transaksi, tanggal, receive_from, petugas, periode, kepala keluarga, saluran, total |
+| 2 | Transaction Recap | `transaction_recap.xlsx` | Nomor transaksi, semua 8 nominal jenis zakat, nominal unik, total, tanggal, receive_from |
+| 3 | Muzakki List | `muzakki_list.xlsx` | Kepala keluarga, alamat, kontak, nama muzakki, email/nama akun pengguna |
+| 4 | Muzakki Recap | `muzakki_recap.xlsx` | Nomor transaksi, nama muzakki, petugas, semua nominal jenis zakat, tanggal, saluran |
+| 5 | Online Payments | `online_payments.xlsx` | Nomor transaksi, tanggal, receive_from, telepon, email, petugas konfirmasi, total |
 
 ### User Workflows
 
-1. **View report** — Navigate to report page → select hijri year → optionally search by name → browse paginated results.
-2. **Export to Excel** — On any report or transaction list page → click export button → select hijri year → download Excel file.
-3. **Print receipt** — View transaction detail → click "Cetak" (print) or "Cetak Rangkap" (dual copy) → browser print dialog opens with optimized layout.
+1. **Lihat laporan** — Buka halaman laporan → pilih tahun Hijriah → opsional cari berdasarkan nama → telusuri hasil yang dipaginasi.
+2. **Ekspor ke Excel** — Di halaman laporan atau daftar transaksi mana pun → klik tombol ekspor → pilih tahun Hijriah → unduh file Excel.
+3. **Cetak kwitansi** — Lihat detail transaksi → klik "Cetak" (cetak) atau "Cetak Rangkap" (dua salinan) → dialog cetak browser terbuka dengan tata letak yang dioptimalkan.
 
 ---
 
@@ -69,9 +69,9 @@
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| Report generation time | < 5 seconds for page load | Server response time for report routes |
-| Export generation time | < 30 seconds for Excel download | Time from click to file download |
-| Report accuracy | 100% match with transaction data | Spot-check exported totals against transaction list |
+| Waktu pembuatan laporan | < 5 detik untuk pemuatan halaman | Waktu respons server untuk rute laporan |
+| Waktu pembuatan ekspor | < 30 detik untuk unduhan Excel | Waktu dari klik hingga file terunduh |
+| Akurasi laporan | Cocok 100% dengan data transaksi | Periksa spot total yang diekspor terhadap daftar transaksi |
 
 ---
 
@@ -79,36 +79,36 @@
 
 ### In Scope (v1.0)
 
-- [x] Transaction Recap report view (aggregated per transaction, searchable, hijri year filter, paginated)
-- [x] Daily Transaction Recap report view (ordered by payment_date then created_at)
-- [x] Muzakki Recap report view (per-muzakki line detail)
-- [x] Daily Muzakki Recap report view (ordered by payment_date)
-- [x] Muzakki List report view (families with muzakkis and linked users, paginated)
-- [x] Online Payments report view (online-only transactions with phone/email, confirm button)
-- [x] Summary Excel export (`zakat.xlsx`)
-- [x] Transaction Recap Excel export (`transaction_recap.xlsx`, 2-row header)
-- [x] Muzakki List Excel export (`muzakki_list.xlsx`)
-- [x] Muzakki Recap Excel export (`muzakki_recap.xlsx`, 2-row header)
-- [x] Online Payments Excel export (`online_payments.xlsx`)
-- [x] Print-optimized transaction receipt (single and dual copy)
-- [x] Search by name across all report views
-- [x] Hijri year filter on all report views
-- [x] All reports restricted to upzis and administrator roles
-- [x] Exports use Maatwebsite Excel with auto-sized columns and styled headers
+- [x] Tampilan laporan Transaction Recap (rekapitulasi per transaksi, dapat dicari, filter tahun Hijriah, dipaginasi)
+- [x] Tampilan laporan Daily Transaction Recap (diurutkan berdasarkan payment_date lalu created_at)
+- [x] Tampilan laporan Muzakki Recap (rincian baris per muzakki)
+- [x] Tampilan laporan Daily Muzakki Recap (diurutkan berdasarkan payment_date)
+- [x] Tampilan laporan Muzakki List (keluarga beserta muzakki dan pengguna terhubung, dipaginasi)
+- [x] Tampilan laporan Online Payments (transaksi daring saja dengan telepon/email, tombol konfirmasi)
+- [x] Ekspor Excel Summary (`zakat.xlsx`)
+- [x] Ekspor Excel Transaction Recap (`transaction_recap.xlsx`, header 2 baris)
+- [x] Ekspor Excel Muzakki List (`muzakki_list.xlsx`)
+- [x] Ekspor Excel Muzakki Recap (`muzakki_recap.xlsx`, header 2 baris)
+- [x] Ekspor Excel Online Payments (`online_payments.xlsx`)
+- [x] Kwitansi transaksi siap cetak (salinan tunggal dan rangkap)
+- [x] Pencarian berdasarkan nama di semua tampilan laporan
+- [x] Filter tahun Hijriah di semua tampilan laporan
+- [x] Semua laporan dibatasi untuk peran upzis dan administrator
+- [x] Ekspor menggunakan Maatwebsite Excel dengan kolom yang diubah ukuran otomatis dan header berformat
 
 ### Out of Scope
 
 | Item | Rationale | Future? |
 |------|-----------|---------|
-| PDF export | Excel is the standard format for mosque reporting | TBD |
-| Dashboard charts / visualizations | Reports are tabular; no charting requirement | TBD |
-| Scheduled / email reports | Officers generate reports on-demand | TBD |
-| Cross-year comparison reports | Single hijri year per report is sufficient | TBD |
-| Custom report builder | Fixed report types cover all current needs | TBD |
+| Ekspor PDF | Excel adalah format standar untuk pelaporan masjid | TBD |
+| Grafik / visualisasi dashboard | Laporan bersifat tabular; tidak ada persyaratan grafis | TBD |
+| Laporan terjadwal / melalui email | Petugas membuat laporan sesuai kebutuhan | TBD |
+| Laporan perbandingan lintas tahun | Satu tahun Hijriah per laporan sudah cukup | TBD |
+| Pembuat laporan kustom | Jenis laporan tetap mencakup semua kebutuhan saat ini | TBD |
 
 ### Future (This Capability)
 
-- None planned — capability is stable.
+- Tidak ada yang direncanakan — kapabilitas sudah stabil.
 
 ---
 
@@ -118,25 +118,25 @@
 
 | Story | Priority | Link |
 |-------|----------|------|
-| UPZIS officer views transaction recap for current hijri year | P0 | — |
-| UPZIS officer views daily recap for reconciliation | P0 | — |
-| UPZIS officer views online payments to follow up on unconfirmed transfers | P0 | — |
-| Admin views muzakki list across all families | P1 | — |
+| Petugas UPZIS melihat rekap transaksi untuk tahun Hijriah saat ini | P0 | — |
+| Petugas UPZIS melihat rekap harian untuk rekonsiliasi | P0 | — |
+| Petugas UPZIS melihat pembayaran daring untuk menindaklanjuti transfer yang belum dikonfirmasi | P0 | — |
+| Admin melihat daftar muzakki di semua keluarga | P1 | — |
 
 ### Export
 
 | Story | Priority | Link |
 |-------|----------|------|
-| UPZIS officer exports transaction recap to Excel | P0 | — |
-| UPZIS officer exports muzakki recap to Excel | P1 | — |
-| UPZIS officer exports online payments for phone follow-up | P1 | — |
+| Petugas UPZIS mengekspor rekap transaksi ke Excel | P0 | — |
+| Petugas UPZIS mengekspor rekap muzakki ke Excel | P1 | — |
+| Petugas UPZIS mengekspor pembayaran daring untuk tindak lanjut via telepon | P1 | — |
 
 ### Print
 
 | Story | Priority | Link |
 |-------|----------|------|
-| UPZIS officer prints receipt for confirmed transaction | P0 | — |
-| UPZIS officer prints dual-copy receipt | P1 | — |
+| Petugas UPZIS mencetak kwitansi untuk transaksi yang dikonfirmasi | P0 | — |
+| Petugas UPZIS mencetak kwitansi rangkap | P1 | — |
 
 ---
 
@@ -144,8 +144,8 @@
 
 | Category | Requirement | Rationale |
 |----------|-------------|-----------|
-| Export file size | Handles up to 10,000 rows | Sufficient for single mosque annual collection |
-| Report access | Restricted to upzis and administrator roles | Financial data is sensitive |
+| Ukuran file ekspor | Menangani hingga 10.000 baris | Cukup untuk pengumpulan tahunan satu masjid |
+| Akses laporan | Dibatasi untuk peran upzis dan administrator | Data keuangan bersifat sensitif |
 
 ---
 
@@ -153,39 +153,39 @@
 
 | Term | Definition |
 |------|------------|
-| Transaction Recap | Aggregated view showing summed amounts per transaction across all zakat types |
-| Muzakki Recap | Line-level view showing individual muzakki contributions within each transaction |
-| Daily Recap | Same data as standard recap but ordered by payment_date for daily reconciliation |
-| Online Payments | Filtered view showing only online (non-gerai) transactions with donor contact info |
+| Transaction Recap | Tampilan teragregasi yang menunjukkan jumlah nominal per transaksi di semua jenis zakat |
+| Muzakki Recap | Tampilan tingkat baris yang menunjukkan kontribusi muzakki individu dalam setiap transaksi |
+| Daily Recap | Data yang sama dengan rekap standar tetapi diurutkan berdasarkan payment_date untuk rekonsiliasi harian |
+| Online Payments | Tampilan terfilter yang menampilkan hanya transaksi daring (non-gerai) beserta info kontak donatur |
 
 ---
 
 ## Technical Considerations
 
-- All exports use Maatwebsite Excel package (`FromQuery`, `WithMapping`, `WithHeadings`, `WithColumnFormatting`, `WithStyles`, `ShouldAutoSize`)
-- Transaction Recap and Muzakki Recap exports use 2-row headers to group sub-columns (e.g., Fitrah → Rp/Kg/Lt)
-- Report data comes from `ZakatDomain` query methods, not raw SQL
-- Daily recaps have no pagination (full dataset rendered) — may need attention if data volume grows
-- Export route accepts optional `hijriYear` parameter; defaults to current hijri year from AppConfig
+- Semua ekspor menggunakan paket Maatwebsite Excel (`FromQuery`, `WithMapping`, `WithHeadings`, `WithColumnFormatting`, `WithStyles`, `ShouldAutoSize`)
+- Ekspor Transaction Recap dan Muzakki Recap menggunakan header 2 baris untuk mengelompokkan sub-kolom (mis., Fitrah → Rp/Kg/Lt)
+- Data laporan berasal dari metode kueri `ZakatDomain`, bukan SQL mentah
+- Rekap harian tidak memiliki paginasi (seluruh dataset dirender) — perlu perhatian jika volume data bertumbuh
+- Rute ekspor menerima parameter `hijriYear` opsional; default ke tahun Hijriah saat ini dari AppConfig
 
 ---
 
 ## Open Questions
 
-None — capability is shipped and stable.
+Tidak ada — kapabilitas sudah dikirim dan stabil.
 
 ---
 
 ## RFCs
 
-None — implemented directly.
+Tidak ada — diimplementasikan langsung.
 
 ---
 
 ## Changelog
 
 ### Version 1.0 — 2026-02-27
-- Retroactive documentation of shipped capability
+- Dokumentasi retroaktif dari kapabilitas yang sudah dikirim
 
 ---
 

@@ -8,23 +8,23 @@
 
 ## Summary
 
-**Capability ID:** C5 (from [product vision](./_index.md))
+**Capability ID:** C5 (dari [product vision](./_index.md))
 
-**One-liner:** Provides administrator-managed runtime configuration for hijri year settings, fitrah amounts, bank account info, payment display periods, and rate limits.
+**One-liner:** Menyediakan konfigurasi runtime yang dikelola administrator untuk pengaturan tahun Hijriah, nominal fitrah, info rekening bank, periode tampilan pembayaran, dan batas laju pencarian.
 
 **Dependencies:**
 - Requires: C1 (User Authentication & Role Management)
-- Enables: C3 (Zakat Transaction Management — hijri year, fitrah amounts, payment display, unique number context)
+- Enables: C3 (Zakat Transaction Management — tahun Hijriah, nominal fitrah, tampilan pembayaran, konteks nominal unik)
 
 ---
 
 ## Problem
 
-**What:** Zakat collection parameters change each year — the hijri year advances, fitrah amounts may be updated, bank accounts can change, and QRIS/transfer payment options need to be shown or hidden based on collection period timing. These settings must be adjustable without code changes.
+**What:** Parameter pengumpulan zakat berubah setiap tahun — tahun Hijriah bertambah, nominal fitrah dapat diperbarui, rekening bank bisa berubah, dan opsi pembayaran QRIS/transfer perlu ditampilkan atau disembunyikan berdasarkan waktu periode pengumpulan. Pengaturan ini harus dapat disesuaikan tanpa perubahan kode.
 
-**Who:** Administrators.
+**Who:** Administrator.
 
-**Current State:** Settings would be hardcoded or managed through direct database edits, requiring developer involvement for routine annual changes.
+**Current State:** Pengaturan akan di-hardcode atau dikelola melalui pengeditan database langsung, yang mengharuskan keterlibatan pengembang untuk perubahan tahunan yang rutin.
 
 ---
 
@@ -32,32 +32,32 @@
 
 ### Key Features
 
-1. **Hijri Year Settings** — Current active hijri year and beginning year (defines the selectable range for reports and transactions).
-2. **Fitrah Amount Options** — Multiple configurable Rp amounts that muzakki can select when entering fitrah zakat (stored as multiple rows with key `fitrah_amount`).
-3. **Bank Account Info** — Bank account number displayed on transaction detail for online transfer instructions.
-4. **Payment Display Periods** — Date ranges controlling when QRIS and bank transfer payment options are shown/hidden on transaction detail.
-5. **Contact Information** — Confirmation phone number (WhatsApp) displayed for muzakki to contact UPZIS.
-6. **KK Lookup Rate Limit** — Maximum number of KK number lookups allowed per user.
+1. **Hijri Year Settings** — Tahun Hijriah aktif saat ini dan tahun awal (mendefinisikan rentang yang dapat dipilih untuk laporan dan transaksi).
+2. **Fitrah Amount Options** — Beberapa nominal Rp yang dapat dikonfigurasi untuk dipilih muzakki saat memasukkan zakat fitrah (disimpan sebagai beberapa baris dengan kunci `fitrah_amount`).
+3. **Bank Account Info** — Nomor rekening bank yang ditampilkan pada detail transaksi untuk instruksi transfer daring.
+4. **Payment Display Periods** — Rentang tanggal yang mengontrol kapan opsi pembayaran QRIS dan transfer bank ditampilkan/disembunyikan pada detail transaksi.
+5. **Contact Information** — Nomor telepon konfirmasi (WhatsApp) yang ditampilkan bagi muzakki untuk menghubungi UPZIS.
+6. **KK Lookup Rate Limit** — Jumlah maksimum pencarian nomor KK yang diperbolehkan per pengguna.
 
 ### Configuration Keys
 
 | Key | Description | Example Value | Multi-value |
 |-----|-------------|---------------|-------------|
-| `hijri_year` | Current active hijri year | `1447` | No |
-| `hijri_year_beginning` | Earliest selectable hijri year | `1444` | No |
-| `fitrah_amount` | Selectable fitrah Rp amounts | `35000`, `40000`, `45000` | Yes |
-| `bank_account` | Bank account number for transfers | `1234567890 (BSI)` | No |
-| `confirmation_phone` | WhatsApp contact number | `08123456789` | No |
-| `remove_qr_start_date` | Start date to hide QRIS option | `2026-03-20` | No |
-| `remove_qr_end_date` | End date to hide QRIS option | `2026-04-05` | No |
-| `remove_transfer_start_date` | Start date to hide transfer option | `2026-03-28` | No |
-| `remove_transfer_end_date` | End date to hide transfer option | `2026-04-05` | No |
-| `check_kk_limit` | Max KK lookups per user | `5` | No |
+| `hijri_year` | Tahun Hijriah aktif saat ini | `1447` | No |
+| `hijri_year_beginning` | Tahun Hijriah paling awal yang dapat dipilih | `1444` | No |
+| `fitrah_amount` | Nominal fitrah Rp yang dapat dipilih | `35000`, `40000`, `45000` | Yes |
+| `bank_account` | Nomor rekening bank untuk transfer | `1234567890 (BSI)` | No |
+| `confirmation_phone` | Nomor kontak WhatsApp | `08123456789` | No |
+| `remove_qr_start_date` | Tanggal mulai menyembunyikan opsi QRIS | `2026-03-20` | No |
+| `remove_qr_end_date` | Tanggal akhir menyembunyikan opsi QRIS | `2026-04-05` | No |
+| `remove_transfer_start_date` | Tanggal mulai menyembunyikan opsi transfer | `2026-03-28` | No |
+| `remove_transfer_end_date` | Tanggal akhir menyembunyikan opsi transfer | `2026-04-05` | No |
+| `check_kk_limit` | Maks pencarian KK per pengguna | `5` | No |
 
 ### User Workflows
 
-1. **Update settings** — Admin navigates to App Configuration page → sees table of all config keys and values → edits a value inline → clicks save → value is updated immediately.
-2. **Annual rollover** — At start of new collection period, admin updates `hijri_year`, reviews `fitrah_amount` values, and adjusts payment display date ranges.
+1. **Memperbarui pengaturan** — Admin membuka halaman Konfigurasi Aplikasi → melihat tabel semua kunci dan nilai konfigurasi → mengedit nilai secara langsung → klik simpan → nilai diperbarui seketika.
+2. **Pergantian tahunan** — Di awal periode pengumpulan baru, admin memperbarui `hijri_year`, meninjau nilai `fitrah_amount`, dan menyesuaikan rentang tanggal tampilan pembayaran.
 
 ---
 
@@ -65,8 +65,8 @@
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| Configuration changes | No code deployment needed | Admin can update all settings via UI |
-| Annual rollover time | < 10 minutes | Time for admin to update all year-specific settings |
+| Perubahan konfigurasi | Tidak perlu deployment kode | Admin dapat memperbarui semua pengaturan melalui antarmuka |
+| Waktu pergantian tahunan | < 10 menit | Waktu admin memperbarui semua pengaturan spesifik tahun |
 
 ---
 
@@ -74,34 +74,34 @@
 
 ### In Scope (v1.0)
 
-- [x] `app_config` key-value table (key, value — not unique key, allows multiple rows per key)
-- [x] Admin-only configuration management page (table with inline edit per row)
-- [x] `hijri_year` — current active hijri year for transactions
-- [x] `hijri_year_beginning` — defines start of selectable hijri year range
-- [x] `fitrah_amount` — multiple values for fitrah Rp amount selector (multiple rows with same key)
-- [x] `bank_account` — bank account displayed on transaction detail
-- [x] `confirmation_phone` — WhatsApp contact displayed for muzakki
-- [x] `remove_qr_start_date` / `remove_qr_end_date` — date range to hide QRIS payment option
-- [x] `remove_transfer_start_date` / `remove_transfer_end_date` — date range to hide bank transfer option
-- [x] `check_kk_limit` — per-user rate limit for KK number lookups
-- [x] `AppConfig::getConfigValue()` — retrieve single value by key
-- [x] `AppConfig::getConfigValues()` — retrieve all values for a key (multi-value support)
-- [x] AppConfigPolicy restricting all operations to administrator role
-- [x] Delete operation blocked at policy level (returns false)
+- [x] Tabel `app_config` berupa key-value (kunci, nilai — kunci tidak unik, memungkinkan beberapa baris per kunci)
+- [x] Halaman pengelolaan konfigurasi khusus admin (tabel dengan edit langsung per baris)
+- [x] `hijri_year` — tahun Hijriah aktif saat ini untuk transaksi
+- [x] `hijri_year_beginning` — mendefinisikan awal rentang tahun Hijriah yang dapat dipilih
+- [x] `fitrah_amount` — beberapa nilai untuk pemilih nominal fitrah Rp (beberapa baris dengan kunci yang sama)
+- [x] `bank_account` — rekening bank yang ditampilkan pada detail transaksi
+- [x] `confirmation_phone` — kontak WhatsApp yang ditampilkan untuk muzakki
+- [x] `remove_qr_start_date` / `remove_qr_end_date` — rentang tanggal untuk menyembunyikan opsi pembayaran QRIS
+- [x] `remove_transfer_start_date` / `remove_transfer_end_date` — rentang tanggal untuk menyembunyikan opsi transfer bank
+- [x] `check_kk_limit` — batas laju per pengguna untuk pencarian nomor KK
+- [x] `AppConfig::getConfigValue()` — mengambil satu nilai berdasarkan kunci
+- [x] `AppConfig::getConfigValues()` — mengambil semua nilai untuk sebuah kunci (dukungan multi-nilai)
+- [x] AppConfigPolicy yang membatasi semua operasi untuk peran administrator
+- [x] Operasi delete diblokir di level policy (mengembalikan false)
 
 ### Out of Scope
 
 | Item | Rationale | Future? |
 |------|-----------|---------|
-| Config versioning / history | Low change frequency doesn't justify audit trail on config | TBD |
-| Config validation rules per key | Values are simple strings; admin is trusted | TBD |
-| Config import/export | Small number of settings; manual management is fine | TBD |
-| Environment-based config override | Single deployment environment | Never |
-| Config grouping or categories in UI | Flat list is sufficient for ~10 keys | TBD |
+| Versioning / riwayat konfigurasi | Frekuensi perubahan rendah tidak membenarkan jejak audit pada konfigurasi | TBD |
+| Aturan validasi konfigurasi per kunci | Nilai berupa string sederhana; admin dipercaya | TBD |
+| Impor/ekspor konfigurasi | Jumlah pengaturan sedikit; pengelolaan manual sudah cukup | TBD |
+| Override konfigurasi berbasis environment | Satu lingkungan deployment | Never |
+| Pengelompokan atau kategori konfigurasi di antarmuka | Daftar datar sudah cukup untuk ~10 kunci | TBD |
 
 ### Future (This Capability)
 
-- None planned — capability is stable.
+- Tidak ada yang direncanakan — kapabilitas sudah stabil.
 
 ---
 
@@ -111,10 +111,10 @@
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Admin updates hijri year for new collection period | P0 | — |
-| Admin updates fitrah amount options | P0 | — |
-| Admin sets payment display date ranges | P1 | — |
-| Admin updates bank account information | P1 | — |
+| Admin memperbarui tahun Hijriah untuk periode pengumpulan baru | P0 | — |
+| Admin memperbarui opsi nominal fitrah | P0 | — |
+| Admin menetapkan rentang tanggal tampilan pembayaran | P1 | — |
+| Admin memperbarui informasi rekening bank | P1 | — |
 
 ---
 
@@ -122,8 +122,8 @@
 
 | Category | Requirement | Rationale |
 |----------|-------------|-----------|
-| Access control | Administrator-only, no delete | Prevents accidental removal of required config keys |
-| Availability | Config values cached per-request via static model methods | Avoids repeated DB queries within single request |
+| Kontrol akses | Khusus administrator, tanpa delete | Mencegah penghapusan tidak sengaja dari kunci konfigurasi yang diperlukan |
+| Ketersediaan | Nilai konfigurasi di-cache per permintaan melalui metode model statis | Menghindari kueri DB berulang dalam satu permintaan |
 
 ---
 
@@ -131,38 +131,38 @@
 
 | Term | Definition |
 |------|------------|
-| Hijri Year | Islamic lunar calendar year used as the primary time dimension for zakat collection periods |
-| Fitrah Amount | Standardized Rp amounts representing the monetary equivalent of zakat fitrah (e.g., 35000, 40000, 45000) |
-| Payment Display Period | Date range during which a payment method (QRIS or bank transfer) is hidden from the transaction detail page |
+| Hijri Year | Tahun kalender lunar Islam yang digunakan sebagai dimensi waktu utama untuk periode pengumpulan zakat |
+| Fitrah Amount | Nominal Rp standar yang mewakili setara uang dari zakat fitrah (mis., 35000, 40000, 45000) |
+| Payment Display Period | Rentang tanggal selama metode pembayaran (QRIS atau transfer bank) disembunyikan dari halaman detail transaksi |
 
 ---
 
 ## Technical Considerations
 
-- `app_config` table allows multiple rows with the same key — this is intentional for `fitrah_amount` which has multiple selectable values
-- No unique constraint on `key` column by design
-- `getConfigValue()` returns a single string; `getConfigValues()` returns an array (plucked values)
-- Payment display logic compares current date against `remove_*_start_date` / `remove_*_end_date` in the ZakatController show method
-- Config values are all stored as strings; type coercion happens at consumption point
+- Tabel `app_config` mengizinkan beberapa baris dengan kunci yang sama — ini disengaja untuk `fitrah_amount` yang memiliki beberapa nilai yang dapat dipilih
+- Tidak ada unique constraint pada kolom `key` secara desain
+- `getConfigValue()` mengembalikan satu string; `getConfigValues()` mengembalikan array (nilai yang di-pluck)
+- Logika tampilan pembayaran membandingkan tanggal saat ini dengan `remove_*_start_date` / `remove_*_end_date` di metode show ZakatController
+- Semua nilai konfigurasi disimpan sebagai string; konversi tipe terjadi di titik konsumsi
 
 ---
 
 ## Open Questions
 
-None — capability is shipped and stable.
+Tidak ada — kapabilitas sudah dikirim dan stabil.
 
 ---
 
 ## RFCs
 
-None — implemented directly.
+Tidak ada — diimplementasikan langsung.
 
 ---
 
 ## Changelog
 
 ### Version 1.0 — 2026-02-27
-- Retroactive documentation of shipped capability
+- Dokumentasi retroaktif dari kapabilitas yang sudah dikirim
 
 ---
 
