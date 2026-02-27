@@ -4,9 +4,11 @@
 
 | ADR | Decision | Status | Date |
 |-----|----------|--------|------|
-| [001](./001-language-choice.md) | Language Choice | Proposed | |
-| [002](./002-database-choice.md) | Database Choice | Proposed | |
-| [003](./003-testing-tools.md) | Testing Tools | Proposed | |
+| [001](./001-laravel-php-framework.md) | Laravel 8 + PHP sebagai Backend Framework | Accepted | 2026-02-27 |
+| [002](./002-mysql-database.md) | MySQL sebagai Database | Accepted | 2026-02-27 |
+| [003](./003-inertia-vue-frontend.md) | Inertia.js + Vue 3 sebagai Frontend Strategy | Accepted | 2026-02-27 |
+| [004](./004-domain-layer-pattern.md) | Domain Layer untuk Pemisahan Logika Bisnis | Accepted | 2026-02-27 |
+| [005](./005-soft-delete-audit-logging.md) | Soft Delete dan Audit Logging untuk Transaksi | Accepted | 2026-02-27 |
 
 ## Superseded
 

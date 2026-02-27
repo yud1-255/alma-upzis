@@ -178,7 +178,7 @@ Tidak ada — kapabilitas sudah dikirim dan stabil.
 
 ## RFCs
 
-Tidak ada — diimplementasikan langsung.
+- [RFC-001: V1 System Design](../rfc/001-system-design.md) — Arsitektur keseluruhan sistem termasuk export system
 
 ---
 
