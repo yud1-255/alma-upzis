@@ -33,10 +33,10 @@
                     <td rowspan="2" class="px-4 py-2">No. Zakat</td>
                     <td rowspan="2" class="px-4 py-2">Terima dari</td>
                     <td colspan="3" class="px-4 py-2">Fitrah</td>
+                    <td colspan="2" class="px-4 py-2">Fidyah</td>
                     <td rowspan="2" class="px-4 py-2">Maal</td>
                     <td rowspan="2" class="px-4 py-2">Profesi</td>
                     <td rowspan="2" class="px-4 py-2">Infaq Shadaqah</td>
-                    <td colspan="2" class="px-4 py-2">Fidyah</td>
                     <td rowspan="2" class="px-4 py-2">Wakaf</td>
                     <td rowspan="2" class="px-4 py-2">Kafarat</td>
                     <td rowspan="2" class="px-4 py-2">Biaya Unik</td>
@@ -74,6 +74,12 @@
                       {{ Number(zakat.fitrah_lt).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
+                      {{ Number(zakat.fidyah_rp).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
+                      {{ Number(zakat.fidyah_kg).toLocaleString("id") }}
+                    </td>
+                    <td class="text-right">
                       {{ Number(zakat.maal_rp).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
@@ -81,12 +87,6 @@
                     </td>
                     <td class="text-right">
                       {{ Number(zakat.infaq_rp).toLocaleString("id") }}
-                    </td>
-                    <td class="text-right">
-                      {{ Number(zakat.fidyah_rp).toLocaleString("id") }}
-                    </td>
-                    <td class="text-right">
-                      {{ Number(zakat.fidyah_kg).toLocaleString("id") }}
                     </td>
                     <td class="text-right">
                       {{ Number(zakat.wakaf_rp).toLocaleString("id") }}
@@ -119,6 +119,12 @@
                       {{ Number(dailyAgg.sum_fitrah_lt).toLocaleString("id") }}
                     </th>
                     <th class="text-right">
+                      {{ Number(dailyAgg.sum_fidyah_rp).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
+                      {{ Number(dailyAgg.sum_fidyah_kg).toLocaleString("id") }}
+                    </th>
+                    <th class="text-right">
                       {{ Number(dailyAgg.sum_maal_rp).toLocaleString("id") }}
                     </th>
                     <th class="text-right">
@@ -126,12 +132,6 @@
                     </th>
                     <th class="text-right">
                       {{ Number(dailyAgg.sum_infaq_rp).toLocaleString("id") }}
-                    </th>
-                    <th class="text-right">
-                      {{ Number(dailyAgg.sum_fidyah_rp).toLocaleString("id") }}
-                    </th>
-                    <th class="text-right">
-                      {{ Number(dailyAgg.sum_fidyah_kg).toLocaleString("id") }}
                     </th>
                     <th class="text-right">
                       {{ Number(dailyAgg.sum_wakaf_rp).toLocaleString("id") }}
