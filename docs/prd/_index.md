@@ -28,13 +28,15 @@ Pengumpulan zakat secara manual di masjid mengandalkan formulir kertas, buku cat
 | C3 | Zakat Transaction Management | [003](./003-zakat-transactions.md) | V1 | Shipped |
 | C4 | Reporting & Data Export | [004](./004-reporting-export.md) | V1 | Shipped |
 | C5 | Application Configuration | [005](./005-app-config.md) | V1 | Shipped |
+| C6 | Simplified Self-Service Zakat | [006](./006-simplified-self-service.md) | V1.1 | Draft |
 
 ### Capability Dependencies
 
 ```
 C1 (Auth & Roles)
  ├──▶ C2 (Family & Muzakki) ──▶ C3 (Zakat Transactions) ──▶ C4 (Reporting & Export)
- └──▶ C5 (App Config) ──────────┘
+ ├──▶ C5 (App Config) ──────────┘
+ └──▶ C6 (Simplified Self-Service) ──▶ C2, C3 (auto-creates data, produces transactions)
 ```
 
 ---
@@ -87,8 +89,10 @@ C1 (Auth & Roles)
 
 Capabilities: C1, C2, C3, C4, C5
 
-### V1.x — Enhancements
-**Goal:** TBD
+### V1.1 — Simplified Self-Service Zakat
+**Goal:** Menurunkan hambatan masuk bagi muzakki baru dengan social login, PWA, dan formulir pengajuan zakat yang disederhanakan — memungkinkan pengajuan zakat dalam waktu kurang dari 3 menit tanpa pendaftaran keluarga di awal. Data keluarga dan muzakki dibangun secara otomatis dari pengajuan.
+
+Capabilities: C6
 
 ### V2 — Future
 **Goal:** TBD
