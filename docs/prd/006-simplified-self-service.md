@@ -2,7 +2,7 @@
 
 | Version | Status | Phase | Last Updated |
 |---------|--------|-------|--------------|
-| 1.2 | Draft | V1.1 | 2026-03-06 |
+| 1.2 | Approved | V1.1 | 2026-03-06 |
 
 ---
 
@@ -127,46 +127,46 @@
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Pengguna baru mendaftar dan masuk menggunakan akun Google | P0 | -- |
-| Pengguna baru mendaftar dan masuk menggunakan akun Facebook | P0 | -- |
-| Pengguna lama (sudah punya akun email) masuk via social login | P1 | -- |
+| Pengguna baru mendaftar dan masuk menggunakan akun Google | P0 | [social-login-registrasi](../stories/simplified-self-service/social-login-registrasi.md) |
+| Pengguna baru mendaftar dan masuk menggunakan akun Facebook | P0 | [social-login-registrasi](../stories/simplified-self-service/social-login-registrasi.md) |
+| Pengguna lama (sudah punya akun email) masuk via social login | P1 | [social-login-account-linking](../stories/simplified-self-service/social-login-account-linking.md) |
 
 ### PWA
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Pengguna menginstal aplikasi ke layar utama ponsel | P0 | -- |
-| Pengguna membuka aplikasi dari layar utama tanpa address bar browser | P0 | -- |
+| Pengguna menginstal aplikasi ke layar utama ponsel | P0 | [pwa-instal](../stories/simplified-self-service/pwa-instal.md) |
+| Pengguna membuka aplikasi dari layar utama tanpa address bar browser | P0 | [pwa-instal](../stories/simplified-self-service/pwa-instal.md) |
 
 ### Auto Hijri Year
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Transaksi baru otomatis mendapat tag tahun Hijriah dari tanggal saat ini tanpa konfigurasi admin | P0 | -- |
-| Admin meng-override tahun Hijriah via AppConfig jika diperlukan | P1 | -- |
+| Transaksi baru otomatis mendapat tag tahun Hijriah dari tanggal saat ini tanpa konfigurasi admin | P0 | [auto-hijri-year](../stories/simplified-self-service/auto-hijri-year.md) |
+| Admin meng-override tahun Hijriah via AppConfig jika diperlukan | P1 | [override-hijri-year](../stories/simplified-self-service/override-hijri-year.md) |
 
 ### Simplified Form — Basic Flow
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Muzakki baru mengajukan zakat tanpa pendaftaran keluarga di awal | P0 | -- |
-| Muzakki baru menambahkan anggota keluarga di formulir sederhana | P0 | -- |
-| Muzakki yang sudah memiliki data keluarga mengajukan via formulir sederhana dengan data terisi otomatis | P0 | -- |
-| Muzakki menerima nomor transaksi dan nominal transfer setelah pengajuan | P0 | -- |
+| Muzakki baru mengajukan zakat tanpa pendaftaran keluarga di awal | P0 | [pengajuan-zakat-sederhana](../stories/simplified-self-service/pengajuan-zakat-sederhana.md) |
+| Muzakki baru menambahkan anggota keluarga di formulir sederhana | P0 | [tambah-anggota-formulir](../stories/simplified-self-service/tambah-anggota-formulir.md) |
+| Muzakki yang sudah memiliki data keluarga mengajukan via formulir sederhana dengan data terisi otomatis | P0 | [pengajuan-prefill](../stories/simplified-self-service/pengajuan-prefill.md) |
+| Muzakki menerima nomor transaksi dan nominal transfer setelah pengajuan | P0 | [pengajuan-zakat-sederhana](../stories/simplified-self-service/pengajuan-zakat-sederhana.md) |
 
 ### Simplified Form — Data Building
 
 | Story | Priority | Link |
 |-------|----------|------|
-| Sistem membuat record Family otomatis dari data formulir sederhana | P0 | -- |
-| Sistem membuat record Muzakki otomatis untuk setiap anggota di formulir | P0 | -- |
-| Anggota baru yang ditambahkan di formulir otomatis tersimpan ke Family yang sudah ada | P1 | -- |
+| Sistem membuat record Family otomatis dari data formulir sederhana | P0 | [auto-create-keluarga](../stories/simplified-self-service/auto-create-keluarga.md) |
+| Sistem membuat record Muzakki otomatis untuk setiap anggota di formulir | P0 | [auto-create-keluarga](../stories/simplified-self-service/auto-create-keluarga.md) |
+| Anggota baru yang ditambahkan di formulir otomatis tersimpan ke Family yang sudah ada | P1 | [auto-create-keluarga](../stories/simplified-self-service/auto-create-keluarga.md) |
 
 ### Simplified Form — Confirmation
 
 | Story | Priority | Link |
 |-------|----------|------|
-| UPZIS mengkonfirmasi pembayaran dari formulir sederhana (alur sama dengan V1) | P0 | -- |
+| UPZIS mengkonfirmasi pembayaran dari formulir sederhana (alur sama dengan V1) | P0 | [konfirmasi-pembayaran-sederhana](../stories/simplified-self-service/konfirmasi-pembayaran-sederhana.md) |
 
 ---
 
@@ -228,7 +228,7 @@ Tidak ada — semua pertanyaan telah dijawab. Siap untuk tahap RFC.
 
 | RFC | Title | Status |
 |-----|-------|--------|
-| TBD | Simplified Self-Service Zakat — System Design | Not started |
+| [RFC-002](../rfc/002-simplified-self-service.md) | Simplified Self-Service Zakat — System Design | Draft |
 
 ---
 
