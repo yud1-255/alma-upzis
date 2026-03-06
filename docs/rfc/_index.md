@@ -4,7 +4,7 @@
 
 | RFC | Title | Status | Last Updated |
 |-----|-------|--------|--------------|
-| | | | |
+| [002](./002-simplified-self-service.md) | Simplified Self-Service Zakat — System Design | Draft | 2026-03-06 |
 
 ## Accepted
 
