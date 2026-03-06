@@ -2,7 +2,7 @@
 
 | Version | Status | Phase | Last Updated |
 |---------|--------|-------|--------------|
-| 1.1 | Draft | V1.1 | 2026-03-06 |
+| 1.2 | Draft | V1.1 | 2026-03-06 |
 
 ---
 
@@ -197,26 +197,30 @@
 ## Technical Considerations
 
 - Social login memerlukan integrasi OAuth 2.0 — pertimbangkan Laravel Socialite yang sudah mature di ekosistem Laravel
-- Account linking: jika email dari social provider sudah ada di tabel `users`, hubungkan ke akun yang ada tanpa membuat akun baru. Perlu strategi penanganan jika email social provider belum diverifikasi oleh provider.
+- Account linking: jika email dari social provider sudah ada di tabel `users`, hubungkan ke akun yang ada tanpa membuat akun baru. Percayai klaim `email_verified` dari provider; jika provider tidak mengembalikan email terverifikasi, fallback ke alur verifikasi email V1.
 - PWA memerlukan HTTPS (sudah terpenuhi jika deployment via HTTPS)
 - Service worker harus dikonfigurasi agar tidak mengganggu session-based auth (cookie handling)
-- Auto-create Family: gunakan data dari formulir sederhana untuk mengisi `head_of_family` (nama), `phone`, dan `email`. Field alamat (`address`, `is_bpi`, dsb.) diisi dengan nilai default atau dikosongkan karena tidak diminta di formulir sederhana.
+- Auto-create Family: gunakan data dari formulir sederhana untuk mengisi `head_of_family` (nama), `phone`, dan `email`. Field alamat (`address`, `is_bpi`, `kk_number`) di-set nullable — tidak perlu flag `is_complete` khusus. Family yang auto-created dapat digunakan di alur V1 untuk pengajuan zakat; jika pengguna ingin mengedit data keluarga via halaman V1, mereka perlu melengkapi field alamat yang wajib di halaman tersebut.
 - Auto-create Muzakki: buat satu record Muzakki per anggota yang dimasukkan di formulir. Hubungkan ke Family yang baru dibuat atau yang sudah ada.
 - Transaksi yang dihasilkan harus mengisi `family_id` dan `zakat_lines` yang valid — model data identik dengan V1, hanya jalur masuknya yang berbeda.
 - Formulir sederhana dan alur V1 menghasilkan record di tabel yang sama (`zakats`, `zakat_lines`, `families`, `muzakkis`) — tidak ada tabel baru untuk data transaksi.
-- Auto Hijri Year: konversi Gregorian → Hijri memerlukan library atau algoritma konversi kalender. Pertimbangkan library PHP yang sudah teruji (misalnya `islamic-network/prayer-times` atau konversi manual dengan tabel). Logika: `AppConfig::getConfigValue('hijri_year') ?? HijriDate::currentYear()`.
+- Auto Hijri Year: konversi Gregorian → Hijri menggunakan library `geniusts/hijri-dates` (330K+ downloads, Carbon-based, cocok dengan stack Laravel). Logika: `AppConfig::getConfigValue('hijri_year') ?? HijriDate::currentYear()`. Untuk use case ini hanya perlu tahun, jadi perbedaan algoritmik ±1-2 hari di batas tahun tidak signifikan — admin override sebagai safety net.
 - Auto Hijri Year berlaku system-wide — perlu memastikan semua titik yang sebelumnya membaca `AppConfig::getConfigValue('hijri_year')` sekarang melalui satu helper yang menerapkan logika fallback (override → auto-detect).
 
 ---
 
+## Resolved Questions
+
+- [x] **Bagaimana menangani data Family yang tidak lengkap?** — **Keputusan:** Set nullable. Field alamat (`address`, `is_bpi`, `kk_number`) boleh kosong pada Family yang auto-created. Tidak perlu flag `is_complete` khusus. Family tetap dapat digunakan untuk pengajuan zakat di alur V1; pengeditan data keluarga via halaman V1 akan meminta pengguna melengkapi field wajib.
+- [x] **Apakah email dari social provider yang belum diverifikasi oleh provider harus tetap di-bypass verifikasi email?** — **Keputusan:** Percayai proses verifikasi social provider. Jika provider mengembalikan `email_verified=true`, bypass verifikasi email kita. Jika tidak (edge case: Facebook phone-only account), fallback ke alur verifikasi email V1.
+- [x] **Bagaimana perilaku jika pengguna social login mengajukan via formulir sederhana, lalu ingin menggunakan alur V1?** — **Keputusan:** Data Family auto-created dapat langsung dipakai di alur V1 untuk pengajuan zakat (family dan muzakki record sudah ada). Jika pengguna ingin mengedit data keluarga via halaman manajemen V1, mereka perlu melengkapi field alamat yang wajib di halaman tersebut. Ini adalah perilaku alami yang mendorong progressive data completion.
+- [x] **Apakah perlu ada batas jumlah anggota keluarga yang bisa ditambahkan di formulir sederhana?** — **Keputusan:** Tidak perlu batas khusus. Perilaku sama dengan V1 — tidak ada batas eksplisit jumlah anggota keluarga.
+- [x] **Library konversi Hijri mana yang digunakan?** — **Keputusan:** Gunakan `geniusts/hijri-dates` (330K+ downloads, Carbon-based, cocok dengan stack Laravel). Konversi algoritmik cukup memadai — untuk use case ini hanya perlu tahun Hijriah, bukan tanggal presisi. Perbedaan algoritmik ±1-2 hari di batas tahun tidak signifikan karena admin override tersedia sebagai safety net.
+- [x] **Bagaimana mekanisme admin override untuk auto Hijri year?** — **Keputusan:** Toggle on/off di halaman AppConfig admin. Jika toggle on (override aktif), admin memasukkan tahun Hijriah manual. Jika toggle off (default), sistem menggunakan auto-detect. Operasi ini jarang dilakukan (sekali per tahun jika ada koreksi), sehingga toggle sederhana sudah memadai.
+
 ## Open Questions
 
-- [ ] **Bagaimana menangani data Family yang tidak lengkap?** — Family yang dibuat via auto-create tidak memiliki alamat dan nomor KK. Apakah perlu flag khusus (misalnya `is_complete=false`) untuk membedakannya dari Family yang didaftarkan lengkap via V1? Atau cukup biarkan field-nya nullable? — Owner: Product, Due: Sebelum RFC
-- [ ] **Apakah email dari social provider yang belum diverifikasi oleh provider harus tetap di-bypass verifikasi email?** — V1 mewajibkan verifikasi email sebelum akses dashboard. Jika social provider tidak menjamin email terverifikasi, apakah kita tetap meminta verifikasi email terpisah? — Owner: Product + Engineering, Due: Sebelum RFC
-- [ ] **Bagaimana perilaku jika pengguna social login mengajukan via formulir sederhana, lalu ingin menggunakan alur V1?** — Apakah data Family yang auto-created sudah cukup untuk dipakai di alur V1, atau pengguna harus melengkapi data keluarga dulu? — Owner: Product, Due: Sebelum implementasi
-- [ ] **Apakah perlu ada batas jumlah anggota keluarga yang bisa ditambahkan di formulir sederhana?** — Di V1 tidak ada batas eksplisit. Untuk formulir sederhana, apakah perlu dibatasi demi kesederhanaan UI? — Owner: Product + Design, Due: Sebelum implementasi
-- [ ] **Library konversi Hijri mana yang digunakan?** — Perlu library PHP yang akurat untuk konversi Gregorian → Hijri. Akurasi kalender Hijri bervariasi antar algoritma (astronomical vs tabular). Apakah cukup menggunakan konversi algoritmik, atau perlu validasi terhadap kalender resmi Kemenag? — Owner: Engineering, Due: Sebelum RFC
-- [ ] **Bagaimana mekanisme admin override untuk auto Hijri year?** — Opsi: (a) field khusus di AppConfig yang jika terisi meng-override auto-detect, atau (b) toggle on/off di UI admin untuk beralih antara mode otomatis dan manual. — Owner: Product + Engineering, Due: Sebelum RFC
+Tidak ada — semua pertanyaan telah dijawab. Siap untuk tahap RFC.
 
 ---
 
@@ -229,6 +233,10 @@
 ---
 
 ## Changelog
+
+### Version 1.2 — 2026-03-06
+- Resolved: semua 6 open questions dijawab dan didokumentasikan
+- Keputusan: Family nullable (tanpa flag is_complete), trust social provider email verification, library `geniusts/hijri-dates`, toggle on/off untuk Hijri override
 
 ### Version 1.1 — 2026-03-06
 - Ditambahkan: fitur Auto Hijri Year (penentuan tahun Hijriah otomatis, system-wide, dengan admin override)
