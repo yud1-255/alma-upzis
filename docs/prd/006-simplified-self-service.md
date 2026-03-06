@@ -2,7 +2,7 @@
 
 | Version | Status | Phase | Last Updated |
 |---------|--------|-------|--------------|
-| 1.0 | Draft | V1.1 | 2026-03-04 |
+| 1.1 | Draft | V1.1 | 2026-03-06 |
 
 ---
 
@@ -10,7 +10,7 @@
 
 **Capability ID:** C6 (dari [product vision](./_index.md))
 
-**One-liner:** Menurunkan hambatan masuk bagi muzakki baru dengan menyediakan login sosial, dukungan PWA, dan formulir pengajuan zakat yang disederhanakan tanpa memerlukan pendaftaran keluarga di awal.
+**One-liner:** Menurunkan hambatan masuk bagi muzakki baru dengan menyediakan login sosial, dukungan PWA, formulir pengajuan zakat yang disederhanakan tanpa memerlukan pendaftaran keluarga di awal, serta penentuan tahun Hijriah otomatis untuk mengurangi konfigurasi manual.
 
 **Dependencies:**
 - Requires: C1 (Auth & Roles), C3 (Zakat Transactions), C5 (App Config)
@@ -20,7 +20,7 @@
 
 ## Problem
 
-**What:** Alur V1 mengharuskan muzakki baru melalui tiga langkah sebelum bisa membayar zakat: (1) registrasi akun dengan email/password, (2) pendaftaran keluarga lengkap dengan data alamat, KK, dsb., dan (3) baru kemudian mengisi formulir zakat. Proses ini terlalu berat untuk pengguna baru yang hanya ingin membayar zakat dengan cepat, terutama melalui ponsel.
+**What:** Alur V1 mengharuskan muzakki baru melalui tiga langkah sebelum bisa membayar zakat: (1) registrasi akun dengan email/password, (2) pendaftaran keluarga lengkap dengan data alamat, KK, dsb., dan (3) baru kemudian mengisi formulir zakat. Proses ini terlalu berat untuk pengguna baru yang hanya ingin membayar zakat dengan cepat, terutama melalui ponsel. Di sisi operasional, tahun Hijriah yang menentukan periode transaksi harus diatur manual oleh admin di awal setiap tahun — menimbulkan risiko lupa dan salah tagging.
 
 **Who:** Muzakki baru yang belum terdaftar dalam sistem — khususnya pengguna dengan literasi teknologi rendah yang terbiasa login menggunakan akun Google/Facebook dan tidak mau mengisi banyak formulir.
 
@@ -35,6 +35,7 @@
 1. **Social Login (Google & Facebook)** — Autentikasi satu klik menggunakan akun Google atau Facebook yang sudah ada, menggantikan kebutuhan registrasi email/password manual. Pengguna yang login via social login tetap mendapat peran muzakki implisit seperti registrasi biasa.
 2. **PWA (Progressive Web App)** — Aplikasi web yang dapat diinstal ke layar utama ponsel, memberikan pengalaman seperti aplikasi native tanpa perlu unduh dari app store. Mendukung ikon di layar utama, splash screen, dan tampilan fullscreen.
 3. **Formulir Zakat Sederhana** — Jalur masuk baru yang memungkinkan muzakki mengajukan zakat hanya dengan mengisi nama, email, telepon, dan nominal zakat — tanpa wajib mendaftarkan keluarga terlebih dahulu. Sistem secara otomatis membuat record Family dan Muzakki dari data yang dimasukkan.
+4. **Auto Hijri Year** — Sistem menghitung tahun Hijriah secara otomatis berdasarkan tanggal saat ini, menggantikan kebutuhan konfigurasi manual oleh admin. Admin tetap dapat meng-override jika diperlukan (misalnya koreksi kalender). Berlaku untuk seluruh sistem — semua transaksi baru, filter, dan laporan.
 
 ### User Workflows
 
@@ -76,6 +77,14 @@
 - [ ] Splash screen saat aplikasi dibuka dari layar utama
 - [ ] Tampilan standalone (tanpa address bar browser)
 
+**Auto Hijri Year:**
+- [ ] Sistem menghitung tahun Hijriah dari tanggal server saat ini secara otomatis (konversi Gregorian → Hijri)
+- [ ] Nilai auto-detect digunakan sebagai default untuk seluruh sistem (transaksi baru, filter daftar, laporan)
+- [ ] Admin dapat meng-override via AppConfig (`hijri_year`) — jika nilai manual di-set, nilai manual yang dipakai
+- [ ] Jika override dihapus/dikosongkan, sistem kembali ke auto-detect
+- [ ] Berlaku system-wide: alur V1, formulir sederhana C6, dan reporting (C4)
+- [ ] `hijri_year_beginning` tetap dikonfigurasi manual (untuk rentang dropdown filter tahun)
+
 **Formulir Zakat Sederhana:**
 - [ ] Jalur masuk baru di dashboard: tombol/link "Bayar Zakat" yang mengarah ke formulir sederhana
 - [ ] Formulir sederhana berdampingan (coexist) dengan alur V1 — keduanya dapat diakses
@@ -90,7 +99,7 @@
 - [ ] Alur konfirmasi pembayaran daring tetap berlaku (UPZIS mengkonfirmasi setelah transfer bank)
 - [ ] Mekanisme unique number tetap berlaku untuk pengajuan daring
 - [ ] Nomor transaksi berurutan otomatis tetap berlaku
-- [ ] Tag tahun Hijriah tetap berlaku
+- [ ] Tag tahun Hijriah menggunakan auto-detect (atau override admin jika di-set)
 - [ ] Validasi: minimal satu nominal bukan nol pada seluruh baris
 - [ ] Halaman detail transaksi / kwitansi sama dengan V1
 
@@ -128,6 +137,13 @@
 |-------|----------|------|
 | Pengguna menginstal aplikasi ke layar utama ponsel | P0 | -- |
 | Pengguna membuka aplikasi dari layar utama tanpa address bar browser | P0 | -- |
+
+### Auto Hijri Year
+
+| Story | Priority | Link |
+|-------|----------|------|
+| Transaksi baru otomatis mendapat tag tahun Hijriah dari tanggal saat ini tanpa konfigurasi admin | P0 | -- |
+| Admin meng-override tahun Hijriah via AppConfig jika diperlukan | P1 | -- |
 
 ### Simplified Form — Basic Flow
 
@@ -174,6 +190,7 @@
 | Formulir Sederhana | Jalur masuk pengajuan zakat yang baru, dengan data wajib minimal (nama, email, telepon) tanpa mengharuskan pendaftaran keluarga di awal |
 | Auto-create | Mekanisme sistem yang secara otomatis membuat record Family dan Muzakki dari data yang dimasukkan di formulir sederhana |
 | Account Linking | Proses menghubungkan akun social login dengan akun email/password yang sudah ada berdasarkan kecocokan alamat email |
+| Auto Hijri Year | Penentuan tahun Hijriah secara otomatis dari tanggal Gregorian saat ini, menggantikan konfigurasi manual. Admin override tetap dimungkinkan |
 
 ---
 
@@ -187,6 +204,8 @@
 - Auto-create Muzakki: buat satu record Muzakki per anggota yang dimasukkan di formulir. Hubungkan ke Family yang baru dibuat atau yang sudah ada.
 - Transaksi yang dihasilkan harus mengisi `family_id` dan `zakat_lines` yang valid — model data identik dengan V1, hanya jalur masuknya yang berbeda.
 - Formulir sederhana dan alur V1 menghasilkan record di tabel yang sama (`zakats`, `zakat_lines`, `families`, `muzakkis`) — tidak ada tabel baru untuk data transaksi.
+- Auto Hijri Year: konversi Gregorian → Hijri memerlukan library atau algoritma konversi kalender. Pertimbangkan library PHP yang sudah teruji (misalnya `islamic-network/prayer-times` atau konversi manual dengan tabel). Logika: `AppConfig::getConfigValue('hijri_year') ?? HijriDate::currentYear()`.
+- Auto Hijri Year berlaku system-wide — perlu memastikan semua titik yang sebelumnya membaca `AppConfig::getConfigValue('hijri_year')` sekarang melalui satu helper yang menerapkan logika fallback (override → auto-detect).
 
 ---
 
@@ -196,6 +215,8 @@
 - [ ] **Apakah email dari social provider yang belum diverifikasi oleh provider harus tetap di-bypass verifikasi email?** — V1 mewajibkan verifikasi email sebelum akses dashboard. Jika social provider tidak menjamin email terverifikasi, apakah kita tetap meminta verifikasi email terpisah? — Owner: Product + Engineering, Due: Sebelum RFC
 - [ ] **Bagaimana perilaku jika pengguna social login mengajukan via formulir sederhana, lalu ingin menggunakan alur V1?** — Apakah data Family yang auto-created sudah cukup untuk dipakai di alur V1, atau pengguna harus melengkapi data keluarga dulu? — Owner: Product, Due: Sebelum implementasi
 - [ ] **Apakah perlu ada batas jumlah anggota keluarga yang bisa ditambahkan di formulir sederhana?** — Di V1 tidak ada batas eksplisit. Untuk formulir sederhana, apakah perlu dibatasi demi kesederhanaan UI? — Owner: Product + Design, Due: Sebelum implementasi
+- [ ] **Library konversi Hijri mana yang digunakan?** — Perlu library PHP yang akurat untuk konversi Gregorian → Hijri. Akurasi kalender Hijri bervariasi antar algoritma (astronomical vs tabular). Apakah cukup menggunakan konversi algoritmik, atau perlu validasi terhadap kalender resmi Kemenag? — Owner: Engineering, Due: Sebelum RFC
+- [ ] **Bagaimana mekanisme admin override untuk auto Hijri year?** — Opsi: (a) field khusus di AppConfig yang jika terisi meng-override auto-detect, atau (b) toggle on/off di UI admin untuk beralih antara mode otomatis dan manual. — Owner: Product + Engineering, Due: Sebelum RFC
 
 ---
 
@@ -208,6 +229,10 @@
 ---
 
 ## Changelog
+
+### Version 1.1 — 2026-03-06
+- Ditambahkan: fitur Auto Hijri Year (penentuan tahun Hijriah otomatis, system-wide, dengan admin override)
+- Ditambahkan: open questions terkait library konversi Hijri dan mekanisme override
 
 ### Version 1.0 — 2026-03-04
 - Definisi kapabilitas awal mencakup social login, PWA, dan formulir zakat sederhana

@@ -90,7 +90,7 @@ C1 (Auth & Roles)
 Capabilities: C1, C2, C3, C4, C5
 
 ### V1.1 — Simplified Self-Service Zakat
-**Goal:** Menurunkan hambatan masuk bagi muzakki baru dengan social login, PWA, dan formulir pengajuan zakat yang disederhanakan — memungkinkan pengajuan zakat dalam waktu kurang dari 3 menit tanpa pendaftaran keluarga di awal. Data keluarga dan muzakki dibangun secara otomatis dari pengajuan.
+**Goal:** Menurunkan hambatan masuk bagi muzakki baru dengan social login, PWA, formulir pengajuan zakat yang disederhanakan, dan penentuan tahun Hijriah otomatis — memungkinkan pengajuan zakat dalam waktu kurang dari 3 menit tanpa pendaftaran keluarga di awal. Data keluarga dan muzakki dibangun secara otomatis dari pengajuan.
 
 Capabilities: C6
 
