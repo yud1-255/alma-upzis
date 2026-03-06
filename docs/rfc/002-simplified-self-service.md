@@ -31,7 +31,7 @@
 
 ### Summary
 
-Empat fitur C6 diimplementasikan sebagai ekstensi dari arsitektur monolith V1 yang sudah ada, tanpa mengubah model data inti. Social login menggunakan Laravel Socialite dengan account linking berbasis email. PWA diimplementasikan dengan web app manifest dan service worker untuk caching aset statis. Formulir sederhana dibangun sebagai jalur masuk baru yang auto-create record Family dan Muzakki, lalu menghasilkan transaksi identik dengan V1. Auto Hijri Year menggunakan library `geniusts/hijri-dates` dengan helper terpusat yang menerapkan logika fallback (admin override lalu auto-detect).
+Empat fitur C6 diimplementasikan sebagai ekstensi dari arsitektur monolith V1 yang sudah ada, tanpa mengubah model data inti. Social login menggunakan Laravel Socialite dengan account linking berbasis email. PWA diimplementasikan dengan web app manifest dan service worker untuk caching aset statis. Formulir sederhana dibangun sebagai jalur masuk baru dengan **application-layer use case** (`SubmitSimpleZakat`) yang mengorkestrasikan auto-create Family/Muzakki lalu mendelegasikan pembuatan transaksi ke `ZakatDomain` yang sudah ada — tidak ada domain baru. Auto Hijri Year menggunakan library `geniusts/hijri-dates` dengan helper terpusat yang menerapkan logika fallback (admin override lalu auto-detect).
 
 ### Architecture
 
@@ -55,28 +55,31 @@ Empat fitur C6 diimplementasikan sebagai ekstensi dari arsitektur monolith V1 ya
 │  ┌──────────────────┐  ┌─────────────────────────────────────────┐ │
 │  │ SocialLogin      │  │ SimpleZakatController                   │ │
 │  │ Controller       │  │   create() → form view                 │ │
-│  │   redirect()     │  │   store()  → validate + domain call    │ │
+│  │   redirect()     │  │   store()  → validate + use case call  │ │
 │  │   callback()     │  └──────────────────┬──────────────────────┘ │
 │  └────────┬─────────┘                     │                        │
 │           │                               │                        │
 │  ┌────────▼─────────┐  ┌─────────────────▼──────────────────────┐ │
-│  │ Laravel Socialite │  │ SimpleZakatDomain                      │ │
-│  │                   │  │   submitSimpleZakat(user, data): Zakat │ │
+│  │ Laravel Socialite │  │ SubmitSimpleZakat (Use Case)           │ │
+│  │                   │  │   execute(user, data): Zakat           │ │
 │  │ Google Provider   │  │     ├── findOrCreateFamily()           │ │
 │  │ Facebook Provider │  │     ├── syncMuzakkis()                 │ │
-│  └───────────────────┘  │     ├── createZakatWithLines()         │ │
-│                         │     └── logSubmission()                │ │
-│  ┌───────────────────┐  └─────────────────┬──────────────────────┘ │
-│  │ HijriYearHelper   │                    │                        │
-│  │   current(): str  │                    │                        │
-│  │   (override ??    │                    ▼                        │
-│  │    auto-detect)   │  ┌─────────────────────────────────────┐   │
-│  └───────────────────┘  │ Models (Eloquent) — TIDAK BERUBAH   │   │
-│                         │   User (+ social_id, social_type)   │   │
-│  ┌───────────────────┐  │   Family (address nullable)         │   │
-│  │ manifest.json     │  │   Muzakki, Zakat, ZakatLine         │   │
-│  │ sw.js             │  │   AppConfig                         │   │
-│  └───────────────────┘  └──────────────────┬──────────────────┘   │
+│  └───────────────────┘  │     └── ZakatDomain::submit...()  ◄───┤ │
+│                         └────────────────────────────────────────┘ │
+│  ┌───────────────────┐                                             │
+│  │ HijriYearHelper   │  ┌─────────────────────────────────────┐   │
+│  │   current(): str  │  │ Domains (Business Logic)            │   │
+│  │   (override ??    │  │   ZakatDomain  ← TIDAK BERUBAH      │   │
+│  │    auto-detect)   │  │   ResidenceDomain ← TIDAK BERUBAH   │   │
+│  └───────────────────┘  └─────────────────┬───────────────────┘   │
+│                                            │                       │
+│  ┌───────────────────┐  ┌─────────────────▼───────────────────┐   │
+│  │ manifest.json     │  │ Models (Eloquent)                   │   │
+│  │ sw.js             │  │   User (+ social_id, social_type)   │   │
+│  └───────────────────┘  │   Family (address nullable)         │   │
+│                         │   Muzakki, Zakat, ZakatLine         │   │
+│                         │   AppConfig                         │   │
+│                         └──────────────────┬──────────────────┘   │
 └─────────────────────────────────────────────┼─────────────────────┘
                                               │
                                      ┌────────▼────────┐
@@ -94,6 +97,7 @@ Empat fitur C6 diimplementasikan sebagai ekstensi dari arsitektur monolith V1 ya
 | Social Login | Laravel Socialite | Paket resmi Laravel untuk OAuth; mendukung Google & Facebook out-of-the-box; integrasi natural dengan session-based auth Laravel Breeze |
 | Hijri Conversion | `geniusts/hijri-dates` | 330K+ downloads, Carbon-based, cocok stack Laravel; konversi algoritmik cukup untuk kebutuhan tahun (bukan tanggal presisi) |
 | PWA Manifest | Manual (`manifest.json` + `sw.js`) | Tidak perlu paket tambahan; PWA setup sederhana (manifest + service worker untuk asset caching) |
+| Orchestration | Use Case pattern (`app/UseCases/`) | Menjaga bounded context tetap utuh; domain logic zakat tetap di `ZakatDomain`; use case hanya mengorkestrasikan persiapan data |
 | Frontend | Vue 3 + Inertia.js (existing) | Konsisten dengan V1; halaman baru ditambahkan sebagai Vue pages biasa |
 | Database | MySQL (existing) | Tidak ada tabel baru untuk transaksi; hanya migration untuk kolom social login di `users` dan nullable fields di `families` |
 
@@ -206,34 +210,51 @@ resources/views/app.blade.php — <link rel="manifest"> + service worker registr
 | Browser tidak mendukung service worker | No SW | Aplikasi tetap berjalan normal sebagai web biasa; fitur install tidak tersedia |
 | Cache storage penuh | QuotaExceeded | Service worker menghapus cache lama dan mencoba ulang |
 
-### 3.3 Formulir Zakat Sederhana (SimpleZakatDomain)
+### 3.3 Formulir Zakat Sederhana (SubmitSimpleZakat Use Case)
 
-**Responsibility:** Menyediakan jalur masuk baru untuk pengajuan zakat dengan field minimal (nama, email, telepon), auto-create Family dan Muzakki, dan menghasilkan transaksi identik dengan V1.
+**Responsibility:** Mengorkestrasikan pengajuan zakat via formulir sederhana — auto-create Family dan Muzakki jika diperlukan, lalu mendelegasikan pembuatan transaksi zakat ke `ZakatDomain` yang sudah ada. Ini adalah **application-layer use case**, bukan domain baru — logika bisnis zakat tetap terpusat di `ZakatDomain`.
+
+**Rationale:** Formulir sederhana bukan domain bisnis baru; domain "zakat" tetap sama (aturan transaksi, penomoran, unique number, konfirmasi). Yang berbeda hanyalah jalur masuk (presentation) dan orkestrasi persiapan data (application). Memisahkannya sebagai domain baru akan memecah bounded context dan menduplikasi logika bisnis. Use case pattern menjaga `ZakatDomain` sebagai single source of truth untuk logika transaksi.
 
 **Interface:**
 ```php
-// SimpleZakatDomain
-submitSimpleZakat(User $user, array $data): Zakat
-    // Orchestrator utama:
-    // 1. findOrCreateFamily()
-    // 2. syncMuzakkis()
-    // 3. createZakatWithLines()
-    // 4. logSubmission()
+// app/UseCases/SubmitSimpleZakat.php
+class SubmitSimpleZakat
+{
+    public function __construct(
+        private ZakatDomain $zakatDomain
+    ) {}
 
-// Internal methods (private)
-findOrCreateFamily(User $user, array $contactData): Family
-    // Jika user->family_id ada → return family yang ada
-    // Jika tidak → buat Family baru, link ke user
+    /**
+     * Orchestrator utama:
+     * 1. findOrCreateFamily() — persiapan data (bukan domain logic)
+     * 2. syncMuzakkis() — persiapan data (bukan domain logic)
+     * 3. $this->zakatDomain->submitAsMuzakki() — delegasi ke domain
+     */
+    public function execute(User $user, array $data): Zakat
 
-syncMuzakkis(Family $family, array $members): Collection<Muzakki>
-    // Untuk setiap anggota di form:
-    //   - Jika muzakki_id ada (existing) → gunakan yang ada
-    //   - Jika baru → buat Muzakki baru, link ke family
+    // Internal methods (private)
+    private function findOrCreateFamily(User $user, array $contactData): Family
+        // Jika user->family_id ada → return family yang ada
+        // Jika tidak → buat Family baru, link ke user
 
-createZakatWithLines(User $user, Family $family, Collection $muzakkis, array $data): Zakat
-    // Buat record Zakat + ZakatLine per muzakki
-    // Gunakan ZakatDomain::generateZakatNumber() dan unique_number logic dari V1
+    private function syncMuzakkis(Family $family, array $members): Collection
+        // Untuk setiap anggota di form:
+        //   - Jika muzakki_id ada (existing) → gunakan yang ada
+        //   - Jika baru → buat Muzakki baru, link ke family
+}
 ```
+
+**Batas tanggung jawab:**
+| Concern | Siapa yang menangani |
+|---------|---------------------|
+| Auto-create Family | `SubmitSimpleZakat` (use case) |
+| Auto-create Muzakki | `SubmitSimpleZakat` (use case) |
+| Generate zakat number | `ZakatDomain` (existing) |
+| Generate unique number | `ZakatDomain` (existing) |
+| Create Zakat + ZakatLine records | `ZakatDomain` (existing) |
+| Hijri year tagging | `ZakatDomain` via `HijriYearHelper` (existing) |
+| Audit logging | `ZakatDomain` (existing) |
 
 **Input Data Structure (dari Vue form):**
 ```php
@@ -307,9 +328,10 @@ Untuk setiap member di $data['members']:
 ```
 
 **Behaviour:**
-- Formulir sederhana menghasilkan record di tabel yang SAMA dengan V1 (`zakats`, `zakat_lines`)
-- `generateZakatNumber()` dan `unique_number` (0-500) logic identik dengan V1 (reuse dari `ZakatDomain`)
-- Tahun Hijriah diambil dari `HijriYearHelper::current()` (auto-detect dengan admin override)
+- Formulir sederhana menghasilkan record di tabel yang SAMA dengan V1 (`zakats`, `zakat_lines`) — karena menggunakan `ZakatDomain` yang sama
+- Use case `SubmitSimpleZakat` hanya bertanggung jawab atas persiapan data (Family, Muzakki), lalu memanggil `ZakatDomain::submitAsMuzakki()` untuk logika transaksi yang sesungguhnya
+- `generateZakatNumber()`, `unique_number` (0-500), audit logging — semuanya ditangani oleh `ZakatDomain`, bukan diduplikasi
+- Tahun Hijriah diambil dari `HijriYearHelper::current()` di dalam `ZakatDomain` (auto-detect dengan admin override)
 - `is_offline_submission = false` (selalu daring)
 - `receive_from = $user->id`
 - `family_head = $family->head_of_family`
@@ -323,9 +345,9 @@ Untuk setiap member di $data['members']:
 |-----------|-------|----------|
 | Semua nominal nol pada seluruh baris | Validation error | Ditolak dengan pesan "Minimal satu jenis zakat harus diisi" |
 | Email format invalid | Validation error | Laravel validation rule `email` |
-| muzakki_id tidak milik family user | Authorization error | Tolak request; muzakki harus milik family yang sama |
+| muzakki_id tidak milik family user | Authorization error | Tolak request di use case; muzakki harus milik family yang sama |
 | User sudah punya transaksi pending (optional) | Tidak diblokir | Diperbolehkan — sama dengan V1 |
-| DB transaction gagal di tengah jalan | Transaction rollback | Gunakan `DB::transaction()` — semua auto-create dan transaksi zakat dalam satu DB transaction |
+| DB transaction gagal di tengah jalan | Transaction rollback | `DB::transaction()` di use case membungkus auto-create + delegasi ke `ZakatDomain` — gagal di titik mana pun akan rollback semua |
 
 ### 3.4 Auto Hijri Year (HijriYearHelper)
 
@@ -373,9 +395,8 @@ public static function autoDetect(): string
 **Behaviour:**
 - Berlaku system-wide: semua titik yang sebelumnya membaca `AppConfig::getConfigValue('hijri_year')` langsung harus diganti menjadi `HijriYearHelper::current()`
 - Titik-titik yang terpengaruh:
-  - `ZakatDomain::submitAsMuzakki()` — tag `hijri_year` pada transaksi baru
+  - `ZakatDomain::submitAsMuzakki()` — tag `hijri_year` pada transaksi baru (digunakan oleh V1 maupun C6 via `SubmitSimpleZakat` use case)
   - `ZakatDomain::submitAsUpzis()` — tag `hijri_year` pada transaksi baru
-  - `SimpleZakatDomain::submitSimpleZakat()` — tag `hijri_year` pada transaksi baru (C6)
   - Controller yang menyediakan filter tahun Hijriah default di halaman laporan
   - Halaman AppConfig admin — menampilkan info auto-detect di samping field override
 - `hijri_year_beginning` tetap dikonfigurasi manual via AppConfig (untuk rentang dropdown filter tahun) — tidak terpengaruh auto-detect
@@ -537,19 +558,25 @@ Route-route berikut tidak berubah path-nya, tetapi controller-nya diupdate untuk
 - **Pros:** Kontrol penuh atas caching strategy; tidak ada dependensi tambahan; mudah di-debug.
 - **Cons:** Harus menulis service worker code sendiri.
 
-### 6.4 Formulir Sederhana: Domain Baru vs Extend ZakatDomain
+### 6.4 Formulir Sederhana: Arsitektur Orchestration
 
-**Alternatif A: Extend `ZakatDomain` yang ada**
-- **Approach:** Tambahkan method `submitSimpleZakat()` ke `ZakatDomain` yang sudah ada.
-- **Pros:** Satu domain untuk semua logika zakat; reuse method internal (`generateZakatNumber`, dll.).
-- **Cons:** `ZakatDomain` sudah 14KB (lihat [ADR-004](../adr/004-domain-layer-pattern.md)) — menambah logika auto-create Family dan Muzakki akan membuatnya semakin besar dan melanggar single responsibility.
-- **Ditolak karena:** Risiko god object. Formulir sederhana memiliki tanggung jawab tambahan yang berbeda (auto-create Family/Muzakki) yang bukan core concern ZakatDomain.
+**Alternatif A: Extend `ZakatDomain` dengan method `submitSimpleZakat()`**
+- **Approach:** Tambahkan method baru ke `ZakatDomain` yang menangani auto-create Family/Muzakki + submit transaksi.
+- **Pros:** Satu domain untuk semua logika zakat; reuse method internal (`generateZakatNumber`, dll.) tanpa coupling antar class.
+- **Cons:** `ZakatDomain` sudah 14KB (lihat [ADR-004](../adr/004-domain-layer-pattern.md)) — menambah logika auto-create Family dan Muzakki akan membuatnya semakin besar. Auto-create Family/Muzakki bukan core concern domain zakat.
+- **Ditolak karena:** Risiko god object. Logika auto-create Family/Muzakki adalah orchestration concern, bukan business rule zakat.
 
-**Alternatif B: `SimpleZakatDomain` baru (DIPILIH)**
-- **Approach:** Domain class baru yang mengorkestrasikan auto-create Family/Muzakki dan kemudian mendelegasikan pembuatan transaksi ke method yang sesuai.
-- **Pros:** Single responsibility yang jelas; `ZakatDomain` tidak membengkak; logika auto-create terisolasi.
-- **Cons:** Satu class domain tambahan; beberapa method dari `ZakatDomain` perlu dipanggil (reuse, bukan duplikasi).
-- **Mitigasi coupling:** `SimpleZakatDomain` memanggil `ZakatDomain::generateZakatNumber()` — reuse, bukan copy-paste.
+**Alternatif B: `SimpleZakatDomain` — domain baru terpisah**
+- **Approach:** Domain class baru (`app/Domains/SimpleZakatDomain.php`) yang mengorkestrasikan auto-create dan delegasi ke `ZakatDomain`.
+- **Pros:** `ZakatDomain` tidak membengkak; logika auto-create terisolasi.
+- **Cons:** Memecah bounded context — "zakat sederhana" bukan domain bisnis yang berbeda, hanya jalur masuk yang berbeda. Menyesatkan secara DDD: dua domain untuk satu konsep bisnis yang sama. Potensi duplikasi logika jika batas tanggung jawab tidak jelas.
+- **Ditolak karena:** Formulir sederhana bukan domain baru. Domain "zakat" tetap satu — yang berbeda adalah cara data masuk ke sistem. Membuat domain terpisah menciptakan ilusi bahwa ada dua bounded context padahal hanya ada satu.
+
+**Alternatif C: Application-layer use case `SubmitSimpleZakat` (DIPILIH)**
+- **Approach:** Class use case (`app/UseCases/SubmitSimpleZakat.php`) yang mengorkestrasikan persiapan data (auto-create Family/Muzakki) lalu mendelegasikan ke `ZakatDomain::submitAsMuzakki()` untuk logika transaksi.
+- **Pros:** Bounded context tetap utuh — satu `ZakatDomain` untuk semua logika bisnis zakat. Pemisahan concern yang jelas: use case = orchestration, domain = business rules. `ZakatDomain` tidak membengkak. Mudah dipahami: use case menggambarkan "apa yang terjadi saat user submit formulir sederhana" tanpa mencampur dengan aturan bisnis.
+- **Cons:** Menambah satu layer baru (`app/UseCases/`) yang belum ada di codebase V1. Use case meng-inject `ZakatDomain` — ada coupling, tapi ini coupling yang valid (use case tahu domain mana yang dipanggil).
+- **Trade-off yang diterima:** Layer `UseCases/` baru, tapi hanya satu class. Jika ke depan ada use case lain yang memerlukan orchestration lintas-domain, pattern ini sudah tersedia. Ini bukan over-engineering — ini minimal layering yang diperlukan untuk menjaga domain tetap bersih.
 
 ### 6.5 Formulir Sederhana: Family Email — Kolom Baru vs Mengambil dari User
 
@@ -641,7 +668,7 @@ Route-route berikut tidak berubah path-nya, tetapi controller-nya diupdate untuk
 **Exit Criteria:** Muzakki baru dapat mengajukan zakat via formulir sederhana dalam < 3 menit; Family dan Muzakki auto-created valid dan dapat digunakan di alur V1; transaksi yang dihasilkan identik dengan V1.
 
 **Scope:**
-- `SimpleZakatDomain` dengan logika auto-create Family, auto-create Muzakki, dan submit transaksi
+- `SubmitSimpleZakat` use case (`app/UseCases/`) — orchestration auto-create Family/Muzakki + delegasi ke `ZakatDomain::submitAsMuzakki()`
 - `SimpleZakatController` dengan halaman form dan submit
 - Vue pages: `SimpleZakat/Create.vue` (form) — reuse halaman detail transaksi V1 untuk show
 - Pre-fill data dari Family existing jika user sudah punya data keluarga
@@ -700,8 +727,8 @@ Route-route berikut tidak berubah path-nya, tetapi controller-nya diupdate untuk
 - [ ] **Social login password:** User yang dibuat via social login mendapat password acak yang di-hash. Mereka tidak bisa login via password kecuali melakukan password reset. Ini mencegah account takeover jika social account dikompromikan
 - [ ] **Service worker scope:** Service worker hanya cache aset statis. Tidak meng-intercept POST request atau request dengan cookie — menghindari cache poisoning pada data sensitif
 - [ ] **Input validation formulir sederhana:** Validasi server-side di controller untuk semua field (nama, email, telepon, nominal). Tidak bergantung pada validasi client-side Vue
-- [ ] **Family ownership:** `SimpleZakatDomain` memverifikasi bahwa muzakki_id yang dikirim dalam form benar-benar milik family user — mencegah cross-family data manipulation
-- [ ] **DB transaction integrity:** Seluruh proses auto-create Family, auto-create Muzakki, dan submit transaksi dibungkus dalam `DB::transaction()` — gagal di tengah jalan akan rollback semua perubahan
+- [ ] **Family ownership:** `SubmitSimpleZakat` use case memverifikasi bahwa muzakki_id yang dikirim dalam form benar-benar milik family user — mencegah cross-family data manipulation
+- [ ] **DB transaction integrity:** Seluruh proses di `SubmitSimpleZakat` (auto-create Family, auto-create Muzakki, delegasi ke `ZakatDomain`) dibungkus dalam `DB::transaction()` — gagal di titik mana pun akan rollback semua perubahan
 - [ ] **Rate limiting social login:** Laravel default throttle pada route login (60 req/menit) berlaku juga untuk social login callback — mencegah abuse
 
 ---
