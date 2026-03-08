@@ -105,4 +105,5 @@ Scenario: Tombol social login tersedia di halaman registrasi
 
 - **PRD:** [C6 — Simplified Self-Service Zakat](../../prd/006-simplified-self-service.md)
 - **RFC:** [RFC-002: Simplified Self-Service Zakat](../../rfc/002-simplified-self-service.md)
+- **Tasks:** [rfc-002/003](../../tasks/rfc-002/003-social-login-backend.md), [rfc-002/004](../../tasks/rfc-002/004-social-login-frontend.md)
 - **Related Stories:** [social-login-account-linking](./social-login-account-linking.md)

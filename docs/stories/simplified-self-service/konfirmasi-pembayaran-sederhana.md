@@ -88,4 +88,5 @@ Scenario: Unique number diverifikasi saat konfirmasi
 
 - **PRD:** [C6 — Simplified Self-Service Zakat](../../prd/006-simplified-self-service.md)
 - **RFC:** [RFC-002: Simplified Self-Service Zakat](../../rfc/002-simplified-self-service.md)
+- **Task:** [rfc-002/007](../../tasks/rfc-002/007-dashboard-integration.md)
 - **Related Stories:** [pengajuan-zakat-sederhana](./pengajuan-zakat-sederhana.md), [auto-create-keluarga](./auto-create-keluarga.md)

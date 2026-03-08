@@ -91,4 +91,5 @@ Scenario: Aset statis tersedia dari cache setelah instalasi
 
 - **PRD:** [C6 — Simplified Self-Service Zakat](../../prd/006-simplified-self-service.md)
 - **RFC:** [RFC-002: Simplified Self-Service Zakat](../../rfc/002-simplified-self-service.md)
+- **Task:** [rfc-002/008](../../tasks/rfc-002/008-pwa-setup.md)
 - **Related Stories:** Tidak ada

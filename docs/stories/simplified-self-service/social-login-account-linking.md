@@ -81,4 +81,5 @@ Scenario: Pengguna lama login via provider berbeda dari yang pertama
 
 - **PRD:** [C6 — Simplified Self-Service Zakat](../../prd/006-simplified-self-service.md)
 - **RFC:** [RFC-002: Simplified Self-Service Zakat](../../rfc/002-simplified-self-service.md)
+- **Task:** [rfc-002/003](../../tasks/rfc-002/003-social-login-backend.md)
 - **Related Stories:** [social-login-registrasi](./social-login-registrasi.md)
