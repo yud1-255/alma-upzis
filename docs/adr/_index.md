@@ -9,6 +9,8 @@
 | [003](./003-inertia-vue-frontend.md) | Inertia.js + Vue 3 sebagai Frontend Strategy | Accepted | 2026-02-27 |
 | [004](./004-domain-layer-pattern.md) | Domain Layer untuk Pemisahan Logika Bisnis | Accepted | 2026-02-27 |
 | [005](./005-soft-delete-audit-logging.md) | Soft Delete dan Audit Logging untuk Transaksi | Accepted | 2026-02-27 |
+| [006](./006-use-case-layer.md) | Use Case Layer untuk Orkestrasi Lintas-Domain | Accepted | 2026-03-08 |
+| [007](./007-social-login-socialite.md) | Laravel Socialite dengan Penyimpanan Kolom di Tabel Users | Accepted | 2026-03-08 |
 
 ## Superseded
 
