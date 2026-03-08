@@ -8,6 +8,18 @@
 
     <div class="my-6">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mb-4 overflow-hidden bg-lime-700 shadow-sm sm:rounded-lg">
+          <div class="p-6 text-center">
+            <p class="text-white text-lg mb-3">Bayar zakat dengan mudah dan cepat</p>
+            <Link
+              :href="route('simple-zakat.create')"
+              class="inline-block px-8 py-3 bg-white text-lime-700 font-bold rounded-lg shadow hover:bg-gray-100 transition"
+            >
+              Bayar Zakat
+            </Link>
+          </div>
+        </div>
+
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <p class="pt-2 pb-4">

@@ -70,10 +70,13 @@
       </BreezeButton>
     </div>
   </form>
+
+  <SocialLoginButtons />
 </template>
 
 <script>
 import BreezeButton from "@/Components/Button.vue";
+import SocialLoginButtons from "@/Components/SocialLoginButtons.vue";
 import BreezeGuestLayout from "@/Layouts/Guest.vue";
 import BreezeInput from "@/Components/Input.vue";
 import BreezeLabel from "@/Components/Label.vue";
@@ -91,6 +94,7 @@ export default {
     BreezeLabel,
     BreezeValidationErrors,
     InputPassword,
+    SocialLoginButtons,
     Head,
     Link,
   },

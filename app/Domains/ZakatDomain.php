@@ -2,6 +2,7 @@
 
 namespace App\Domains;
 
+use App\Helpers\HijriYearHelper;
 use App\Models\AppConfig;
 use App\Models\SequenceNumber;
 use App\Models\Zakat;
@@ -325,7 +326,7 @@ class ZakatDomain
 
     public function getHijriYears(): array
     {
-        return range(AppConfig::getConfigValue('hijri_year_beginning'), AppConfig::getConfigValue('hijri_year'));
+        return range(AppConfig::getConfigValue('hijri_year_beginning'), HijriYearHelper::current());
     }
 
 
@@ -368,7 +369,7 @@ class ZakatDomain
             array_push($this->errors, "Pengguna {$user->name} tidak memiliki otorisasi hapus zakat");
         }
 
-        if ($zakat->hijri_year != AppConfig::getConfigValue('hijri_year')) {
+        if ($zakat->hijri_year != HijriYearHelper::current()) {
             array_push($this->errors, "Zakat {$zakat->transaction_no} hanya bisa dihapus pada periode zakat yang sama");
         }
         if ($zakat->zakat_pic != null) {

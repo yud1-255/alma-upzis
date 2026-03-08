@@ -4,8 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="theme-color" content="#1a5d1a">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
+
+        <!-- PWA -->
+        <link rel="manifest" href="/manifest.json">
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -23,5 +27,11 @@
         @env ('local')
             <script src="http://localhost:8080/js/bundle.js"></script>
         @endenv
+
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js');
+            }
+        </script>
     </body>
 </html>

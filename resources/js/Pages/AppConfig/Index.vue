@@ -9,7 +9,7 @@
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <table class="align-top">
-              <tr v-for="(appConfig, idx) in appConfigs" :key="appConfig.key">
+              <tr v-for="(appConfig, idx) in appConfigs" :key="appConfig.key + '-' + idx">
                 <th
                   v-if="
                     appConfig.key == 'fitrah_amount' &&
@@ -25,13 +25,50 @@
                   class="text-left"
                 >
                   {{ configTranslation[appConfig.key] ?? appConfig.key }}
+                  <template v-if="appConfig.key === 'hijri_year'">
+                    <br />
+                    <span class="text-xs font-normal text-gray-500">
+                      Auto-detect: {{ autoDetectHijriYear }}
+                    </span>
+                  </template>
                 </th>
                 <td>
-                  <Input v-model="appConfig.value" class="w-96"></Input>
+                  <template v-if="appConfig.key === 'hijri_year'">
+                    <div class="flex items-center gap-2">
+                      <label class="flex items-center gap-1 text-sm text-gray-600">
+                        <input
+                          type="checkbox"
+                          v-model="hijriOverrideEnabled"
+                          class="rounded border-gray-300"
+                        />
+                        Override
+                      </label>
+                      <Input
+                        v-model="appConfig.value"
+                        class="w-96"
+                        :disabled="!hijriOverrideEnabled"
+                        :placeholder="hijriOverrideEnabled ? '' : autoDetectHijriYear"
+                        maxlength="4"
+                        pattern="[0-9]{4}"
+                      ></Input>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <Input v-model="appConfig.value" class="w-96"></Input>
+                  </template>
                 </td>
                 <td>
-                  <Link class="text-red-700" @click="saveConfig(appConfig)"
+                  <Link
+                    v-if="appConfig.key !== 'hijri_year' || hijriOverrideEnabled"
+                    class="text-red-700"
+                    @click="saveConfig(appConfig)"
                     >Ubah</Link
+                  >
+                  <Link
+                    v-else-if="appConfig.key === 'hijri_year' && appConfig.value"
+                    class="text-gray-500"
+                    @click="clearHijriOverride(appConfig)"
+                    >Hapus Override</Link
                   >
                 </td>
               </tr>
@@ -62,6 +99,7 @@ export default {
   },
   props: {
     appConfigs: Array,
+    autoDetectHijriYear: String,
   },
   setup() {
     const appConfigForm = useForm({
@@ -73,7 +111,9 @@ export default {
     return { appConfigForm };
   },
   data() {
+    const hijriConfig = this.appConfigs?.find((c) => c.key === "hijri_year");
     return {
+      hijriOverrideEnabled: !!(hijriConfig && hijriConfig.value),
       configTranslation: {
         hijri_year: "Tahun Hijriyah (Saat ini)",
         hijri_year_beginning: "Tahun Hijriyah (Awal Entri Data)",
@@ -96,6 +136,10 @@ export default {
   methods: {
     keyItems(key) {
       return this.appConfigs.filter((a) => a.key == key);
+    },
+    clearHijriOverride(appConfig) {
+      appConfig.value = "";
+      this.saveConfig(appConfig);
     },
     saveConfig(appConfig) {
       this.appConfigForm.id = appConfig.id;

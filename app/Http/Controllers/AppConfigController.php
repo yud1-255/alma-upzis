@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\HijriYearHelper;
 use App\Models\AppConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -23,7 +24,8 @@ class AppConfigController extends Controller
         }
 
         return Inertia::render('AppConfig/Index', [
-            'appConfigs' => AppConfig::all()
+            'appConfigs' => AppConfig::all(),
+            'autoDetectHijriYear' => HijriYearHelper::autoDetect(),
         ]);
     }
 

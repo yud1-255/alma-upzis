@@ -3,6 +3,7 @@
 use App\Http\Controllers\ZakatController;
 use App\Http\Controllers\MuzakkiController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\SimpleZakatController;
 
 use App\Http\Controllers\AppConfigController;
 use App\Http\Controllers\RoleController;
@@ -62,6 +63,12 @@ Route::middleware(['auth', 'role:administrator,upzis'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/family/check_kk', [FamilyController::class, 'checkKkNumber'])->name('family.checkKk');
     Route::post('/family/assign/{id}', [FamilyController::class, 'assign'])->name('family.assign');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/simple-zakat/create', [SimpleZakatController::class, 'create'])->name('simple-zakat.create');
+    Route::post('/simple-zakat', [SimpleZakatController::class, 'store'])->name('simple-zakat.store');
+    Route::get('/simple-zakat/{id}', [SimpleZakatController::class, 'show'])->name('simple-zakat.show');
 });
 
 Route::middleware(['auth'])->group(function () {

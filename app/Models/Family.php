@@ -10,7 +10,7 @@ class Family extends Model
     use HasFactory;
 
     protected $fillable = [
-        'head_of_family', 'phone', 'address', 'is_bpi', 'bpi_block_no', 'bpi_house_no'
+        'head_of_family', 'phone', 'email', 'address', 'kk_number', 'is_bpi', 'bpi_block_no', 'bpi_house_no'
     ];
 
     protected $hidden = ['created_at', 'updated_at'];

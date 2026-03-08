@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domains\ZakatDomain;
 use App\Domains\ResidenceDomain;
+use App\Helpers\HijriYearHelper;
 use App\Exports\ZakatExport;
 use App\Exports\TransactionRecapExport;
 use App\Exports\MuzakkiListExport;
@@ -36,7 +37,7 @@ class ZakatController extends Controller
         $zakats = array();
 
         $searchTerm = $request->searchTerm ?? "";
-        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
+        $hijriYear = $request->hijriYear ?? HijriYearHelper::current();
 
         if ($user->can('viewAny', new Zakat())) {
             $zakats = $domain->transactionSummary($searchTerm, $hijriYear, false);
@@ -93,7 +94,7 @@ class ZakatController extends Controller
             'family_placeholder' => $familyPlaceholder,
             'muzakkis' => $muzakkis,
             'transaction_no' => $transactionNo,
-            'hijri_year' => AppConfig::getConfigValue('hijri_year'),
+            'hijri_year' => HijriYearHelper::current(),
             'fitrah_amount' => AppConfig::getConfigValues('fitrah_amount'),
             'is_family_requested' => $isFamilyRequested,
             'blockNumbers' => $blockNumbers,
@@ -226,7 +227,7 @@ class ZakatController extends Controller
     public function transactionRecap(Request $request)
     {
         $searchTerm = $request->searchTerm ?? "";
-        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
+        $hijriYear = $request->hijriYear ?? HijriYearHelper::current();
 
         $domain = new ZakatDomain(Auth::user());
         $zakats = $domain->zakatTransactionRecap($searchTerm, $hijriYear);
@@ -240,7 +241,7 @@ class ZakatController extends Controller
 
     public function dailyTransactionRecap(Request $request)
     {
-        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
+        $hijriYear = $request->hijriYear ?? HijriYearHelper::current();
 
         $domain = new ZakatDomain(Auth::user());
         $zakats = $domain->zakatTransactionRecap("", $hijriYear)
@@ -258,7 +259,7 @@ class ZakatController extends Controller
     public function muzakkiRecap(Request $request)
     {
         $searchTerm = $request->searchTerm ?? "";
-        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
+        $hijriYear = $request->hijriYear ?? HijriYearHelper::current();
 
         $domain = new ZakatDomain(Auth::user());
         $zakats = $domain->zakatMuzakkiRecap($searchTerm, $hijriYear);
@@ -273,7 +274,7 @@ class ZakatController extends Controller
     public function dailyMuzakkiRecap(Request $request)
     {
         $domain = new ZakatDomain(Auth::user());
-        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
+        $hijriYear = $request->hijriYear ?? HijriYearHelper::current();
 
 
         $zakats = $domain->zakatMuzakkiRecap("", $hijriYear)
@@ -302,7 +303,7 @@ class ZakatController extends Controller
     {
         $user = Auth::user();
         $searchTerm = $request->searchTerm ?? "";
-        $hijriYear = $request->hijriYear ?? AppConfig::getConfigValue('hijri_year');
+        $hijriYear = $request->hijriYear ?? HijriYearHelper::current();
 
         $domain = new ZakatDomain(Auth::user());
         $zakats = $domain->zakatOnlinePayments($searchTerm, $hijriYear);

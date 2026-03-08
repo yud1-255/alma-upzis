@@ -7,6 +7,13 @@
     {{ status }}
   </div>
 
+  <div
+    v-if="$page.props.flash && $page.props.flash.error"
+    class="mb-4 font-medium text-sm text-red-600"
+  >
+    {{ $page.props.flash.error }}
+  </div>
+
   <form @submit.prevent="submit">
     <div>
       <BreezeLabel for="email" value="Email" />
@@ -69,10 +76,13 @@
       </BreezeButton>
     </div>
   </form>
+
+  <SocialLoginButtons />
 </template>
 
 <script>
 import BreezeButton from "@/Components/Button.vue";
+import SocialLoginButtons from "@/Components/SocialLoginButtons.vue";
 import BreezeCheckbox from "@/Components/Checkbox.vue";
 import BreezeGuestLayout from "@/Layouts/Guest.vue";
 import BreezeInput from "@/Components/Input.vue";
@@ -91,6 +101,7 @@ export default {
     BreezeLabel,
     InputPassword,
     BreezeValidationErrors,
+    SocialLoginButtons,
     Head,
     Link,
   },
