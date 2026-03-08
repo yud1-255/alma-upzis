@@ -94,5 +94,5 @@ Scenario: Anggota tanpa nominal — baris diabaikan
 ## Links
 
 - **PRD:** [C6 — Simplified Self-Service Zakat](../../prd/006-simplified-self-service.md)
-- **RFC:** TBD
+- **RFC:** [RFC-002: Simplified Self-Service Zakat](../../rfc/002-simplified-self-service.md)
 - **Related Stories:** [pengajuan-zakat-sederhana](./pengajuan-zakat-sederhana.md), [auto-create-keluarga](./auto-create-keluarga.md)

@@ -85,5 +85,5 @@ Scenario: AppConfig hijri_year kosong — fallback ke auto-detect
 ## Links
 
 - **PRD:** [C6 — Simplified Self-Service Zakat](../../prd/006-simplified-self-service.md)
-- **RFC:** TBD
+- **RFC:** [RFC-002: Simplified Self-Service Zakat](../../rfc/002-simplified-self-service.md)
 - **Related Stories:** [override-hijri-year](./override-hijri-year.md)

@@ -2,7 +2,7 @@
 
 | Status | Author | Capability | Last Updated |
 |--------|--------|------------|--------------|
-| Draft | UPZIS Team | [C6](../prd/006-simplified-self-service.md) | 2026-03-06 |
+| Accepted | UPZIS Team | [C6](../prd/006-simplified-self-service.md) | 2026-03-08 |
 
 **Status Values:** Draft → Review → Accepted → Implementing → Done | Superseded
 

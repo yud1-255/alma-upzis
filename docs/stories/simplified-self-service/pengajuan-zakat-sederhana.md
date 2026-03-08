@@ -107,5 +107,5 @@ Scenario: Formulir sederhana berdampingan dengan alur V1
 ## Links
 
 - **PRD:** [C6 — Simplified Self-Service Zakat](../../prd/006-simplified-self-service.md)
-- **RFC:** TBD
+- **RFC:** [RFC-002: Simplified Self-Service Zakat](../../rfc/002-simplified-self-service.md)
 - **Related Stories:** [tambah-anggota-formulir](./tambah-anggota-formulir.md), [pengajuan-prefill](./pengajuan-prefill.md), [auto-create-keluarga](./auto-create-keluarga.md), [konfirmasi-pembayaran-sederhana](./konfirmasi-pembayaran-sederhana.md)

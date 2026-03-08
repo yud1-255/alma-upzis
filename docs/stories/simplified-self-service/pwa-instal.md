@@ -90,5 +90,5 @@ Scenario: Aset statis tersedia dari cache setelah instalasi
 ## Links
 
 - **PRD:** [C6 — Simplified Self-Service Zakat](../../prd/006-simplified-self-service.md)
-- **RFC:** TBD
+- **RFC:** [RFC-002: Simplified Self-Service Zakat](../../rfc/002-simplified-self-service.md)
 - **Related Stories:** Tidak ada
