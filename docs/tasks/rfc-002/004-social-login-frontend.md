@@ -2,7 +2,7 @@
 
 | Phase | Status | Story |
 |-------|--------|-------|
-| 2 | Not Started | [social-login-registrasi](../../stories/simplified-self-service/social-login-registrasi.md) |
+| 2 | Done | [social-login-registrasi](../../stories/simplified-self-service/social-login-registrasi.md) |
 
 ---
 
@@ -14,7 +14,7 @@ Social login buttons (Google and Facebook) are displayed on both login and regis
 
 ## Preconditions
 
-- [ ] Task rfc-002/003: Social login backend routes exist
+- [x] Task rfc-002/003: Social login backend routes exist
 
 ---
 

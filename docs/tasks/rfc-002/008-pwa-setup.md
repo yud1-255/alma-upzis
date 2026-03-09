@@ -2,7 +2,7 @@
 
 | Phase | Status | Story |
 |-------|--------|-------|
-| 4 | Not Started | [pwa-instal](../../stories/simplified-self-service/pwa-instal.md) |
+| 4 | Done | [pwa-instal](../../stories/simplified-self-service/pwa-instal.md) |
 
 ---
 

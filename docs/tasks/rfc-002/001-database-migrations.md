@@ -2,7 +2,7 @@
 
 | Phase | Status | Story |
 |-------|--------|-------|
-| 1 | Not Started | N/A (infrastructure) |
+| 1 | Done | N/A (infrastructure) |
 
 ---
 

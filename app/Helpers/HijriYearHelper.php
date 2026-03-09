@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\AppConfig;
-use GeniusTS\HijriDate\HijriDate;
+use GeniusTS\HijriDate\Date as HijriDate;
 use Illuminate\Support\Facades\Log;
 
 class HijriYearHelper

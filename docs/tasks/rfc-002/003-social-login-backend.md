@@ -2,7 +2,7 @@
 
 | Phase | Status | Story |
 |-------|--------|-------|
-| 2 | Not Started | [social-login-registrasi](../../stories/simplified-self-service/social-login-registrasi.md), [social-login-account-linking](../../stories/simplified-self-service/social-login-account-linking.md) |
+| 2 | Done | [social-login-registrasi](../../stories/simplified-self-service/social-login-registrasi.md), [social-login-account-linking](../../stories/simplified-self-service/social-login-account-linking.md) |
 
 ---
 
@@ -15,7 +15,7 @@ Users can authenticate via Google and Facebook OAuth using Laravel Socialite, wi
 ## Preconditions
 
 - [x] RFC-002 accepted
-- [ ] Task rfc-002/001: Database migrations completed (social_id, social_type columns exist)
+- [x] Task rfc-002/001: Database migrations completed (social_id, social_type columns exist)
 
 ---
 

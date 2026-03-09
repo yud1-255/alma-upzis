@@ -2,7 +2,7 @@
 
 | Phase | Status | Story |
 |-------|--------|-------|
-| 3 | Not Started | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [auto-create-keluarga](../../stories/simplified-self-service/auto-create-keluarga.md) |
+| 3 | Done | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [auto-create-keluarga](../../stories/simplified-self-service/auto-create-keluarga.md) |
 
 ---
 
@@ -15,8 +15,8 @@ Backend use case and controller for simplified zakat submission are implemented 
 ## Preconditions
 
 - [x] RFC-002 accepted
-- [ ] Task rfc-002/001: Database migrations completed (families.email, nullable fields)
-- [ ] Task rfc-002/002: HijriYearHelper available
+- [x] Task rfc-002/001: Database migrations completed (families.email, nullable fields)
+- [x] Task rfc-002/002: HijriYearHelper available
 
 ---
 

@@ -2,7 +2,7 @@
 
 | Phase | Status | Story |
 |-------|--------|-------|
-| 1 | Not Started | [auto-hijri-year](../../stories/simplified-self-service/auto-hijri-year.md), [override-hijri-year](../../stories/simplified-self-service/override-hijri-year.md) |
+| 1 | Done | [auto-hijri-year](../../stories/simplified-self-service/auto-hijri-year.md), [override-hijri-year](../../stories/simplified-self-service/override-hijri-year.md) |
 
 ---
 
@@ -15,7 +15,7 @@ Hijri year is determined automatically system-wide via `HijriYearHelper::current
 ## Preconditions
 
 - [x] RFC-002 accepted
-- [ ] Task rfc-002/001: Database migrations completed (for `families.email`, needed for full Phase 1 exit)
+- [x] Task rfc-002/001: Database migrations completed (for `families.email`, needed for full Phase 1 exit)
 
 ---
 

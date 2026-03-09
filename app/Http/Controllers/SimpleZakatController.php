@@ -9,6 +9,7 @@ use App\Models\Zakat;
 use App\UseCases\SubmitSimpleZakat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -53,7 +54,12 @@ class SimpleZakatController extends Controller
     {
         $user = Auth::user();
 
-        $validated = $request->validate([
+        $zakatFields = [
+            'fitrah_rp', 'fitrah_kg', 'fitrah_lt', 'maal_rp', 'profesi_rp',
+            'infaq_rp', 'wakaf_rp', 'fidyah_rp', 'fidyah_kg', 'kafarat_rp',
+        ];
+
+        $rules = [
             'head_of_family' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:50'],
@@ -61,17 +67,30 @@ class SimpleZakatController extends Controller
             'members.*.muzakki_id' => ['nullable', 'integer'],
             'members.*.name' => ['required', 'string', 'max:255'],
             'members.*.zakat' => ['required', 'array'],
-            'members.*.zakat.fitrah_rp' => ['required', 'numeric', 'min:0'],
-            'members.*.zakat.fitrah_kg' => ['required', 'numeric', 'min:0'],
-            'members.*.zakat.fitrah_lt' => ['required', 'numeric', 'min:0'],
-            'members.*.zakat.maal_rp' => ['required', 'numeric', 'min:0'],
-            'members.*.zakat.profesi_rp' => ['required', 'numeric', 'min:0'],
-            'members.*.zakat.infaq_rp' => ['required', 'numeric', 'min:0'],
-            'members.*.zakat.wakaf_rp' => ['required', 'numeric', 'min:0'],
-            'members.*.zakat.fidyah_rp' => ['required', 'numeric', 'min:0'],
-            'members.*.zakat.fidyah_kg' => ['required', 'numeric', 'min:0'],
-            'members.*.zakat.kafarat_rp' => ['required', 'numeric', 'min:0'],
-        ]);
+        ];
+
+        foreach ($zakatFields as $field) {
+            $rules["members.*.zakat.{$field}"] = ['required', 'numeric', 'min:0'];
+        }
+
+        $validated = $request->validate($rules);
+
+        // Validate at least one non-zero amount across all members
+        $hasNonZeroAmount = false;
+        foreach ($validated['members'] as $member) {
+            foreach ($zakatFields as $field) {
+                if (($member['zakat'][$field] ?? 0) > 0) {
+                    $hasNonZeroAmount = true;
+                    break 2;
+                }
+            }
+        }
+
+        if (!$hasNonZeroAmount) {
+            throw ValidationException::withMessages([
+                'members' => 'Setidaknya satu jenis zakat harus memiliki jumlah lebih dari nol.',
+            ]);
+        }
 
         $this->validateMuzakkiOwnership($user, $validated['members']);
 

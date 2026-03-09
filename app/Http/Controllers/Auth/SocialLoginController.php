@@ -59,28 +59,26 @@ class SocialLoginController extends Controller
         $user = User::where('email', $socialUser->getEmail())->first();
 
         if ($user) {
-            // Link social account to existing user
-            $user->update([
+            $updateData = [
                 'social_id' => $socialUser->getId(),
                 'social_type' => $provider,
-            ]);
+            ];
+
+            // If existing user is unverified but provider confirms email, verify them
+            if (!$user->email_verified_at) {
+                $emailVerified = $this->isEmailVerifiedByProvider($socialUser, $provider);
+                if ($emailVerified) {
+                    $updateData['email_verified_at'] = now();
+                }
+            }
+
+            $user->update($updateData);
 
             return $user;
         }
 
         // Create new user
-        $emailVerifiedAt = null;
-
-        // Only set email_verified_at if provider confirms email is verified
-        if ($provider === 'google') {
-            $rawUser = $socialUser->getRaw();
-            if (!empty($rawUser['email_verified'])) {
-                $emailVerifiedAt = now();
-            }
-        } elseif ($provider === 'facebook') {
-            // Facebook doesn't always return email_verified, trust if email is provided
-            $emailVerifiedAt = now();
-        }
+        $emailVerifiedAt = $this->isEmailVerifiedByProvider($socialUser, $provider) ? now() : null;
 
         return User::create([
             'name' => $socialUser->getName(),
@@ -90,5 +88,27 @@ class SocialLoginController extends Controller
             'social_type' => $provider,
             'email_verified_at' => $emailVerifiedAt,
         ]);
+    }
+
+    /**
+     * Check if the OAuth provider has verified the user's email.
+     *
+     * @param \Laravel\Socialite\Contracts\User $socialUser
+     * @param string $provider
+     * @return bool
+     */
+    private function isEmailVerifiedByProvider($socialUser, string $provider): bool
+    {
+        if ($provider === 'google') {
+            $rawUser = $socialUser->getRaw();
+            return !empty($rawUser['email_verified']);
+        }
+
+        // Facebook doesn't always return email_verified; trust if email is provided
+        if ($provider === 'facebook') {
+            return true;
+        }
+
+        return false;
     }
 }

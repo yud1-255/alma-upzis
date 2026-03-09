@@ -2,7 +2,7 @@
 
 **RFC:** [002-simplified-self-service.md](../../rfc/002-simplified-self-service.md)
 **Capability:** [C6 — Simplified Self-Service Zakat](../../prd/006-simplified-self-service.md)
-**Status:** Not Started
+**Status:** Done
 **Total Tasks:** 8
 
 ---
@@ -13,8 +13,8 @@
 
 | Task | Title | Status | Depends On | Story |
 |------|-------|--------|------------|-------|
-| [001](./001-database-migrations.md) | Database Migrations for C6 | Not Started | — | N/A |
-| [002](./002-hijri-year-helper.md) | HijriYearHelper + Refactor + AppConfig UI | Not Started | 001 | [auto-hijri-year](../../stories/simplified-self-service/auto-hijri-year.md), [override-hijri-year](../../stories/simplified-self-service/override-hijri-year.md) |
+| [001](./001-database-migrations.md) | Database Migrations for C6 | Done | — | N/A |
+| [002](./002-hijri-year-helper.md) | HijriYearHelper + Refactor + AppConfig UI | Done | 001 | [auto-hijri-year](../../stories/simplified-self-service/auto-hijri-year.md), [override-hijri-year](../../stories/simplified-self-service/override-hijri-year.md) |
 
 ## Phase 2: Social Login
 
@@ -23,8 +23,8 @@
 
 | Task | Title | Status | Depends On | Story |
 |------|-------|--------|------------|-------|
-| [003](./003-social-login-backend.md) | Social Login Backend — Socialite + Controller + Routes | Not Started | 001 | [social-login-registrasi](../../stories/simplified-self-service/social-login-registrasi.md), [social-login-account-linking](../../stories/simplified-self-service/social-login-account-linking.md) |
-| [004](./004-social-login-frontend.md) | Social Login Frontend — Vue Components | Not Started | 003 | [social-login-registrasi](../../stories/simplified-self-service/social-login-registrasi.md) |
+| [003](./003-social-login-backend.md) | Social Login Backend — Socialite + Controller + Routes | Done | 001 | [social-login-registrasi](../../stories/simplified-self-service/social-login-registrasi.md), [social-login-account-linking](../../stories/simplified-self-service/social-login-account-linking.md) |
+| [004](./004-social-login-frontend.md) | Social Login Frontend — Vue Components | Done | 003 | [social-login-registrasi](../../stories/simplified-self-service/social-login-registrasi.md) |
 
 ## Phase 3: Formulir Zakat Sederhana
 
@@ -33,9 +33,9 @@
 
 | Task | Title | Status | Depends On | Story |
 |------|-------|--------|------------|-------|
-| [005](./005-simple-zakat-backend.md) | SubmitSimpleZakat Use Case + Controller | Not Started | 001, 002 | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [auto-create-keluarga](../../stories/simplified-self-service/auto-create-keluarga.md) |
-| [006](./006-simple-zakat-form-frontend.md) | SimpleZakat/Create.vue Form Page | Not Started | 005 | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [tambah-anggota-formulir](../../stories/simplified-self-service/tambah-anggota-formulir.md), [pengajuan-prefill](../../stories/simplified-self-service/pengajuan-prefill.md) |
-| [007](./007-dashboard-integration.md) | Dashboard Integration + E2E Verification | Not Started | 005, 006 | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [konfirmasi-pembayaran-sederhana](../../stories/simplified-self-service/konfirmasi-pembayaran-sederhana.md) |
+| [005](./005-simple-zakat-backend.md) | SubmitSimpleZakat Use Case + Controller | Done | 001, 002 | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [auto-create-keluarga](../../stories/simplified-self-service/auto-create-keluarga.md) |
+| [006](./006-simple-zakat-form-frontend.md) | SimpleZakat/Create.vue Form Page | Done | 005 | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [tambah-anggota-formulir](../../stories/simplified-self-service/tambah-anggota-formulir.md), [pengajuan-prefill](../../stories/simplified-self-service/pengajuan-prefill.md) |
+| [007](./007-dashboard-integration.md) | Dashboard Integration + E2E Verification | Done | 005, 006 | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [konfirmasi-pembayaran-sederhana](../../stories/simplified-self-service/konfirmasi-pembayaran-sederhana.md) |
 
 ## Phase 4: PWA
 
@@ -44,7 +44,7 @@
 
 | Task | Title | Status | Depends On | Story |
 |------|-------|--------|------------|-------|
-| [008](./008-pwa-setup.md) | PWA Setup — Manifest, Service Worker, Icons | Not Started | — | [pwa-instal](../../stories/simplified-self-service/pwa-instal.md) |
+| [008](./008-pwa-setup.md) | PWA Setup — Manifest, Service Worker, Icons | Done | — | [pwa-instal](../../stories/simplified-self-service/pwa-instal.md) |
 
 ---
 

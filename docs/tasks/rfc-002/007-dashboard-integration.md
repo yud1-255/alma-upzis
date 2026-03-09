@@ -2,7 +2,7 @@
 
 | Phase | Status | Story |
 |-------|--------|-------|
-| 3 | Not Started | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [konfirmasi-pembayaran-sederhana](../../stories/simplified-self-service/konfirmasi-pembayaran-sederhana.md) |
+| 3 | Done | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [konfirmasi-pembayaran-sederhana](../../stories/simplified-self-service/konfirmasi-pembayaran-sederhana.md) |
 
 ---
 
@@ -14,8 +14,8 @@
 
 ## Preconditions
 
-- [ ] Task rfc-002/005: SimpleZakat backend working
-- [ ] Task rfc-002/006: SimpleZakat form page working
+- [x] Task rfc-002/005: SimpleZakat backend working
+- [x] Task rfc-002/006: SimpleZakat form page working
 
 ---
 

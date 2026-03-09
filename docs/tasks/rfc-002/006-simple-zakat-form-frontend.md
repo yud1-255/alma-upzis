@@ -2,7 +2,7 @@
 
 | Phase | Status | Story |
 |-------|--------|-------|
-| 3 | Not Started | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [tambah-anggota-formulir](../../stories/simplified-self-service/tambah-anggota-formulir.md), [pengajuan-prefill](../../stories/simplified-self-service/pengajuan-prefill.md) |
+| 3 | Done | [pengajuan-zakat-sederhana](../../stories/simplified-self-service/pengajuan-zakat-sederhana.md), [tambah-anggota-formulir](../../stories/simplified-self-service/tambah-anggota-formulir.md), [pengajuan-prefill](../../stories/simplified-self-service/pengajuan-prefill.md) |
 
 ---
 
@@ -14,7 +14,7 @@ Vue form page for simplified zakat submission is implemented with contact fields
 
 ## Preconditions
 
-- [ ] Task rfc-002/005: SimpleZakatController backend with create() and store() routes
+- [x] Task rfc-002/005: SimpleZakatController backend with create() and store() routes
 
 ---
 
